@@ -16,3 +16,23 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+// admin
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/login','AdminController@getLogin');
+    Route::post('/login','AdminController@postLogin');
+
+    Route::get('/dashboard','AdminController@getDashboard');
+    Route::group(['prefix' => 'categories'], function () {
+
+    });
+
+});
+// parent
+Route::group(['prefix' => 'parent'], function () {
+
+});
+
+//babysitter
+Route::group(['prefix' => 'babysitter'], function () {
+
+});
