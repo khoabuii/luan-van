@@ -25,7 +25,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'categories'], function () {
 
     });
-
 });
 // parent
 Route::group(['prefix' => 'parent'], function () {
