@@ -15,9 +15,19 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'sitters',
     ],
 
+    'sitters' => [
+        'driver' => 'eloquent',
+        'model' => App\Sitters::class,
+    ],
+
+    'sitters' => [
+        'provider' => 'sitters',
+        'table' => 'password_resets',
+        'expire' => 60,
+    ],
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -38,14 +48,36 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'sitters',
         ],
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'users',
+            'provider' => 'sitters',
             'hash' => false,
         ],
+
+        'parents' => [
+            'driver' => 'session',
+            'provider' => 'parents',
+        ],
+
+        'api-parents' => [
+            'driver' => 'token',
+            'provider' => 'parents',
+        ],
+
+        // sitters
+
+        // 'sitters' => [
+        //     'driver' => 'session',
+        //     'provider' => 'sitters',
+        // ],
+
+        // 'api-sitters' => [
+        //     'driver' => 'token',
+        //     'provider' => 'sitters',
+        // ],
     ],
 
     /*
@@ -66,11 +98,20 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'sitters' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Sitters::class,
         ],
-
+        //parents
+        'parents' => [
+            'driver' => 'eloquent',
+            'model' => App\Parents::class,
+        ],
+        //sitters
+        // 'sitters' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Sitters::class,
+        // ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -93,12 +134,26 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'sitters' => [
+            'provider' => 'sitters',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],
+        //parents
+        'parents' => [
+            'provider' => 'parents',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        //sitters
+        // 'sitters' => [
+        //     'provider' => 'sitters',
+        //     'table' => 'password_resets',
+        //     'expire' => 60,
+        //     'throttle' => 60,
+        // ],
     ],
 
     /*

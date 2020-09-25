@@ -71,8 +71,8 @@
 						</button>
 						<div class="menu-container">
 							<ul class="header-top-nav header-top-nav__tertiary">
-								<li><a href="page-login.html"><i class="fa-pencil-square-o fa"></i> Đăng ký</a></li>
-								<li><a href="page-login.html"><i class="fa-lock fa"></i> Đăng nhập</a></li>
+								{{-- <li><a href="page-login.html"><i class="fa-pencil-square-o fa"></i> Đăng ký</a></li>
+								<li><a href="page-login.html"><i class="fa-lock fa"></i> Đăng nhập</a></li> --}}
 							</ul>
 						</div>
 					</div>
@@ -85,7 +85,7 @@
 
 					<!-- Logo -->
 					<div class="logo">
-						<a href="index.html"><img src="{{asset('homepage/images/logo.png')}}" alt="Babysitter"></a>
+						<a href="{{asset('/')}}"><img src="{{asset('homepage/images/logo.png')}}" alt="Babysitter"></a>
 						<!-- <h1><a href="index.html"><strong>Baby</strong>sitter</a></h1> -->
 						<p class="tagline hidden-xs hidden-sm">Best care for baby!</p>
 					</div>
@@ -117,53 +117,7 @@
 			</div>
 
 			<!-- Navigation -->
-			<nav class="nav-main">
-				<div class="container">
-					<ul data-breakpoint="992" class="flexnav">
-						<li class="active"><a href="index.html">Home</a></li>
-						<li><a href="#">Pages</a>
-							<ul>
-								<li><a href="page-about.html">About Us</a></li>
-								<li><a href="page-services.html">Services</a></li>
-								<li><a href="page-team.html">Team</a></li>
-								<li><a href="page-team-member.html">Team Member</a></li>
-								<li><a href="page-faqs.html">FAQs</a></li>
-								<li><a href="page-fullwidth.html">Full Width</a></li>
-								<li><a href="page-left-sidebar.html">Left Sidebar</a></li>
-								<li><a href="page-right-sidebar.html">Right Sidebar</a></li>
-								<li><a href="page-404.html">404</a></li>
-							</ul>
-						</li>
-						<li><a href="#">Features</a>
-							<ul>
-								<li><a href="features-shortcodes.html">Shortcodes</a></li>
-								<li><a href="features-pricing-tables.html">Pricing Tables</a></li>
-								<li><a href="features-typography.html">Typography</a></li>
-								<li><a href="features-columns.html">Columns</a></li>
-								<li><a href="features-icons.html">Icons</a></li>
-							</ul>
-						</li>
-						<li><a href="#">Sitters/Jobs</a>
-							<ul>
-								<li><a href="job-post-profile.html">Post a Profile</a></li>
-								<li><a href="job-post-job.html">Post a Job</a></li>
-								<li><a href="job-list.html">Pet Sitters List</a></li>
-								<li><a href="job-dashboard.html">Dashboard</a></li>
-								<li><a href="job-profile.html">Profile</a></li>
-							</ul>
-						</li>
-						<li><a href="blog-right-sidebar.html">Blog</a>
-							<ul>
-								<li><a href="blog-right-sidebar.html">Blog Right Sidebar</a></li>
-								<li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
-								<li><a href="blog-fullwidth.html">Blog Full Width</a></li>
-								<li><a href="blog-post.html">Single Post</a></li>
-							</ul>
-						</li>
-						<li><a href="contacts.html">Contacts</a></li>
-					</ul>
-				</div>
-			</nav>
+			{{-- deleted --}}
 			<!-- Navigation / End -->
 
 		</header>
@@ -211,12 +165,9 @@
 						<div class="col-md-4">
 							<!-- Icon Box -->
 							<div class="icon-box boxed circled icon-box-color__primary">
-								<div class="icon">
-									1
-								</div>
 								<div class="icon-box-body">
-									<h2>Post a Job you want</h2>
-									Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor. Lorem ipsum dolor sit amet.
+									<h2>Kết nối không giới hạn</h2>
+									Chúng tôi cung cấp giải pháp giúp mọi người dễ dàng liên hệ với nhau
 								</div>
 							</div>
 							<!-- Icon Box / End -->
@@ -224,12 +175,9 @@
 						<div class="col-md-4">
 							<!-- Icon Box -->
 							<div class="icon-box boxed circled icon-box-color__secondary">
-								<div class="icon">
-									2
-								</div>
 								<div class="icon-box-body">
-									<h2>Contact babysitters</h2>
-									Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor. Lorem ipsum dolor sit amet.
+									<h2>Kết nối thông minh</h2>
+									Chúng tôi sử dụng những công nghệ hiện đại nhất để giải quyết những vấn đề cho khách hàng
 								</div>
 							</div>
 							<!-- Icon Box / End -->
@@ -237,12 +185,9 @@
 						<div class="col-md-4">
 							<!-- Icon Box -->
 							<div class="icon-box boxed circled icon-box-color__tertiary">
-								<div class="icon">
-									3
-								</div>
 								<div class="icon-box-body">
-									<h2>Hire with confidence</h2>
-									Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor. Lorem ipsum dolor sit amet.
+										<h2>Bảo vệ thông tin khách hàng</h2>
+										Chúng tôi đảm bảo thông tin của anh chị luôn được bảo mật.
 								</div>
 							</div>
 							<!-- Icon Box / End -->
@@ -255,20 +200,26 @@
 							<!-- Call to Action -->
 							<div class="call-to-action call-to-action__no-bg centered">
 								<div class="cta-txt">
-									<h1>Welcome to Our Site!</h1>
-									<p>Curabitur eget rhoncus quam, vel elementum arcu. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. </p>
+									<h1>Chào mừng bạn đã đến website của chúng tôi!</h1>
+									<p>Chúng tôi hy vọng sẽ mang lại trãi nghiệm tốt nhất cho bạn. Hãy đăng ký tham gia vào hệ thống của chúng tôi nhé! </p>
 								</div>
-								<div class="cta-btn">
-									<a href="#" class="btn btn-primary btn-lg">Join Now!</a>
+								<div class="col-md-6">
+											<div class="cta-btn">
+												<a href="{{asset('/parent')}}" class="btn btn-primary btn-lg">Tham gia với vai trò là Phụ huynh</a>
+											</div>
+										</div>
+									<div class="col-md-6">
+										<div class="cta-btn">
+											<a href="{{asset('/sitter')}}" class="btn btn-tertiary btn-lg">Tham gia với vai trò là Babysitter</a>
+										</div>
 								</div>
+
 							</div>
 							<!-- Call to Action / End -->
 						</div>
 					</div>
 
 					<div class="spacer-lg"></div>
-
-
 					<h2>Latest Babysitters</h2>
 					<div class="row">
 						<div class="col-xs-6 col-sm-3 col-md-3" data-animation="fadeInLeft" data-animation-delay="0">
@@ -369,7 +320,7 @@
 
 								</ul>
 							</div>
-							<a href="#" class="btn btn-primary">View All Services</a>
+							<a href="#" class="btn btn-primary">Xem tất cả dịch vụ</a>
 						</div>
 						<div class="col-md-4">
 							<h2>Lời khuyên của chúng tôi</h2>
@@ -382,43 +333,16 @@
 								<li>
 									<figure class="thumbnail"><a href="#"><img src="images/samples/post-img-2-sm.jpg" alt=""></a></figure>
 									<span class="date">16/07/2020</span>
-									<h5 class="title"><a href="#">Tìm babysitter như thế nào cho hiệu quả nhất</a></h5>
+									<h5 class="title"><a href="#">Trẻ biến ăn thì giải quyết thế nào.</a></h5>
 								</li>
 								<li>
 									<figure class="thumbnail"><a href="#"><img src="images/samples/post-img-3-sm.jpg" alt=""></a></figure>
 									<span class="date">14/07/2020</span>
-									<h5 class="title"><a href="#">Tìm babysitter như thế nào cho hiệu quả nhất</a></h5>
+									<h5 class="title"><a href="#">Các tiêu chí chọn sửa cho bé</a></h5>
 								</li>
 							</ul>
 						</div>
 					</div>
-
-					<hr class="lg hr__bold">
-
-					<h2>Our Clients</h2>
-					<div class="row">
-						<div class="col-sm-3 col-md-3">
-							<div class="hovered-img text-center">
-								<a href="#"><img src="{{asset('images/samples/client-logo2.png')}}" alt=""></a>
-							</div>
-						</div>
-						<div class="col-sm-3 col-md-3">
-							<div class="hovered-img text-center">
-								<a href="#"><img src="{{asset('images/samples/client-logo3.png')}}" alt=""></a>
-							</div>
-						</div>
-						<div class="col-sm-3 col-md-3">
-							<div class="hovered-img text-center">
-								<a href="#"><img src="{{asset('images/samples/client-logo4.png')}}" alt=""></a>
-							</div>
-						</div>
-						<div class="col-sm-3 col-md-3">
-							<div class="hovered-img text-center">
-								<a href="#"><img src="{{asset('images/samples/client-logo1.png')}}" alt=""></a>
-							</div>
-						</div>
-					</div>
-
 				</div>
 			</section>
 			<!-- Page Content / End -->

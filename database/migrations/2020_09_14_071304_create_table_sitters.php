@@ -18,6 +18,7 @@ class CreateTableSitters extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->boolean('gender');
+            $table->date('birthDay')->nullable();
             $table->string('address')->nullable();
             // foreign address
             //

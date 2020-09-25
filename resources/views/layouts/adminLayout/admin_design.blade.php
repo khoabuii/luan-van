@@ -49,5 +49,21 @@
         });
     } );
 </script>
+<script>
+		jQuery(function($){
+			$('body').addClass('loading');
+		});
+
+		$(window).load(function(){
+			$('.flexslider').flexslider({
+				animation: "fade",
+				controlNav: true,
+				directionNav: true,
+				start: function(slider){
+					$('body').removeClass('loading');
+				}
+			});
+		});
+    </script>
 </body>
 </html>

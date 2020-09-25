@@ -1,11 +1,11 @@
 /**
     * @package Stability Responsive HTML5 Template
-    * 
+    *
     * Template Scripts
     * Created by Dan Fisher
 
     Init JS
-    
+
     1. Main Navigation
     2. Magnific Popup
     3. Flickr
@@ -31,7 +31,7 @@ jQuery(function($){
         'hoverIntent':        true,          // Change to true for use with hoverIntent plugin
         'hoverIntentTimeout': 50,            // hoverIntent default timeout
         'calcItemWidths':     false,          // dynamically calcs top level nav item widths
-        'hover':              true            // would you like hover support?      
+        'hover':              true            // would you like hover support?
     });
 
 
@@ -54,14 +54,14 @@ jQuery(function($){
     /* ----------------------------------------------------------- */
     /*  3. Flickr
     /* ----------------------------------------------------------- */
-    
+
     $('.flickr-feed').jflickrfeed({
         limit: 9,
         qstrings: {
             id: '52617155@N08'
         },
         itemTemplate: '<li><a href="{{link}}" target="_blank"><img src="{{image_s}}" alt="{{title}}" /></a></li>'
-    }, 
+    },
     function(data) {
         $(".flickr-feed li:nth-child(3n)").addClass("nomargin");
     });
@@ -175,7 +175,7 @@ jQuery(function($){
     // Animation on scroll
     var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (isMobile == false) {
-        
+
         $("[data-animation]").each(function() {
 
         var $this = $(this);
@@ -203,7 +203,7 @@ jQuery(function($){
 
         }
 
-    });  
+    });
     }
 });
 

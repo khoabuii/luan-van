@@ -18,18 +18,73 @@ Route::get('/','HomeController@getIndex');
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/login','AdminController@getLogin');
     Route::post('/login','AdminController@postLogin');
+    // logout
+    Route::get('/logout','AdminController@getLogout');
+    Route::get('/dashboard','AdminController@getDashboard')->middleware('checkLoginAdmin');
+    Route::group(['prefix' => 'sitters','middleware'=>'checkLoginAdmin'], function () {
+        Route::get('/','AdminController@getSitters');
 
-    Route::get('/dashboard','AdminController@getDashboard');
-    Route::group(['prefix' => 'categories'], function () {
+        Route::get('/delete/{id}','AdminController@getDeleteSitter'); //delete
+        Route::get('/block/{id}','AdminController@getBlockSitter'); //block
+    });
 
+    Route::group(['prefix' => 'parents','middleware'=>'checkLoginAdmin'], function () {
+        Route::get('/','AdminController@getParents');
     });
 });
 // parent
 Route::group(['prefix' => 'parent'], function () {
+    Route::get('/','ParentsController@getIndex')->middleware('checkLoginParents');
+    // register
+    Route::group(['prefix' => 'register'], function () {
+        Route::get('/','ParentsController@getRegister');
+        Route::post('/','ParentsController@postRegister');
+    });
+    //
+    // login
+    Route::group(['prefix' => 'login'], function () {
+        Route::get('/','ParentsController@getRegister');
+        Route::post('/','ParentsController@postLogin');
+    });
+    //logout
+    Route::get('/logout','ParentsController@logout');
 
+    // profile
+    Route::group(['prefix' => 'profile','middleware'=>'checkLoginParents'], function () {
+        Route::get('/','ParentsController@getProfile');
+    });
 });
 
-//babysitter
-Route::group(['prefix' => 'babysitter'], function () {
+// show districts
+Route::post('showDistricts','HomeController@showDistricts');
+// show wards
+Route::post('showWards','HomeController@showWards');
 
+//babysitter
+Route::group(['prefix' => 'sitter'], function () {
+    Route::get('/','SittersController@getIndex')->middleware('checkLoginSitters');
+    // login
+    Route::group(['prefix' => 'login'], function () {
+        Route::get('/','SittersController@getRegister');
+        Route::post('/','SittersController@postLogin');
+    });
+    Route::group(['prefix' => 'register'], function () {
+        Route::get('/','SittersController@getRegister');
+        Route::post('/','SittersController@postRegister');
+    });
+    // logout
+    Route::get('logout','SittersController@logout');
+    // profile
+    Route::group(['prefix' => 'profile','middleware'=>'checkLoginSitters'], function () {
+        // view profile
+        Route::get('/','SittersController@getProfile');
+        // update profile
+        Route::get('/update_info','SittersController@getUpdateProfile');
+        Route::post('/update_info','SittersController@postUpdateProfile');
+        // manage images
+        Route::post('/images','SittersController@postImagesProfile');
+        Route::get('/images_delete/{id}','SittersController@getDeleteImageProfile');
+        // update location
+        Route::post('/location_update','SittersController@postLocationUpdate');//update location
+    });
 });

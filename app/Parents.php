@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Parents extends Authenticatable
 {
     use Notifiable;
 
@@ -15,8 +15,11 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $table='parents';
+    protected $guard='parents';
+    protected $primaryKey="id";
     protected $fillable = [
-        'name', 'email', 'password',
+         'email', 'password',
     ];
 
     /**
@@ -25,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 
     /**
@@ -36,6 +39,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    protected $table = 'users';
-    protected $primaryKey='id';
 }
