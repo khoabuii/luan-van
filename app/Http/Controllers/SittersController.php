@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\feedback_parent;
 use App\img_sitter;
 use App\Location;
+use App\Parents;
 use App\Province;
 use App\Sitters;
 use Illuminate\Contracts\Session\Session;
@@ -17,9 +19,22 @@ class SittersController extends Controller
 {
     //
     public function getIndex(){
-        return view('sitters.index');
+        $id_sitter=Auth::user()->id;
+        $your_province=Location::where('sitter',$id_sitter)->select('city','address')->get();
+
+        $data['parent_near']=DB::table('location')
+        ->join('parents','location.parent','=','parents.id')
+        ->where('city',$your_province[0]->city)
+        ->select('parents.id as id','parents.name as name','parents.description','parents.avatar as img','parents.created_at')
+        ->orderBy('location.id','desc')->take(8)->get();
+        $data['location_name']=Province::where('id',$your_province[0]->city)->select('name')->get();
+
+        return view('sitters.index',$data);
     }
     public function getRegister(){
+        if(Auth::user()){
+            return redirect('/sitter');
+        }
         $data['address']=Province::all();
         return view('sitters.login',$data);
     }
@@ -76,7 +91,12 @@ class SittersController extends Controller
         $data['img']=img_sitter::where('sitter_id',Auth::user()->id)->select('img')->get();
         $data['address']=Province::all();
         $data['location']=Location::where('sitter',Auth::user()->id)->select('address')->get();
-        // dd($data['location']);
+        $data['feedback']=DB::table('feedback_sitters')
+        ->where('sitter',Auth::user()->id)
+        ->join('parents','feedback_sitters.parent','=','parents.id')
+        ->select('feedback_sitters.*','parents.id as id_parent','parents.name','parents.avatar')
+        ->orderBy('feedback_sitters.id','desc')->paginate(10);
+        // dd($data['feedback']);
         return view('sitters.profile.profile',$data);
     }
     //update profile
@@ -95,6 +115,10 @@ class SittersController extends Controller
         $file=substr($file,16);
         $img->img=$file;
         $img->save();
+
+        $save_img_sitter=Sitters::findOrFail($id);
+        $save_img_sitter->images=$file;
+        $save_img_sitter->save();
         return back();
     }
     public function getDeleteImageProfile($id){
@@ -128,5 +152,58 @@ class SittersController extends Controller
 
         $location->save();
         return back()->with('update','Đã cập nhật vị trí');
+    }
+    public function getParentsList(){
+        $data['parents']=DB::table('parents')
+        ->join('location','parents.id','=','location.parent')
+        ->select('parents.id','parents.name','parents.avatar as img','parents.created_at','location.district','location.city','location.address')
+        ->paginate(10);
+        return view('sitters.parents_list',$data);
+    }
+
+    // parent profile
+    public function getParentProfile($id){
+        $data['parent']=Parents::find($id);
+        $data['location']=DB::table('location')
+        ->where('parent',$id)->get();
+
+        //feedback
+        $data['feedback']=DB::table('feedback_parents')
+        ->join('sitters','feedback_parents.sitter','=','sitters.id')
+        ->where('parent',$id)
+        ->select('feedback_parents.*','sitters.name','sitters.images')
+        ->get();
+        // dd($data['feedback']);
+        $data['check_feedback']=DB::table('feedback_parents')
+        ->where('sitter',Auth::user()->id)
+        ->where('parent',$id)->get();
+        // dd($data['check_feedback']);
+        return view('sitters.parent_profile',$data);
+    }
+    // post feedback parent profile
+    public function postFeedbackParent(Request $request,$id_parent){
+        $id_sitter=Auth::user()->id;
+        $check=DB::table('feedback_parents')
+        ->where('sitter',$id_sitter)->where('parent',$id_parent)
+        ->select('id')
+        ->get();
+        if(count($check)>0){
+            $feedback=feedback_parent::find($check[0]->id);
+            $feedback->parent=$id_parent;
+            $feedback->sitter=$id_sitter;
+            $feedback->rate_parent=$request->star;
+            $feedback->content_parent=$request->description;
+            $feedback->save();
+            return redirect('sitter/parent_profile/'.$id_parent.'/#feedback_parent');
+        }
+        $feedback=new feedback_parent();
+        $feedback->parent=$id_parent;
+        $feedback->sitter=$id_sitter;
+        $feedback->rate_parent=$request->star;
+        $feedback->content_parent=$request->description;
+
+        $feedback->save();
+
+        return redirect('sitter/parent_profile/'.$id_parent.'/#feedback_parent');
     }
 }

@@ -79,7 +79,6 @@
                                     </span>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                     <!-- /Widget :: Newsletter -->

@@ -61,8 +61,8 @@
     <nav class="nav-main">
         <div class="container">
             <ul data-breakpoint="992" class="flexnav">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#">Sitters</a></li>
+                <li><a href="{{asset('sitter/')}}">Home</a></li>
+                <li><a href="{{asset('sitter/parents_list')}}">Phụ huynh</a></li>
                 <li><a href="#">Bài viết</a>
                     <ul>
                         <li><a href="features-shortcodes.html">Shortcodes</a></li>
@@ -81,7 +81,7 @@
                         <li><a href="{{asset('sitter/profile/update')}}">Cập nhật tài khoản</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Danh sách đã đánh dấu</a></li>
+                <li><a href="{{asset('sitter/save_parents')}}">Danh sách đã đánh dấu</a></li>
             </ul>
         </div>
     </nav>

@@ -64,14 +64,12 @@
         <div class="container">
             <ul data-breakpoint="992" class="flexnav">
                 <li><a href="{{asset('/parent')}}">Home</a></li>
-                <li><a href="#">Sitters</a></li>
-                <li><a href="#">Bài viết</a>
+                <li><a href="{{asset('/parent/list_sitters')}}">Sitters</a></li>
+                <li><a href="{{asset('/parent/posts')}}">Bài viết</a>
                     <ul>
-                        <li><a href="features-shortcodes.html">Shortcodes</a></li>
-                        <li><a href="features-pricing-tables.html">Pricing Tables</a></li>
-                        <li><a href="features-typography.html">Typography</a></li>
-                        <li><a href="features-columns.html">Columns</a></li>
-                        <li><a href="features-icons.html">Icons</a></li>
+                        <li><a href="{{asset('/parent/posts/add')}}">Đăng bài viết mới</a></li>
+                        <li><a href="{{asset('/parent/posts')}}">Xem danh sách bài viết</a></li>
+                        <li><a href="{{asset('/parent/profile/post')}}">Bài viết của tôi</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Tìm kiếm</a> </li>
@@ -83,7 +81,7 @@
                         <li><a href="blog-fullwidth.html">Cập nhật tài khoản</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Danh sách đã đánh dấu</a></li>
+                <li><a href="{{asset('parent/save_sitters')}}">Danh sách đã đánh dấu</a></li>
 
             </ul>
         </div>

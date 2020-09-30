@@ -18,6 +18,17 @@
     </div>
 </section>
 <!-- Page Heading / End -->
+@if(Session::has('errors'))
+    <script>
+        alert('{{session('errors')}}')
+    </script>
+@endif
+
+@if(Session::has('update'))
+    <script>
+        alert('{{session('update')}}')
+    </script>
+@endif
 <!-- Page Content -->
 <section class="page-content">
     <div class="container">
@@ -27,16 +38,39 @@
                     <ul class="slides">
                         <li>
                             <figure class="alignnone">
-                                <img src="{{asset('homepage/images/samples/bsitter-1.jpg')}}" width="350px" alt="">
-                            </figure>
-                        </li>
-                        <li>
-                            <figure class="alignnone">
-                                <img src="{{asset('homepage/images/samples/bsitter-2.jpg')}}" width="350px" alt="">
+                                <img src="{{asset('/uploads/parents_profile')}}/{{Auth::guard('parents')->user()->avatar}}" width="350px" alt="">
                             </figure>
                         </li>
                     </ul>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#imagesProfile"><span class="fa fa-picture-o"> Cập nhật ảnh đại diện</span></button>
                 </div>
+                <!-- Modal img -->
+                <div class="modal fade" id="imagesProfile" tabindex="-1" role="dialog" aria-labelledby="imagesProfile" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="imagesProfile">Cập nhật hình ảnh</h5>
+                            </div>
+                            <form action="{{asset('parent/profile/image_update')}}" method="post" enctype="multipart/form-data">
+                                {{csrf_field()}}
+                                <div class="modal-body">
+                                <fieldset class="fieldset-company_logo">
+                                    <label for="company_logo">Cập nhật hình ảnh mới</label>
+                                    <div class="field">
+                                        <input type="file" class="form-control hidden" name="image" id="img" onchange="changeImg(this)"/>
+                                        <img id="avatar" class="thumbnail" width="140px" src="{{asset('homepage/images/seo.png')}}">
+                                    </div>
+                                </fieldset>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <!-- end Modal img-->
             </div>
 
             <div class="col-md-7">
@@ -59,8 +93,72 @@
                                         <li>Babysitter</li>
                                     </ul>
                                     <ul class="info">
-                                        <li><i class="fa fa-map-marker"></i> Looking within 20 miles of <a href="#">London, UK</a></li>
-
+                                        <li><i class="fa fa-map-marker"></i>
+                                            @if(count($location)>0)
+                                                {{$location[0]->address}}
+                                            @else
+                                                Chưa thiết lập địa chỉ
+                                            @endif
+                                            <button class="btn btn-small" data-toggle="modal" data-target="#location">Cập nhật</button></li>
+                                         <!-- Modal location -->
+                                         <div class="modal fade bd-example-modal-lg" id="location" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <form action="{{asset('parent/profile/location_update')}}" method="post">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="imagesProfile"><center>Cập nhật vị trí</center></h4>
+                                                </div>
+                                                    {{csrf_field()}}
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for=""><small>Tỉnh /Thành phố</small></label> <br>
+                                                                    <select class="form-control" name="provinces">
+                                                                        <option value="">Chọn Tỉnh/TP</option>
+                                                                            @foreach($address as $add)
+                                                                        <option value="{{$add->id}}">{{$add->name}}</option>
+                                                                            @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label><small>Huyện /Quận</small></label> <br>
+                                                                    <select class="form-control" name="districts">
+                                                                        <option value="">Chọn Huyện/Quận</option>
+                                                                        @if(!empty($districts))
+                                                                            @foreach($districts as $key=>$value)
+                                                                                <option value="{{$key}}">{{$value}}</option>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for=""><small>Xã /Phường</small></label> <br>
+                                                                    <select class="form-control" name="wards">
+                                                                        <option value="">Chọn Xã/Phường</option>
+                                                                        @if(!empty($wards))
+                                                                        @foreach($wards as $key=>$value)
+                                                                            <option value="{{$key}}">{{$value}}</option>
+                                                                        @endforeach
+                                                                    @endif
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <!--end modal location-->
                                         <li><i class="fa fa-clock-o"></i> Tham gia vào {{Auth::guard('parents')->user()->created_at}}.</li>
                                     </ul>
                                     <div class="spacer-lg"></div>
@@ -176,8 +274,117 @@
             <i class="fa fa-circle"></i> &nbsp; Thời gian làm việc
         </div>
         <!-- Person Availability / End -->
-
+        <div class="spacer-xl"></div>
+        <h3><a href="#feedback">Đánh giá</a></h3>
+        <div class="row" style="background-color:rgb(245, 245, 245)">
+            <div class="col-md-2">
+                <div class="">
+                    <div class="job-listing-box">
+                        <figure class="job-listing-img">
+                            <img src="{{asset('uploads/sitters_profile/u3yURYlAj4etVyOtkeSHgxqf8qIOE1f2GMaazq5T.jpeg')}}" alt="">
+                        </figure>
+                        <div>
+                            <div class="name"><center><a href="#">Bui Van Khoa</a></center></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <h6> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></h6>
+                <h6 style="color: black">Hello sdhggggggggggggg sdhhh ssagsagsa sgagsgsasfasfas dsff ddf</h6>
+                <span>Đăng vào 2 ngày trước</span>
+            </div>
+        </div>
+        <br>
+        <div class="row" style="background-color:rgb(245, 245, 245)">
+            <div class="col-md-2">
+                <div class="">
+                    <div class="job-listing-box">
+                        <div class="job-listing-img">
+                            <img src="{{asset('uploads/sitters_profile/u3yURYlAj4etVyOtkeSHgxqf8qIOE1f2GMaazq5T.jpeg')}}" width="200px" alt="">
+                        </div>
+                        <div>
+                            <div class="name"><center><a href="#">Bui Van Khoa</a></center></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <h6> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></h6>
+                <h6 style="color: black">Hello sdhggggggggggggg sdhhh ssagsagsa sgagsgsasfasfas dsff ddf</h6>
+                <span>Đăng vào 2 ngày trước</span>
+            </div>
+        </div>
     </div>
 </section>
 <!-- Page Content / End -->
+{{-- upload images --}}
+<script>
+    function changeImg(input){
+        if(input.files && input.files[0]){
+            var reader = new FileReader();
+            reader.onload = function(e){
+                $('#avatar').attr('src',e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $(document).ready(function() {
+        $('#avatar').click(function(){
+            $('#img').click();
+        });
+    });
+</script>
+
+{{-- ajax address --}}
+<script type="text/javascript">
+    var url_districts = "{{ url('/showDistricts')}}";
+    var url_wards = "{{ url('/showWards')}}";
+    // show districts
+    $("select[name='provinces']").change(function(){
+        var province_id = $(this).val();
+        // console.log(province_id);
+        var token = $("input[name='_token']").val();
+        $.ajax({
+            url: url_districts,
+            method: 'POST',
+            data: {
+                province_id: province_id,
+                _token: token
+            },
+            success: function(data) {
+                $("select[name='districts'").html('');
+                $.each(data, function(key, value){
+                    $("select[name='districts']").append(
+                        "<option value=" + value.id + ">" + value.name + "</option>"
+                    );
+                });
+            }
+        });
+    });
+    //end show district
+
+    // show wards
+    $("select[name='districts']").change(function(){
+        var district_id = $(this).val();
+        var token = $("input[name='_token']").val();
+        $.ajax({
+            url: url_wards,
+            method: 'POST',
+            data: {
+                district_id: district_id,
+                _token: token
+            },
+            success: function(data) {
+                $("select[name='wards'").html('');
+                $.each(data, function(key, value){
+                    $("select[name='wards']").append(
+                        "<option value=" + value.id + ">" + value.name + "</option>"
+                    );
+                });
+            }
+        });
+    });
+</script>
+{{-- end ajax address --}}
 @endsection

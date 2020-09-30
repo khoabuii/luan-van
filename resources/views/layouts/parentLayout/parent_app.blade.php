@@ -28,11 +28,14 @@
 	<link rel="stylesheet" href="{{asset('homepage/vendor/magnific-popup/magnific-popup.css')}}" media="screen">
 	<link rel="stylesheet" href="{{asset('homepage/vendor/flexslider/flexslider.css')}}" media="screen">
 
+    {{-- star --}}
+    <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css'>
+
 	<!-- Theme CSS-->
 	<link rel="stylesheet" href="{{asset('homepage/css/theme.css')}}">
 	<link rel="stylesheet" href="{{asset('homepage/css/theme-elements.css')}}">
 	<link rel="stylesheet" href="{{asset('homepage/css/animate.min.css')}}">
-
+    <link rel="stylesheet" href="{{asset('homepage/vendor/job-manager/frontend.css')}}" media="screen">
   <!-- Head Libs -->
 	<script src="{{asset('homepage/vendor/modernizr.js')}}"></script>
 
@@ -44,6 +47,15 @@
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
 	 integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+     <!-- Map -->
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+     integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+      crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+    crossorigin=""></script>
+
+    <script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
 
     </head>
 <body class="boxed">

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableFeedback extends Migration
+class CreateTableFeedbackParents extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTableFeedback extends Migration
      */
     public function up()
     {
-        Schema::create('feedback', function (Blueprint $table) {
+        Schema::create('feedback_parents', function (Blueprint $table) {
             $table->id();
             $table->BigInteger('parent')->unsigned()->nullable();
             // foreign parents
@@ -23,10 +23,8 @@ class CreateTableFeedback extends Migration
             // foreign sitters
             $table->foreign('sitter')->references('id')->on('sitters')->onDelete('cascade');
             //
-            $table->tinyInteger('rate_sitter')->nullable();
             $table->tinyInteger('rate_parent')->nullable();
             $table->text('content_parent')->nullable();
-            $table->text('content_sitter')->nullable();
             $table->timestamps();
         });
     }
@@ -38,6 +36,6 @@ class CreateTableFeedback extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('feedback');
+        Schema::dropIfExists('feedback_parents');
     }
 }

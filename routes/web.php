@@ -52,13 +52,37 @@ Route::group(['prefix' => 'parent'], function () {
     // profile
     Route::group(['prefix' => 'profile','middleware'=>'checkLoginParents'], function () {
         Route::get('/','ParentsController@getProfile');
+        Route::post('/image_update','ParentsController@postImageUpdate');
+        Route::post('/location_update','ParentsController@postLocationUpdate');
     });
+    // list_babysitter
+    Route::get('/list_sitters','ParentsController@getListSitters')->middleware('checkLoginParents');
+
+    // profile_sitter
+    Route::get('sitter_profile/{id}','ParentsController@getSitterProfile')->middleware('checkLoginParents');
+
+    //save sitter
+    Route::get('/save_sitters','ParentsController@getSaveSitters')->middleware('checkLoginParents');
+    Route::get('/save_sitters/{id}','ParentsController@getSaveSittersId')->middleware('checkLoginParents');
+    Route::get('/save_sitters/delete/{id}','ParentsController@getDeleteSaveSitter')->middleware('checkLoginParents'); //delete save sitter
+
+     // group post
+     Route::group(['prefix' => 'posts','middleware'=>'checkLoginParents'], function () {
+        Route::get('/','ParentsController@getPostsList');
+        Route::get('/add','ParentsController@getPostAdd');
+
+        Route::post('/add','ParentsController@postAddPost')->name('post.add');
+    });
+
+    // rate sitters
+    Route::post('/rate_sitter/{id}','ParentsController@postRateSitter')->middleware('checkLoginParents');
+
 });
 
-// show districts
-Route::post('showDistricts','HomeController@showDistricts');
-// show wards
-Route::post('showWards','HomeController@showWards');
+//ajax
+Route::post('showDistricts','HomeController@showDistricts');    // show districts
+Route::post('showWards','HomeController@showWards');    // show wards
+//
 
 //babysitter
 Route::group(['prefix' => 'sitter'], function () {
@@ -86,5 +110,18 @@ Route::group(['prefix' => 'sitter'], function () {
         Route::get('/images_delete/{id}','SittersController@getDeleteImageProfile');
         // update location
         Route::post('/location_update','SittersController@postLocationUpdate');//update location
+    });
+
+    // parents list
+    Route::get('/parents_list','SittersController@getParentsList')->middleware('checkLoginSitters');
+
+    // parent profile
+    Route::get('/parent_profile/{id}','SittersController@getParentProfile')->middleware('checkLoginSitters');
+    // post feedback to parent profile
+    Route::post('/feedback_parent/{id_parent}','SittersController@postFeedbackParent')->middleware('checkLoginSitters');
+
+    // group post
+    Route::group(['prefix' => 'posts','middleware'=>'checkLoginSitters'], function () {
+
     });
 });

@@ -91,14 +91,24 @@
                         <div class="tab-content">
                             <div class="tab-pane fade in active" id="tab1-1">
                                 <div class="">
-                                    <h2 class="name">{{Auth::user()->name}}</h2>
+                                    <h2 class="name">{{Auth::user()->name}}
+                                    @if(Auth::user()->status==1)
+                                    <i class="fa fa-check" style="color: green"></i>
+                                    @endif
+                                    </h2>
                                     <i class="tagline"> </i>
                                     <ul class="meta">
                                         <li>Bảo mẫu</li>
                                         <li>Babysitter</li>
                                     </ul>
                                     <ul class="info">
-                                        <li><i class="fa fa-map-marker"></i>{{$location[0]->address}} <button class="btn btn-small" data-toggle="modal" data-target="#location">Cập nhật</button></li>
+                                        <li><i class="fa fa-map-marker"></i>
+                                            @if(count($location)>0)
+                                                {{$location[0]->address}}
+                                            @else
+                                                Chưa thiết lập địa chỉ
+                                            @endif
+                                            <button class="btn btn-small" data-toggle="modal" data-target="#location">Cập nhật</button></li>
                                         <!-- Modal location -->
                                         <div class="modal fade bd-example-modal-lg" id="location" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
@@ -258,7 +268,44 @@
                 <h5 class="modal-title" id="exampleModalLabel">Cập nhật lịch làm việc</h5>
                 </div>
                 <div class="modal-body">
-                ...
+                    <div class="table-responsive">
+                        <form action="" method="post">
+                        <table class="table table-striped table-bordered table-schedule">
+                            <thead>
+                                <th class="empty"></th>
+                                <th>Thứ 2</th>
+                                <th>Thứ 3</th>
+                                <th>Thứ 4</th>
+                                <th>Thứ 5</th>
+                                <th>Thứ 6</th>
+                                <th>Thứ 7</th>
+                                <th>Chủ nhật</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="time">Buổi Sáng</td>
+                                    <td><input type="checkbox" class="large" name="" id=""></td>
+                                    <td><input type="checkbox" name="" id=""></td>
+                                    <td><input type="checkbox" name="" id=""></td>
+                                    <td><input type="checkbox" name="" id=""></td>
+                                    <td><input type="checkbox" name="" id=""></td>
+                                    <td><input type="checkbox" name="" id=""></td>
+                                    <td><input type="checkbox" name="" id=""></td>
+                                </tr>
+                                <tr>
+                                    <td class="time">Buổi chiều</td>
+                                    <td><input type="checkbox" name="" id=""></td>
+                                    <td><input type="checkbox" name="" id=""></td>
+                                    <td><input type="checkbox" name="" id=""></td>
+                                    <td><input type="checkbox" name="" id=""></td>
+                                    <td><input type="checkbox" name="" id=""></td>
+                                    <td><input type="checkbox" name="" id=""></td>
+                                    <td><input type="checkbox" name="" id=""></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -308,11 +355,49 @@
             <i class="fa fa-circle"></i> &nbsp; Thời gian làm việc
         </div>
         <!-- Person Availability / End -->
-
+        <div class="spacer-xl"></div>
+        <h3 id="#feedback_sitter"><a href="#feedback_sitter">Đánh giá</a></h3>
+        @foreach($feedback as $feed)
+        <div class="row" style="background-color:rgb(245, 245, 245)">
+            <div class="col-md-2">
+                <div class="">
+                    <div class="job-listing-box">
+                        <div class="job-listing-img">
+                            <img src="{{asset('uploads/parents_profile')}}/{{$feed->avatar}}" width="200px" alt="">
+                        </div>
+                        <div>
+                            <div class="name">
+                                <center>
+                                <a href="{{asset('sitter/parent_profile')}}/{{$feed->id_parent}}">{{$feed->name}}</a>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <br>
+                <h6>@if($feed->rate_sitter==1)
+                    <i class="fa fa-star"></i>
+                    @elseif($feed->rate_sitter==2)
+                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                    @elseif($feed->rate_sitter==3)
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                    @elseif($feed->rate_sitter==4)
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                    @else
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                    @endif
+                </h6>
+                <h6 style="color: black">{!!$feed->content_sitter !!}</h6>
+                <span>Đăng vào {{date_diff(date_create($feed->updated_at), date_create('now'))->d}} ngày trước</span>
+            </div>
+        </div> <br>
+        @endforeach
+            <center><small>{{$feedback->links()}}</small></center>
     </div>
 </section>
 <!-- Page Content / End -->
-
 
 {{-- upload images --}}
 <script>

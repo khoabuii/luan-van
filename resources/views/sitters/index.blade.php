@@ -36,8 +36,7 @@
             </div>
         </div>
 
-
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <!-- Call to Action -->
                 <div class="call-to-action call-to-action__no-bg centered">
@@ -53,87 +52,33 @@
                 </div>
                 <!-- Call to Action / End -->
             </div>
-        </div>
+        </div> --}}
 
         <div class="spacer-lg"></div>
-        <h2>Latest Babysitters</h2>
+        <h2>Phụ huynh gần bạn</h2>
         <div class="row">
+            @foreach($parent_near as $parent)
             <div class="col-xs-6 col-sm-3 col-md-3" data-animation="fadeInLeft" data-animation-delay="0">
                 <div class="job-listing-box">
                     <figure class="job-listing-img">
-                        <a href="job-profile.html"><img src="{{asset('homepage/images/samples/bsitter-1.jpg')}}" alt=""></a>
+                        <a href="{{asset('sitter/parent_profile')}}/{{$parent->id}}"><img src="{{asset('uploads/parents_profile')}}/{{$parent->img}}" alt=""></a>
                     </figure>
                     <div class="job-listing-body">
-                        <div class="name"><a href="job-profile.html">Elizabeth G.</a></div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <div class="name"><a href="{{asset('sitter/parent_profile')}}/{{$parent->id}}">{{$parent->name}}</a></div>
+                        <p>{{$parent->description}}</p>
                     </div>
                     <footer class="job-listing-footer">
                         <ul class="meta">
-                            <li class="category">Babysitter</li>
-                            <li class="location"><a href="#">Orlando, FL</a></li>
-                            <li class="date">Posted 1 day ago</li>
+                            <li class="category">Phụ huynh</li>
+                            <li class="location"><a href="#">{{$location_name[0]->name}}</a></li>
+                            <li class="date">Tham gia vào <span style="color: blue">{{date_diff(date_create($parent->created_at), date_create('now'))->d}}</span> ngày trước</li>
                         </ul>
                     </footer>
                 </div>
             </div>
-            <div class="col-xs-6 col-sm-3 col-md-3" data-animation="fadeInLeft" data-animation-delay="200">
-                <div class="job-listing-box">
-                    <figure class="job-listing-img">
-                        <a href="job-profile.html"><img src="images/samples/bsitter-2.jpg" alt=""></a>
-                    </figure>
-                    <div class="job-listing-body">
-                        <div class="name"><a href="job-profile.html">Hannah S.</a></div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                    <footer class="job-listing-footer">
-                        <ul class="meta">
-                            <li class="category">Nanny</li>
-                            <li class="location"><a href="#">Orlando, FL</a></li>
-                            <li class="date">Posted 2 days ago</li>
-                        </ul>
-                    </footer>
-                </div>
-            </div>
-
+            @endforeach
             <div class="clearfix visible-xs"></div>
             <div class="spacer visible-xs"></div>
-
-            <div class="col-xs-6 col-sm-3 col-md-3" data-animation="fadeInLeft" data-animation-delay="400">
-                <div class="job-listing-box">
-                    <figure class="job-listing-img">
-                        <a href="job-profile.html"><img src="images/samples/bsitter-3.jpg" alt=""></a>
-                    </figure>
-                    <div class="job-listing-body">
-                        <div class="name"><a href="job-profile.html">Jessica N.</a></div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                    <footer class="job-listing-footer">
-                        <ul class="meta">
-                            <li class="category">Nanny</li>
-                            <li class="location"><a href="#">Orlando, FL</a></li>
-                            <li class="date">Posted 3 days ago</li>
-                        </ul>
-                    </footer>
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-3 col-md-3" data-animation="fadeInLeft" data-animation-delay="600">
-                <div class="job-listing-box">
-                    <figure class="job-listing-img">
-                        <a href="job-profile.html"><img src="images/samples/bsitter-4.jpg" alt=""></a>
-                    </figure>
-                    <div class="job-listing-body">
-                        <div class="name"><a href="job-profile.html">Stephanie F.</a></div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                    <footer class="job-listing-footer">
-                        <ul class="meta">
-                            <li class="category">Babysitter</li>
-                            <li class="location"><a href="#">Orlando, FL</a></li>
-                            <li class="date">Posted 5 days ago</li>
-                        </ul>
-                    </footer>
-                </div>
-            </div>
         </div>
 
         <div class="spacer-xl"></div>
