@@ -63,13 +63,9 @@
             <ul data-breakpoint="992" class="flexnav">
                 <li><a href="{{asset('sitter/')}}">Home</a></li>
                 <li><a href="{{asset('sitter/parents_list')}}">Phụ huynh</a></li>
-                <li><a href="#">Bài viết</a>
+                <li><a href="{{asset('sitter/posts')}}">Bài viết</a>
                     <ul>
-                        <li><a href="features-shortcodes.html">Shortcodes</a></li>
-                        <li><a href="features-pricing-tables.html">Pricing Tables</a></li>
-                        <li><a href="features-typography.html">Typography</a></li>
-                        <li><a href="features-columns.html">Columns</a></li>
-                        <li><a href="features-icons.html">Icons</a></li>
+                        <li><a href="{{asset('sitter/posts')}}">Xem bài viết</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Tìm kiếm</a> </li>
@@ -81,7 +77,7 @@
                         <li><a href="{{asset('sitter/profile/update')}}">Cập nhật tài khoản</a></li>
                     </ul>
                 </li>
-                <li><a href="{{asset('sitter/save_parents')}}">Danh sách đã đánh dấu</a></li>
+                <li><a href="{{asset('sitter/posts/save')}}">Bài viết đã lưu</a></li>
             </ul>
         </div>
     </nav>

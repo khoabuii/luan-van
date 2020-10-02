@@ -162,7 +162,10 @@
                                         <li><i class="fa fa-clock-o"></i> Tham gia vào {{Auth::guard('parents')->user()->created_at}}.</li>
                                     </ul>
                                     <div class="spacer-lg"></div>
-
+                                    <a href="{{asset('parent/profile/posts')}}" class="btn btn-primary btn-lg">
+                                        <span class="fa fa-pencil-square-o"></span>
+                                        Quản lý bài viết
+                                    </a>
                                     <a href="#" class="btn btn-primary btn-lg"><span class="fa fa-sliders"></span> Cập nhật tài khoản</a>
                                 </div>
                             </div>

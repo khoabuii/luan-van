@@ -7,7 +7,7 @@
 	<!-- Basic Page Needs
 	================================================== -->
 	<meta charset="utf-8">
-	<title>Easy-BabySitter |</title>
+	<title>Sitter|</title>
 	<meta name="description" content="PetSitter - Responsive HTML5 Template - 1.0">
 	<meta name="author">
     <meta charset="utf-8">

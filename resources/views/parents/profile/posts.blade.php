@@ -1,17 +1,23 @@
 @extends('layouts.parentLayout.parent_app')
-@section('title','Bài viết')
+@section('title','Bài viết của bạn')
 @section('content')
 <!-- Page Heading -->
-@if(session('success'))
+@if(Session::has('success'))
 <script>
     alert({{session('success')}});
+</script>
+@endif
+
+@if(Session::has('errors'))
+<script>
+    alert({{session('errors')}});
 </script>
 @endif
 <section class="page-heading">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h1>Bài viết</h1>
+                <h1>Bài viết của bạn</h1>
             </div>
             <div class="col-md-6">
                 <ul class="breadcrumb">
@@ -73,17 +79,12 @@
                 <article class="entry entry__standard entry__with-icon">
                     <header class="entry-header">
                         <div class="entry-icon visible-md visible-lg">
-                            <img src="{{asset('uploads/parents_profile/')}}/{{$post->avatar}}" alt="" width="140%" height="160%">
+                            <img src="{{asset('uploads/parents_profile/')}}/{{Auth::guard('parents')->user()->avatar}}" alt="" width="140%" height="160%">
                         </div>
                         <a href="{{asset('parent/posts/view/')}}/{{$post->id}}"><h2>{{$post->title}}</h2></a>
                         <div class="entry-meta">
                             <span class="entry-author"><i class="fa fa-user"></i>
-                                @if($post->parent==Auth::guard('parents')->user()->id)
-                                    Tôi
-                                @else
-                                    <a href="{{asset('parent/parent_profile/')}}/{{$post->parent}}">{{$post->name}}
-                                    </a>
-                                 @endif
+                                {{Auth::guard('parents')->user()->name}}
                             </span>
                             <span class="entry-comments"><i class="fa fa-comments"></i> <a href="#">0 Comments</a></span>
                             <span class=""><i class="fa fa-back-in-time"></i>
@@ -103,17 +104,14 @@
                             </figure>
                         @endif
                     </div>
+                    <footer class="entry-footer">
+                        <a href="{{asset('parent/posts/delete')}}/{{$post->id}}" class="btn btn-primary">Xóa</a>
+                    </footer>
                 </article>
                 @endforeach
                 <div class="text-center">
                     <ul class="pagination-custom list-unstyled list-inline">
-                        <li><a href="#" class="btn btn-sm">&laquo;</a></li>
-                        <li class="active"><a href="#" class="btn btn-sm">1</a></li>
-                        <li><a href="#" class="btn btn-sm">2</a></li>
-                        <li><a href="#" class="btn btn-sm">3</a></li>
-                        <li><a href="#" class="btn btn-sm">4</a></li>
-                        <li><a href="#" class="btn btn-sm">5</a></li>
-                        <li><a href="#" class="btn btn-sm">&raquo;</a></li>
+                        {{$posts->links()}}
                     </ul>
                 </div>
             </div>

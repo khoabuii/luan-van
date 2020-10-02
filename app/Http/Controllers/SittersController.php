@@ -7,6 +7,7 @@ use App\img_sitter;
 use App\Location;
 use App\Parents;
 use App\Province;
+use App\save_post;
 use App\Sitters;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\DB;
@@ -205,5 +206,46 @@ class SittersController extends Controller
         $feedback->save();
 
         return redirect('sitter/parent_profile/'.$id_parent.'/#feedback_parent');
+    }
+    // posts list by parents
+    public function getPostsList(){
+        $data['posts']=DB::table('posts')
+        ->join('parents','posts.parent','=','parents.id')
+        ->select('posts.*','parents.name','parents.avatar')
+        ->orderBy('posts.id','desc')
+        ->paginate(15);
+        $data['check_user']=DB::table('save_posts')
+        ->where('sitter',Auth::user()->id)->get();
+        // dd($data['check_user']);
+        return view('sitters.posts_list',$data);
+    }
+    // save post id
+    public function getSavePostId($id){
+        $id_sitter=Auth::user()->id;
+        $check=DB::table('save_posts')
+        ->where('sitter',$id_sitter)->where('post',$id)->get();
+        if($check ==null){
+            $save=new save_post();
+            $save->post=$id;
+            $save->sitter=$id_sitter;
+            $save->save();
+            return back()->with('save','bạn đã lưu thành công');
+        }else
+        return back();
+    }
+    // get save post list
+    public function getSaveList(){
+        $data['save_list']=DB::table('save_posts')
+        ->where('sitter',Auth::user()->id)
+        ->join('posts','save_posts.post','=','posts.id')
+        ->join('parents','posts.parent','=','parents.id')
+        ->select('save_posts.id as id_save_post','posts.id as id_post','posts.title','posts.content','posts.created_at','posts.images','parents.id as id_parent','parents.name as parent_name','parents.avatar')
+        ->orderBy('save_posts.id','desc')->paginate(15);
+        return view('sitters.save_list',$data);
+    }
+    // get getSaveDelete
+    public function getSaveDelete($id){
+        save_post::destroy($id);
+        return back()->with('success','Bạn đã xóa thành công');
     }
 }

@@ -54,24 +54,32 @@ Route::group(['prefix' => 'parent'], function () {
         Route::get('/','ParentsController@getProfile');
         Route::post('/image_update','ParentsController@postImageUpdate');
         Route::post('/location_update','ParentsController@postLocationUpdate');
+
+        // posts manage
+        Route::get('/posts','ParentsController@getPostsParent');
     });
     // list_babysitter
     Route::get('/list_sitters','ParentsController@getListSitters')->middleware('checkLoginParents');
 
     // profile_sitter
     Route::get('sitter_profile/{id}','ParentsController@getSitterProfile')->middleware('checkLoginParents');
+    // view profile parent by ID
+    Route::get('parent_profile/{id}','ParentsController@getProfileParentId')->middleware('checkLoginParents');
 
     //save sitter
     Route::get('/save_sitters','ParentsController@getSaveSitters')->middleware('checkLoginParents');
     Route::get('/save_sitters/{id}','ParentsController@getSaveSittersId')->middleware('checkLoginParents');
     Route::get('/save_sitters/delete/{id}','ParentsController@getDeleteSaveSitter')->middleware('checkLoginParents'); //delete save sitter
 
-     // group post
+     // group posts
      Route::group(['prefix' => 'posts','middleware'=>'checkLoginParents'], function () {
         Route::get('/','ParentsController@getPostsList');
         Route::get('/add','ParentsController@getPostAdd');
 
         Route::post('/add','ParentsController@postAddPost')->name('post.add');
+
+        //delete post
+        Route::get('/delete/{id}','ParentsController@getDeletePost');
     });
 
     // rate sitters
@@ -122,6 +130,10 @@ Route::group(['prefix' => 'sitter'], function () {
 
     // group post
     Route::group(['prefix' => 'posts','middleware'=>'checkLoginSitters'], function () {
+        Route::get('/','SittersController@getPostsList');
+        Route::get('/save/{id}','SittersController@getSavePostId');
+        Route::get('/save','SittersController@getSaveList');
 
+        Route::get('/save_delete/{id}','SittersController@getSaveDelete');
     });
 });

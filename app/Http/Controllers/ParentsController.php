@@ -6,6 +6,7 @@ use App\feedback_sitter;
 use App\img_sitter;
 use App\Location;
 use App\Parents;
+use App\Post;
 use App\Province;
 use App\save_sitters;
 use App\Sitters;
@@ -221,10 +222,64 @@ class ParentsController extends Controller
     }
     // posts
     public function getPostsList(){
-        return view('parents.posts.posts_list');
+        $data['posts']=DB::table('posts')
+        ->join('parents','posts.parent','=','parents.id')
+        ->select('posts.*','parents.name','parents.avatar')
+        ->orderBy('posts.id','desc')
+        ->paginate(15);
+        return view('parents.posts.posts_list',$data);
     }
     // post add
     public function postAddPost(Request $request){
+        $this->validate($request,[
+            'title'=>'min:5',
+            'image'=>'image'
+        ],[
+            'title.min'=>'Tiêu đề tối thiểu 5 kí tự',
+            'image.image'=>'Hình ảnh không đúng định dạng'
+        ]);
+        $post=new Post();
+        $post->title=$request->title;
+        $post->parent=Auth::guard('parents')->user()->id;
+        $file=request()->file('image');
+        if($file !=null){
+            $file=$file->store('posts',['disk'=>'uploads']);
+            $file=substr($file,6);
+        }
 
+        $post->images=$file;
+        $post->content=$request->description;
+        $post->save();
+
+        return back()->with('success','Bạn đã đăng thành công');
+    }
+    //delete post
+    public function getDeletePost($id){
+        $id_parent=Auth::guard('parents')->user()->id;
+        $post=Post::findOrFail($id);
+        if($id_parent == $post->parent){
+            Post::destroy($id);
+            return back()->with('success','Bạn đã xóa bài viết thành công');
+        }else{
+            return abort(404);
+        }
+    }
+    // post parent
+    public function getPostsParent(){
+        $id_parent=Auth::guard('parents')->user()->id;
+        $data['posts']=DB::table('posts')
+        ->where('parent',$id_parent)
+        ->orderBy('id','desc')->paginate(15);
+
+        return view('parents.profile.posts',$data);
+    }
+    public function getProfileParentId($id){
+        $data['parent']=Parents::find($id);
+        $data['feedback']=DB::table('feedback_parents')
+        ->join('sitters','feedback_parents.sitter','=','sitters.id')
+        ->where('parent',$id)
+        ->select('feedback_parents.*','sitters.name','sitters.images')
+        ->get();
+        return view('parents.parent_profile',$data);
     }
 }
