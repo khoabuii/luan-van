@@ -68,9 +68,8 @@
                         <li><a href="{{asset('sitter/posts')}}">Xem bài viết</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Tìm kiếm</a> </li>
                 <li><a href="blog-right-sidebar.html">Trò chuyện</a></li>
-                <li><a href="contacts.html">Hồ sơ ({{Auth::user()->name}})</a>
+                <li><a href="{{asset('sitter/profile')}}">Hồ sơ ({{Auth::user()->name}})</a>
                     <ul>
                         <li><a href="{{asset('sitter/profile')}}">Xem hồ sơ</a></li>
                         <li><a href="{{asset('sitter/profile/posts')}}">Đăng bài tuyển dụng</a></li>
@@ -78,6 +77,7 @@
                     </ul>
                 </li>
                 <li><a href="{{asset('sitter/posts/save')}}">Bài viết đã lưu</a></li>
+                <li><a href="{{asset('sitter/contracts')}}"><i  class="fa fa-life-ring"></i> Thông báo</a></li>
             </ul>
         </div>
     </nav>

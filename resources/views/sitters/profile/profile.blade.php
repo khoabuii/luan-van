@@ -177,13 +177,16 @@
                                                 @endif
                                             </span>
                                         </li>
+                                        <li><i class="fa fa-money"></i>{{number_format(Auth::user()->money)}} VND/Buổi</li>
                                         <li><i class="fa fa-clock-o"></i> Tham gia vào {{Auth::user()->created_at}}.</li>
                                     </ul>
 
                                     <div class="spacer-lg"></div>
 
                                 <a href="{{asset('sitter/profile/update_info')}}" class="btn btn-primary btn-lg"><span class="fa fa-sliders"></span> Cập nhật tài khoản</a>
-                                </div>
+                                <a href="{{asset('sitter/delete_account')}}"
+                                 onclick="return confirm('Khi bạn xóa mọi dữ liệu sẽ không còn trong hệ thống. Bạn có chắc chắn chưa?')" class="btn btn-danger btn-lg"><span class="fa fa-user-times"></span> Xóa tài khoản</a>
+                            </div>
                             </div>
                             <div class="tab-pane fade" id="tab1-2">
                                 <div class="row">

@@ -55,7 +55,6 @@
                         @endforeach
                     </ul>
                 </div>
-
             </div>
             <div class="col-md-7">
                 <div class="job-profile-info">
@@ -93,17 +92,44 @@
                                             </span>
                                         </li>
                                         <li><i class="fa fa-clock-o"></i> Tham gia vào {{$sitter->created_at}}.</li>
+                                        <li><i class="fa fa-money"></i>{{number_format($sitter->money)}} VND/Buổi</li>
                                     </ul>
-
                                     <div class="spacer-lg"></div>
                                     @if(count($check)>0)
                                         <span class="btn btn-primary fa fa-check"> Đã lưu</span>
                                     @else
                                 <a href="{{asset('parent/save_sitters')}}/{{$sitter->id}}" class="btn btn-primary"><span class="fa fa-user-plus"></span> Lưu</a>
                                     @endif
-                                <a href="{{asset('#')}}" class="btn btn-primary"><span class="fa fa-send"></span> Gửi yêu cầu làm việc</a>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contract">
+                                    <span class="fa fa-send"></span> Gửi yêu cầu làm việc
+                                </button>
+                            </div>
+                        </div>
+                        <!-- modal contract -->
+                            <div class="modal fade" id="contract" tabindex="-1" role="dialog" aria-labelledby="contract" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Nội dung ký kết</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                    Bên A: <b>{{Auth::guard('parents')->user()->name}}</b>
+                                    (có ID người dùng: <b>{{Auth::guard('parents')->user()->id}}</b>) là ngưởi gửi yêu cầu làm việc với bên B
+                                    <br>
+                                    Bên B: <b>{{$sitter->name}}</b>( có ID người dùng: <b>{{$sitter->id}}</b>) sẽ xem yêu cầu kí kết hợp đồng
+                                    <br>
+                                    Giá: <b>{{number_format($sitter->money)}}</b> VND/Buổi (Có thể tự thỏa thuận)
+                                    <br>
+                                    Chúng tôi chỉ cung cấp nền tảng, mọi vấn đề xảy ra chúng tôi sẽ không chịu trách nhiệm.
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <a href="{{asset('parent/contract/sendRequest')}}/{{$sitter->id}}" class="btn btn-primary">Xác nhận</a>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
+                        <!-- end modal-->
                             <div class="tab-pane fade" id="tab1-2">
                                 <div class="row">
                                     <div class="col-sm-4 col-md-4">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contract;
 use App\feedback_parent;
 use App\img_sitter;
 use App\Location;
@@ -13,6 +14,7 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use mysqli;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,16 +22,17 @@ class SittersController extends Controller
 {
     //
     public function getIndex(){
-        $id_sitter=Auth::user()->id;
-        $your_province=Location::where('sitter',$id_sitter)->select('city','address')->get();
-
-        $data['parent_near']=DB::table('location')
-        ->join('parents','location.parent','=','parents.id')
-        ->where('city',$your_province[0]->city)
-        ->select('parents.id as id','parents.name as name','parents.description','parents.avatar as img','parents.created_at')
-        ->orderBy('location.id','desc')->take(8)->get();
-        $data['location_name']=Province::where('id',$your_province[0]->city)->select('name')->get();
-
+        $data['id_sitter']=Auth::user()->id;
+        $data['your_province']=Location::where('sitter',$data['id_sitter'])->select('city','address')->get();
+        $data['location_name']=Province::where('id',$data['your_province'][0]->city)->select('name')->get();
+        if(count($data['your_province']) !=0){
+            $data['parent_near']=DB::table('location')
+            ->join('parents','location.parent','=','parents.id')
+            ->where('city',$data['your_province'][0]->city)
+            ->select('parents.id as id','parents.name as name','parents.description','parents.avatar as img','parents.created_at')
+            ->orderBy('location.id','desc')->take(8)->get();
+            return view('sitters.index',$data);
+        }
         return view('sitters.index',$data);
     }
     public function getRegister(){
@@ -69,7 +72,7 @@ class SittersController extends Controller
 
         $address=''.$ward[0]->name.', '.$district[0]->name.', '.$province[0]->name.'';
         $sitter->address=$address;
-
+        $sitter->money=$request->money;
         $sitter->description=$request->description;
 
         $sitter->save();
@@ -224,14 +227,15 @@ class SittersController extends Controller
         $id_sitter=Auth::user()->id;
         $check=DB::table('save_posts')
         ->where('sitter',$id_sitter)->where('post',$id)->get();
-        if($check ==null){
+        if(count($check) ==0){
             $save=new save_post();
             $save->post=$id;
             $save->sitter=$id_sitter;
             $save->save();
             return back()->with('save','bạn đã lưu thành công');
-        }else
-        return back();
+        }else{
+            return back();
+        }
     }
     // get save post list
     public function getSaveList(){
@@ -247,5 +251,41 @@ class SittersController extends Controller
     public function getSaveDelete($id){
         save_post::destroy($id);
         return back()->with('success','Bạn đã xóa thành công');
+    }
+    //send contract parent
+    public function sendRequestContractParent($id){
+        $contract=new Contract();
+        $contract->parent=$id;
+        $contract->sitter=Auth::user()->id;
+        $parent=Parents::findOrFail($id);
+        $description=" Bên A: ".Auth::user()->name."(có ID người dùng: ".Auth::user()->id.") là ngưởi gửi yêu cầu làm việc với bên B
+        Bên B: ".$parent->name."( có ID người dùng: <b>".$parent->id.") sẽ xem yêu cầu kí kết hợp đồng
+        Giá: ".number_format(Auth::user()->money)." VND/Buổi (Có thể tự thỏa thuận)
+        Chúng tôi chỉ cung cấp nền tảng, mọi vấn đề xảy ra chúng tôi sẽ không chịu trách nhiệm.";
+        $contract->description=$description;
+        $contract->status=0;
+        $contract->save();
+        // content data mail send parent
+        $data['sitter_name']=Auth::user()->name;
+        $data['sitter_id']=Auth::user()->id;
+        $data['money']=Auth::user()->money;
+        $data['description']=$description;
+        // send mail confirm to parent
+        Mail::send('sendMailParent',$data, function ($message) {
+            $message->from('khoab1606808@gmail.com', 'Khoa Bui');
+
+            $message->to('khoabuii98@yahoo.com');
+
+            $message->subject('Xác nhận yêu cầu kí kết làm việc');
+        });
+        return redirect('/sitter')->with('success','Đã gửi yêu cầu thành công');
+    }
+
+
+    //delete account
+    public function deleteAccount(){
+        $id=Auth::user()->id;
+        Sitters::destroy($id);
+        return redirect('sitter/login')->with('success','Bạn đã xóa tài khoản của mình');
     }
 }

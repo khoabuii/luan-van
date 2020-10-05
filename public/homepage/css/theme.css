@@ -1,12 +1,4 @@
-/*
-Template Name: Babysitter Responsive HTML Template
-Template URI: http://themeforest.net/item/babysitter-responsive-html-template/4765302
-Author: Dan Fisher
-Author URI: http://themeforest.net/user/dan_fisher
-Description: Babysitter is a unique, clean and professional HTML Template built on 960gs. It is suitable for babysitters/nannies site, a mom’s blog or other baby oriented sites. Babysitter comes with 2-4 columns portfolio layouts, blog pages with post formats, register form page, contacts page and more.
-Version: 2.0.0
-Tags: baby, babysitter, blog, blue, care, child, clean, job, kid, light, nanny, orange, responsive, sitter, tutor
-*/
+
 /* Table of Content
 ==================================================
 	#General
@@ -40,7 +32,7 @@ Tags: baby, babysitter, blog, blue, care, child, clean, job, kid, light, nanny, 
 // #General
 // --------------------------------------------------
 */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700|Kavoon);
+/* @import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700|Kavoon); */
 html {
   overflow-x: hidden;
   overflow-y: auto;

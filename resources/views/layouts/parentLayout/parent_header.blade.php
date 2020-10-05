@@ -82,7 +82,7 @@
                     </ul>
                 </li>
                 <li><a href="{{asset('parent/save_sitters')}}">Danh sách đã đánh dấu</a></li>
-
+                <li><a href="{{asset('parent/contracts')}}"><i  class="fa fa-life-ring"></i> Thông báo</a></li>
             </ul>
         </div>
     </nav>

@@ -1,8 +1,12 @@
 @extends('layouts.parentLayout.parent_design')
 @section('content')
+@if(session('success'))
+    <script>
+        alert('{{session('success')}}');
+    </script>
+@endif
 <section class="page-content">
     <div class="container">
-
         <div class="row">
             <div class="col-md-4">
                 <!-- Icon Box -->
@@ -35,16 +39,17 @@
                 <!-- Icon Box / End -->
             </div>
         </div>
-
-
         <div class="spacer-lg"></div>
+        @if(count($your_province) !=0)
         <h2>Bảo mẫu gần bạn ({{$location_name[0]->name}})</h2>
         <div class="row">
             @foreach($sitters_near as $sitter)
             <div class="col-xs-6 col-sm-3 col-md-3" data-animation="fadeInLeft" data-animation-delay="0">
                 <div class="job-listing-box">
                     <figure class="job-listing-img">
-                        <a href="{{asset('parent/sitter_profile')}}/{{$sitter->id}}"><img src="{{asset('uploads/sitters_profile')}}/{{$sitter->img}}" alt=""></a>
+                        <a href="{{asset('parent/sitter_profile')}}/{{$sitter->id}}">
+                            <img src="{{asset('uploads/sitters_profile')}}/{{$sitter->img}}" alt="">
+                        </a>
                     </figure>
                     <div class="job-listing-body">
                         <div class="name"><a href="{{asset('parent/sitter_profile')}}/{{$sitter->id}}">{{$sitter->name}}</a> @if($sitter->status==1)<i class="fa fa-check" style="color: green"></i> @endif</div>
@@ -63,6 +68,7 @@
             <div class="clearfix visible-xs"></div>
             <div class="spacer visible-xs"></div>
         </div>
+        @endif
         <div class="spacer-xl"></div>
 
         <div class="row">
@@ -80,7 +86,6 @@
                     <ul>
                         <li>Babbysitter</li>
                         <li>Parents</li>
-
                     </ul>
                 </div>
                 <a href="#" class="btn btn-primary">Xem tất cả dịch vụ</a>

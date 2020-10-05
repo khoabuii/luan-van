@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contract;
 use App\feedback_sitter;
 use App\img_sitter;
 use App\Location;
@@ -13,20 +14,24 @@ use App\Sitters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ParentsController extends Controller
 {
     //
     public function getIndex(){
         $id_parent=Auth::guard('parents')->user()->id;
-        $your_province=Location::where('parent',$id_parent)->select('city','address')->get();
-        $data['sitters_id']=Location::where('city',$your_province[0]->city)->select('sitter')->get();
-        $data['sitters_near']=DB::table('location')
-        ->join('sitters','location.sitter','=','sitters.id')
-        ->where('city',$your_province[0]->city)
-        ->select('sitters.id as id','sitters.name as name','sitters.gender','sitters.status as status','sitters.description','sitters.images as img')
-        ->orderBy('location.id','desc')->take(8)->get();
-        $data['location_name']=Province::where('id',$your_province[0]->city)->select('name')->get();
+        $data['your_province']=Location::where('parent',$id_parent)->select('city','address')->get();
+        if(count($data['your_province']) !=0){
+            $data['sitters_id']=Location::where('city',$data['your_province'][0]->city)->select('sitter')->get();
+            $data['sitters_near']=DB::table('location')
+            ->join('sitters','location.sitter','=','sitters.id')
+            ->where('city',$data['your_province'][0]->city)
+            ->select('sitters.id as id','sitters.name as name','sitters.gender','sitters.status as status','sitters.description','sitters.images as img')
+            ->orderBy('location.id','desc')->take(8)->get();
+            $data['location_name']=Province::where('id',$data['your_province'][0]->city)->select('name')->get();
+        }
+
         return view('parents.index',$data);
     }
     public function getRegister(){
@@ -59,10 +64,8 @@ class ParentsController extends Controller
 
         $ward=$request->wards;
         $ward=DB::table('wards')->where('id',$ward)->select('name')->get();
-
         $address=''.$ward[0]->name.', '.$district[0]->name.', '.$province[0]->name.'';
         $parent->address=$address;
-
         $parent->description=$request->description;
         $parent->save();
 
@@ -281,5 +284,39 @@ class ParentsController extends Controller
         ->select('feedback_parents.*','sitters.name','sitters.images')
         ->get();
         return view('parents.parent_profile',$data);
+    }
+    public function sendRequestContractSitter($id){
+        $contract=new Contract();
+        $contract->parent=Auth::guard('parents')->user()->id;
+        $contract->sitter=$id;
+        $sitter=Sitters::findOrFail($id);
+        $description=" Bên A: ".Auth::guard('parents')->user()->name."(có ID người dùng: ".Auth::guard('parents')->user()->id."</b>) là ngưởi gửi yêu cầu làm việc với bên B
+        Bên B: ".$sitter->name."( có ID người dùng: <b>".$sitter->id.") sẽ xem yêu cầu kí kết hợp đồng
+        Giá: ".number_format($sitter->money)." VND/Buổi (Có thể tự thỏa thuận)
+        Chúng tôi chỉ cung cấp nền tảng, mọi vấn đề xảy ra chúng tôi sẽ không chịu trách nhiệm.";
+        $contract->description=$description;
+        $contract->status=0;
+        $contract->save();
+        // content data mail send sitter
+        $data['parent_name']=Auth::guard('parents')->user()->name;
+        $data['parent_id']=Auth::guard('parents')->user()->id;
+        $data['money']=$sitter->money;
+        $data['description']=$description;
+        // send mail confirm to sitter
+        Mail::send('sendMailParent',$data, function ($message) {
+            $message->from('khoab1606808@gmail.com', 'Khoa Bui');
+
+            $message->to('khoabuii98@yahoo.com');
+
+            $message->subject('Xác nhận yêu cầu kí kết làm việc');
+        });
+        return redirect('/parent')->with('success','Đã gửi yêu cầu thành công');
+    }
+
+    //delete account
+    public function deleteAccount(){
+        $id=Auth::guard('parents')->user()->id;
+        Parents::destroy($id);
+        return redirect('parent/login')->with('success','Bạn đã xóa tài khoản của mình');
     }
 }

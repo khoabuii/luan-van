@@ -85,8 +85,34 @@
                                         <li><i class="fa fa-clock-o"></i> Tham gia vào {{$parent->created_at}}.</li>
                                     </ul>
                                     <div class="spacer-lg"></div>
-                                <a href="{{asset('#')}}" class="btn btn-primary"><span class="fa fa-send"></span> Gửi yêu cầu làm việc</a>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contract">
+                                    <span class="fa fa-send"></span> Gửi yêu cầu làm việc
+                                </button>
                                 </div>
+                                <!-- modal contract -->
+                                <div class="modal fade" id="contract" tabindex="-1" role="dialog" aria-labelledby="contract" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLongTitle">Nội dung ký kết</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                          Bên A: <b>{{Auth::user()->name}}</b> (có ID người dùng: <b>{{Auth::user()->id}}</b>) là ngưởi gửi yêu cầu làm việc với bên B
+                                          <br>
+                                          Bên B: <b>{{$parent->name}}</b>( có ID người dùng: <b>{{$parent->id}}</b>) sẽ xem yêu cầu kí kết hợp đồng
+                                          <br>
+                                          Giá: <b>{{number_format(Auth::user()->money)}}</b> VND/Buổi (Có thể tự thỏa thuận)
+                                          <br>
+                                          Chúng tôi chỉ cung cấp nền tảng, mọi vấn đề xảy ra chúng tôi sẽ không chịu trách nhiệm.
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                          <a href="{{asset('sitter/contract/sendRequest/')}}/{{$parent->id}}" class="btn btn-primary">Xác nhận</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <!-- end modal-->
                             </div>
                             <div class="tab-pane fade" id="tab1-2">
                                 <div class="row">
@@ -124,7 +150,7 @@
             </div>
         </div>
 
-        <div class="spacer-xl"></div>
+        {{-- <div class="spacer-xl"></div> --}}
 
         <div class="row">
             <div class="col-md-6">
@@ -279,8 +305,6 @@
     </div>
 </section>
 <!-- Page Content / End -->
-
-
 {{-- upload images --}}
 <script>
     function changeImg(input){

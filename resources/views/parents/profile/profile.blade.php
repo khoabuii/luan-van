@@ -162,11 +162,14 @@
                                         <li><i class="fa fa-clock-o"></i> Tham gia vào {{Auth::guard('parents')->user()->created_at}}.</li>
                                     </ul>
                                     <div class="spacer-lg"></div>
-                                    <a href="{{asset('parent/profile/posts')}}" class="btn btn-primary btn-lg">
+                                    <a href="{{asset('parent/profile/posts')}}" class="btn btn-primary">
                                         <span class="fa fa-pencil-square-o"></span>
                                         Quản lý bài viết
                                     </a>
-                                    <a href="#" class="btn btn-primary btn-lg"><span class="fa fa-sliders"></span> Cập nhật tài khoản</a>
+                                    <a href="#" class="btn btn-primary"><span class="fa fa-sliders"></span>Update tài khoản</a>
+                                    <a href="{{asset('parent/delete_account')}}"
+                                 onclick="return confirm('Khi bạn xóa mọi dữ liệu sẽ không còn trong hệ thống. Bạn có chắc chắn chưa?')"
+                                  class="btn btn-danger"><span class="fa fa-user-times"></span> Xóa tài khoản</a>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="tab1-2">

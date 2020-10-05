@@ -57,6 +57,7 @@
         <div class="spacer-lg"></div>
         <h2>Phụ huynh gần bạn</h2>
         <div class="row">
+        @if(count($your_province)!=0)
             @foreach($parent_near as $parent)
             <div class="col-xs-6 col-sm-3 col-md-3" data-animation="fadeInLeft" data-animation-delay="0">
                 <div class="job-listing-box">
@@ -77,6 +78,7 @@
                 </div>
             </div>
             @endforeach
+        @endif
             <div class="clearfix visible-xs"></div>
             <div class="spacer visible-xs"></div>
         </div>

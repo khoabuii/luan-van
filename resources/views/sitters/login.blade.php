@@ -131,7 +131,7 @@
                                     <label for=""><small>Xã /Phường</small></label> <br>
                                     <select class="form-control" name="wards">
                                         <option value="">Chọn Xã/Phường</option>
-                                        @if(!empty($wards))
+                                    @if(!empty($wards))
                                         @foreach($wards as $key=>$value)
                                             <option value="{{$key}}">{{$value}}</option>
                                         @endforeach
@@ -140,9 +140,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="">Mô tả chi tiết bản thân</label>
-                            <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Thù lao mong muốn</label>
+                                    <input type="text" name="money" class="form-control">VND/Buổi
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="">Mô tả chi tiết bản thân</label>
+                                    <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea>
+                                </div>
+                            </div>
                         </div>
                         <span class="required">*</span><small> Những trường này là bắt buộc</small>
                         <br>
