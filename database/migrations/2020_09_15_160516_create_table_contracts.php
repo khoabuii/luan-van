@@ -24,6 +24,8 @@ class CreateTableContracts extends Migration
             $table->foreign('sitter')->references('id')->on('sitters')->onDelete('cascade');
             //
             $table->tinyInteger('status')->nullable();
+            $table->string('money')->nullable();
+            $table->tinyInteger('check')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });

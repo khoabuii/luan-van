@@ -23,6 +23,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/dashboard','AdminController@getDashboard')->middleware('checkLoginAdmin');
     Route::group(['prefix' => 'sitters','middleware'=>'checkLoginAdmin'], function () {
         Route::get('/','AdminController@getSitters');
+        Route::get('/detail/{id}','AdminController@getDetailSitter');
+        Route::get('/detail/delete_feedback/{id}','AdminController@deleteFeedbackSitter'); // delete feedback
+        Route::post('/detail/update_status/{id}','AdminController@updateStatusSitter');
 
         Route::get('/delete/{id}','AdminController@getDeleteSitter'); //delete
         Route::get('/block/{id}','AdminController@getBlockSitter'); //block
@@ -30,6 +33,17 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['prefix' => 'parents','middleware'=>'checkLoginAdmin'], function () {
         Route::get('/','AdminController@getParents');
+        Route::get('/detail/{id}','AdminController@getDetailParent');
+        Route::get('/detail/delete_feedback/{id}','AdminController@deleteFeedbackParent'); //delete feedback parent
+        Route::get('/delete_parent/{id}','AdminController@getDeleteParent'); //delete parent
+
+        Route::get('/detail/delete_post/{id}','AdminController@deletePostParent'); //delete post Parent
+    });
+    Route::group(['prefix' => 'posts','middleware'=>'checkLoginAdmin'], function () {
+        Route::get('/','AdminController@allPost');
+    });
+    Route::group(['prefix' => 'contracts','middleware'=>'checkLoginAdmin'], function () {
+        Route::get('/','AdminController@getContracts');
     });
 });
 // parent
@@ -124,6 +138,9 @@ Route::group(['prefix' => 'sitter'], function () {
         Route::get('/images_delete/{id}','SittersController@getDeleteImageProfile');
         // update location
         Route::post('/location_update','SittersController@postLocationUpdate');//update location
+
+        // update work time
+        Route::post('/update_work','SittersController@updateWorkTime')->name('post.update_work');
     });
 
     // parents list

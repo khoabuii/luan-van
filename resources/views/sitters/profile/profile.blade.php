@@ -272,7 +272,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="table-responsive">
-                        <form action="" method="post">
                         <table class="table table-striped table-bordered table-schedule">
                             <thead>
                                 <th class="empty"></th>
@@ -285,37 +284,39 @@
                                 <th>Chủ nhật</th>
                             </thead>
                             <tbody>
+                             <form action="{{route('post.update_work')}}" method="post">
+                                    {{csrf_field()}}
                                 <tr>
                                     <td class="time">Buổi Sáng</td>
-                                    <td><input type="checkbox" class="large" name="" id=""></td>
-                                    <td><input type="checkbox" name="" id=""></td>
-                                    <td><input type="checkbox" name="" id=""></td>
-                                    <td><input type="checkbox" name="" id=""></td>
-                                    <td><input type="checkbox" name="" id=""></td>
-                                    <td><input type="checkbox" name="" id=""></td>
-                                    <td><input type="checkbox" name="" id=""></td>
+                                    <td><input type="checkbox" class="large" name="time[]" value="1"></td>
+                                    <td><input type="checkbox" name="time[]" value="2"></td>
+                                    <td><input type="checkbox" name="time[]" value="3"></td>
+                                    <td><input type="checkbox" name="time[]" value="4"></td>
+                                    <td><input type="checkbox" name="time[]" value="5"></td>
+                                    <td><input type="checkbox" name="time[]" value="6"></td>
+                                    <td><input type="checkbox" name="time[]" value="7"></td>
                                 </tr>
                                 <tr>
                                     <td class="time">Buổi chiều</td>
-                                    <td><input type="checkbox" name="" id=""></td>
-                                    <td><input type="checkbox" name="" id=""></td>
-                                    <td><input type="checkbox" name="" id=""></td>
-                                    <td><input type="checkbox" name="" id=""></td>
-                                    <td><input type="checkbox" name="" id=""></td>
-                                    <td><input type="checkbox" name="" id=""></td>
-                                    <td><input type="checkbox" name="" id=""></td>
+                                    <td><input type="checkbox" name="time[]" value="8"></td>
+                                    <td><input type="checkbox" name="time[]" value="9"></td>
+                                    <td><input type="checkbox" name="time[]" value="10"></td>
+                                    <td><input type="checkbox" name="time[]" value="11"></td>
+                                    <td><input type="checkbox" name="time[]" value="12"></td>
+                                    <td><input type="checkbox" name="time[]" value="13"></td>
+                                    <td><input type="checkbox" name="time[]" value="14"></td>
                                 </tr>
                             </tbody>
                         </table>
-                    </form>
                     </div>
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
+              </form>
             </div>
-            </div>
+          </div>
         </div>
         <!-- end modal activity -->
         <div class="table-responsive">

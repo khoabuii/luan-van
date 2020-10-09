@@ -235,50 +235,11 @@
                 </div>
             </div>
         </div>
-
-        <div class="spacer-xl"></div>
+{{--
+        <div class="spacer-xl"></div> --}}
 
         <!-- Person Availability -->
-        <h3>Thời gian cần tìm người phụ giúp</h3>
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered table-schedule">
-                <thead>
-                    <th class="empty"></th>
-                    <th>Thứ 2</th>
-                    <th>Thứ 3</th>
-                    <th>Thứ 4</th>
-                    <th>Thứ 5</th>
-                    <th>Thứ 6</th>
-                    <th>Thứ 7</th>
-                    <th>Chủ nhật</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="time">Buổi Sáng</td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="time">Buổi chiều</td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="table-schedule-legend text-right">
-            <i class="fa fa-circle"></i> &nbsp; Thời gian làm việc
-        </div>
+
         <!-- Person Availability / End -->
         <div class="spacer-xl"></div>
         <h3><a href="#feedback">Đánh giá</a></h3>

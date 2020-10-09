@@ -13,7 +13,7 @@
         <li >
           <a href="{{url ('/admin/sitters')}}">Xem danh sách người bảo mẫu</a></li>
           <li>
-            <a href="{{url ('/admin/sitters/add')}}">Thêm người bảo mẫu</a></li>
+            <a href="{{url ('/admin/sitters/add')}}">---------</a></li>
         </ul>
       </li>
 
@@ -23,30 +23,30 @@
         <li >
           <a href="{{url ('/admin/parents')}}">Xem danh sách người bảo mẫu</a></li>
           <li>
-            <a href="{{url ('/admin/parents/add')}}">Thêm người bảo mẫu</a></li>
+            <a href="{{url ('/admin/parents/add')}}">----------</a></li>
         </ul>
       </li>
 
-      <li class="submenu <?php if(preg_match("/parents/i", $url)){ ?> active <?php } ?>">
+      <li class="submenu <?php if(preg_match("/contracts/i", $url)){ ?> active <?php } ?>">
         <a href="#"><i class="icon icon-th-list"></i> <span>Quản lý hợp đồng</span> <span class="label label-important"></span></a>
-        <ul <?php if(preg_match("/parents/i", $url)){ ?> style="display:block;" <?php } ?>>
+        <ul <?php if(preg_match("/contracts/i", $url)){ ?> style="display:block;" <?php } ?>>
         <li >
-          <a href="{{url ('/admin/parents')}}">Xem danh sách người bảo mẫu</a></li>
+          <a href="{{url ('/admin/contracts')}}">Xem danh sách hợp đồng</a></li>
           <li>
-            <a href="{{url ('/admin/parents/add')}}">Thêm người bảo mẫu</a></li>
+            <a href="{{url ('/admin/contract/add')}}">---------</a></li>
         </ul>
       </li>
-      <li class="submenu <?php if(preg_match("/parents/i", $url)){ ?> active <?php } ?>">
+      <li class="submenu <?php if(preg_match("/posts/i", $url)){ ?> active <?php } ?>">
         <a href="#"><i class="icon icon-th-list"></i> <span>Quản lý bài viết</span> <span class="label label-important"></span></a>
-        <ul <?php if(preg_match("/parents/i", $url)){ ?> style="display:block;" <?php } ?>>
+        <ul <?php if(preg_match("/posts/i", $url)){ ?> style="display:block;" <?php } ?>>
         <li >
-          <a href="{{url ('/admin/parents')}}">Xem danh sách người bảo mẫu</a></li>
+          <a href="{{url ('/admin/posts')}}">Xem danh sách Bài viết</a></li>
           <li>
-            <a href="{{url ('/admin/parents/add')}}">Thêm người bảo mẫu</a></li>
+            <a href="{{url ('/admin/parents/add')}}">---------</a></li>
         </ul>
       </li>
-      
-      <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Mã giảm giá</span> <span class="label label-important"></span></a>
+
+      {{-- <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Mã giảm giá</span> <span class="label label-important"></span></a>
         <ul <?php if(preg_match("/coupon/i", $url)){ ?> style="display:block;" <?php } ?>>
         <li <?php if(preg_match("/add-coupon/i", $url)){ ?> class="active" <?php } ?>>
           <a href="{{url ('/admin/add-coupon')}}">Thêm mã giảm giá</a></li>
@@ -67,7 +67,7 @@
           <li <?php if(preg_match("/view-members/i", $url)){ ?> class="active" <?php } ?>>
             <a href="{{url ('/admin/view-members')}}">Xem danh sách thành viên</a></li>
         </ul>
-      </li>
+      </li> --}}
     </ul>
   </div>
   <!--sidebar-menu-->

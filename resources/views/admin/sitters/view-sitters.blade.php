@@ -26,10 +26,10 @@
             <th>Họ và tên</th>
             <th>Email</th>
             <th>Quê quán</th>
-            <th>Nơi làm việc</th>
             <th>SĐT</th>
             <th>Giới tính</th>
             <th>Trạng thái</th>
+            <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -48,9 +48,6 @@
                     {{$sitter->address}}
                 </td>
                 <td>
-
-                </td>
-                <td>
                     {{$sitter->phone}}
                 </td>
                 <td>
@@ -60,13 +57,29 @@
                     @endif
                 </td>
                 <td>
-                    @if($sitter->status==0)
-                       <span style="color: rgb(201, 174, 21)">Chưa duyệt</span>
-                    @elseif($sitter->status==1)
-                        <span style="color: brown">Từ chối/ Khóa</span>
-                    @elseif($sitter->status==2)
-                        <span style="color: seagreen">Đang hoạt động</span>
-                    @endif
+                    <div class="btn-group">
+                            @if($sitter->status==0)
+                             <button class="btn btn-warning" data-toggle="dropdown">
+                               Chưa Xác thực
+                            @elseif($sitter->status==1)
+                            <button class="btn btn-success" data-toggle="dropdown">
+                                Đã xác thực
+                            @elseif($sitter->status==2)
+                            <button class="btn btn-danger" data-toggle="dropdown">
+                                Bị khóa
+                            @endif
+                        </button>
+                        {{-- <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button> --}}
+                        <ul class="dropdown-menu">
+                          <li><a href="#">Chưa kiểm duyệt</a></li>
+                          <li><a href="#">Xác thực</a></li>
+                          <li><a href="#">Khóa</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td>
+                    <a style="color: rgb(77, 44, 197)" href="{{asset('admin/sitters/detail/')}}/{{$sitter->id}}"> Xem chi tiết</a><br>
+                    / <a style="color:  rgb(77, 44, 197)" href="{{asset('admin/sitters/delete/')}}/{{$sitter->id}}" onclick="return confirm('Bạn chắc chưa?')">Xóa tài khoản</a>
                 </td>
             </tr>
             @endforeach

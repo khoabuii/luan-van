@@ -53,7 +53,7 @@
                     </figure>
                     <div class="job-listing-body">
                         <div class="name"><a href="{{asset('parent/sitter_profile')}}/{{$sitter->id}}">{{$sitter->name}}</a> @if($sitter->status==1)<i class="fa fa-check" style="color: green"></i> @endif</div>
-                        <p>{{$sitter->description}}.</p>
+                        <p>4.6/5 (Tổng 3 lượt đánh giá)</p>
                     </div>
                     <footer class="job-listing-footer">
                         <ul class="meta">
@@ -64,6 +64,7 @@
                     </footer>
                 </div>
             </div>
+            <br>
             @endforeach
             <div class="clearfix visible-xs"></div>
             <div class="spacer visible-xs"></div>

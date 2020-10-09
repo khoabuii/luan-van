@@ -2,7 +2,7 @@
 <div id="header">
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-    <img src="img/admin.png" width="70px">
+    <img src="{{asset('admin/img/admin.png')}}" width="70px">
 </div>
 <!--close-Header-part-->
 

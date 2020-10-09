@@ -294,6 +294,7 @@ class ParentsController extends Controller
         Bên B: ".$sitter->name."( có ID người dùng: <b>".$sitter->id.") sẽ xem yêu cầu kí kết hợp đồng
         Giá: ".number_format($sitter->money)." VND/Buổi (Có thể tự thỏa thuận)
         Chúng tôi chỉ cung cấp nền tảng, mọi vấn đề xảy ra chúng tôi sẽ không chịu trách nhiệm.";
+        $contract->money=$sitter->money;
         $contract->description=$description;
         $contract->status=0;
         $contract->save();
@@ -303,7 +304,7 @@ class ParentsController extends Controller
         $data['money']=$sitter->money;
         $data['description']=$description;
         // send mail confirm to sitter
-        Mail::send('sendMailParent',$data, function ($message) {
+        Mail::send('sendMailSitter',$data, function ($message) {
             $message->from('khoab1606808@gmail.com', 'Khoa Bui');
 
             $message->to('khoabuii98@yahoo.com');

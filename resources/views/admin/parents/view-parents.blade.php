@@ -24,10 +24,10 @@
             <th>ID</th>
             <th>Họ và tên</th>
             <th>Email</th>
-            <th>Nơi ở</th>
+            <th>Nơi ở hiện tại</th>
             <th>SĐT</th>
-            <th>Mô tả</th>
             <th>Ngày tham gia</th>
+            <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -43,16 +43,17 @@
                     {{$parent->email}}
                 </td>
                 <td>
-                    {{$parent->address}}
+                    {{$parent->add_current}}
                 </td>
                 <td>
                     {{$parent->phone}}
                 </td>
                 <td>
-                    {{$parent->description}}
+                    {{$parent->created_at}}
                 </td>
                 <td>
-                    {{$parent->created_at}}
+                    <a href="{{asset('admin/parents/detail')}}/{{$parent->id}}" style="color: blueviolet">Xem chi tiết</a> /
+                    <a href="{{asset('admin/parents/delete_parent')}}/{{$parent->id}}" style="color: blueviolet" onclick="return confirm('Bạn có chắc chưa?')">Xóa</a>
                 </td>
             </tr>
             @endforeach

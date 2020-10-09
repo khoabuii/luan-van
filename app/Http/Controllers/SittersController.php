@@ -7,6 +7,7 @@ use App\feedback_parent;
 use App\img_sitter;
 use App\Location;
 use App\Parents;
+use App\Plan;
 use App\Province;
 use App\save_post;
 use App\Sitters;
@@ -100,7 +101,8 @@ class SittersController extends Controller
         ->join('parents','feedback_sitters.parent','=','parents.id')
         ->select('feedback_sitters.*','parents.id as id_parent','parents.name','parents.avatar')
         ->orderBy('feedback_sitters.id','desc')->paginate(10);
-        // dd($data['feedback']);
+        $data['activity']=Plan::where('sitter',Auth::user()->id)->get();
+        // dd($data['activity']);
         return view('sitters.profile.profile',$data);
     }
     //update profile
@@ -129,7 +131,17 @@ class SittersController extends Controller
         img_sitter::where('img',$id)->delete();
         return back()->with('delete','Đã xóa hình ảnh');
     }
-
+    // update work time
+    public function updateWorkTime(Request $request){
+        $sitter=Auth::user()->id;
+        $time=$request->time;
+        dd(implode(" ",$time));
+        $plan=new Plan();
+        $plan->sitter=$sitter;
+        $plan->calendar=$time;
+        $plan->save();
+        dd($time);
+    }
     // update location
     public function postLocationUpdate(Request $request){
         $location=new Location();
@@ -177,11 +189,9 @@ class SittersController extends Controller
         ->where('parent',$id)
         ->select('feedback_parents.*','sitters.name','sitters.images')
         ->get();
-        // dd($data['feedback']);
         $data['check_feedback']=DB::table('feedback_parents')
         ->where('sitter',Auth::user()->id)
         ->where('parent',$id)->get();
-        // dd($data['check_feedback']);
         return view('sitters.parent_profile',$data);
     }
     // post feedback parent profile
@@ -262,6 +272,8 @@ class SittersController extends Controller
         Bên B: ".$parent->name."( có ID người dùng: <b>".$parent->id.") sẽ xem yêu cầu kí kết hợp đồng
         Giá: ".number_format(Auth::user()->money)." VND/Buổi (Có thể tự thỏa thuận)
         Chúng tôi chỉ cung cấp nền tảng, mọi vấn đề xảy ra chúng tôi sẽ không chịu trách nhiệm.";
+        $contract->money=Auth::user()->money;
+        $contract->check=1;
         $contract->description=$description;
         $contract->status=0;
         $contract->save();
@@ -280,7 +292,6 @@ class SittersController extends Controller
         });
         return redirect('/sitter')->with('success','Đã gửi yêu cầu thành công');
     }
-
 
     //delete account
     public function deleteAccount(){

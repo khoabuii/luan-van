@@ -11,7 +11,6 @@
             <div class="col-md-6">
                 <ul class="breadcrumb">
                     <li><a href="{{asset('parent/')}}">Home</a></li>
-
                 </ul>
             </div>
         </div>
@@ -27,13 +26,12 @@
 <!-- Page Content -->
 <section class="page-content">
     <div class="container">
-
         <ul class="team-list row">
             @foreach($save_list as $list)
             <li class="team-item col-md-3">
                 <div class="team-item-inner">
                     <figure class="team-thumb">
-                        <a href="{{asset('parent/sitter_profile')}}/{{$list->id_sitter}}"><img src="{{asset('uploads/sitters_profile')}}/{{$list->images}}" alt=""></a>
+                        <a href="{{asset('parent/sitter_profile')}}/{{$list->id_sitter}}"><img src="{{asset('uploads/sitters_profile')}}/{{$list->images}}" alt="" width="90%"></a>
                     </figure>
                     <header class="team-head">
                         <a href="{{asset('parent/sitter_profile')}}/{{$list->id_sitter}}"><h5 class="team-name">{{$list->name}}</h5></a>
@@ -43,7 +41,7 @@
                         @if(date_diff(date_create($list->updated_at), date_create('now'))->d==0)
                             <span>Thêm vào hôm nay</span>
                         @else
-                        <span>Thêm vào {{date_diff(date_create($list->updated_at), date_create('now'))->d}} ngày trước</span><br>
+                            <span>Thêm vào {{date_diff(date_create($list->updated_at), date_create('now'))->d}} ngày trước</span><br>
                         @endif
                         <br>
                         <a href="{{asset('parent/save_sitters/delete')}}/{{$list->id}}">Xóa</a>

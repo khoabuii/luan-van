@@ -28,7 +28,7 @@
 @yield('content')
 
 @include('layouts.adminLayout.admin_footer')
-
+{{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
 <script src="{{asset('/admin/js/jquery.min.js')}}"></script>
 <script src="{{asset('/admin/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('/admin/js/jquery.dataTables.min.js')}}"></script>
@@ -50,20 +50,20 @@
     } );
 </script>
 <script>
-		jQuery(function($){
-			$('body').addClass('loading');
-		});
+    jQuery(function($){
+        $('body').addClass('loading');
+    });
 
-		$(window).load(function(){
-			$('.flexslider').flexslider({
-				animation: "fade",
-				controlNav: true,
-				directionNav: true,
-				start: function(slider){
-					$('body').removeClass('loading');
-				}
-			});
-		});
-    </script>
+    $(window).load(function(){
+        $('.flexslider').flexslider({
+            animation: "fade",
+            controlNav: true,
+            directionNav: true,
+            start: function(slider){
+                $('body').removeClass('loading');
+            }
+        });
+    });
+</script>
 </body>
 </html>
