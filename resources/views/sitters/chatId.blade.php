@@ -59,8 +59,7 @@
                             "message": message,
                             "time":time
                         });
-
-                        // prevent form from submitting
+                        
                         return false;
                     }
                 </script>
@@ -94,6 +93,7 @@
                             html +='</div>';
                         }
                         document.getElementById("messages").innerHTML += html;
+
                     });
                     function deleteMessage(self) {
                         // get message ID

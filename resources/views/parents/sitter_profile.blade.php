@@ -38,6 +38,11 @@
         alert('{{session('success')}}')
     </script>
 @endif
+@if(Session::has('errors'))
+    <script>
+        alert('{{session('errors')}}')
+    </script>
+@endif
 {{-- end section update location --}}
 <!-- Page Content -->
 <section class="page-content">
@@ -100,7 +105,9 @@
                                     @else
                                 <a href="{{asset('parent/save_sitters')}}/{{$sitter->id}}" class="btn btn-primary"><span class="fa fa-user-plus"></span> Lưu</a>
                                     @endif
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contract">
+                                <button type="button"
+                                @if(count($check_is_contract)!=0) disabled @endif
+                                class="btn btn-primary" data-toggle="modal" data-target="#contract">
                                     <span class="fa fa-send"></span> Gửi yêu cầu làm việc
                                 </button>
                                 <a href="{{asset('parent/chat')}}/{{$sitter->id}}" class="btn btn-primary">

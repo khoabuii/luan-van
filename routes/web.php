@@ -44,6 +44,7 @@ Route::group(['prefix' => 'admin'], function () {
     });
     Route::group(['prefix' => 'contracts','middleware'=>'checkLoginAdmin'], function () {
         Route::get('/','AdminController@getContracts');
+        Route::get('/delete_contract/{id}','AdminController@deleteContract');
     });
 });
 // parent
@@ -167,6 +168,7 @@ Route::group(['prefix' => 'sitter'], function () {
     // contract
     Route::group(['prefix' => 'contract','middleware'=>'checkLoginSitters'], function () {
         Route::get('/sendRequest/{id}','SittersController@sendRequestContractParent');
+        Route::get('/accept/{id}','SittersController@AcceptContract');
     });
     // chat
     Route::group(['prefix' => 'chat','middleware'=>'checkLoginSitters'], function () {

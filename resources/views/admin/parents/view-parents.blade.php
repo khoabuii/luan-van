@@ -52,8 +52,10 @@
                     {{$parent->created_at}}
                 </td>
                 <td>
-                    <a href="{{asset('admin/parents/detail')}}/{{$parent->id}}" style="color: blueviolet">Xem chi tiết</a> /
-                    <a href="{{asset('admin/parents/delete_parent')}}/{{$parent->id}}" style="color: blueviolet" onclick="return confirm('Bạn có chắc chưa?')">Xóa</a>
+                    <a href="{{asset('admin/parents/detail')}}/{{$parent->id}}" style="color: blueviolet">
+                        <i class="icon icon-eye-open"></i> Xem chi tiết</a> /
+                    <a href="{{asset('admin/parents/delete_parent')}}/{{$parent->id}}" style="color: blueviolet" onclick="return confirm('Bạn có chắc chưa?')">
+                        <i class="icon icon-remove"></i>Xóa</a>
                 </td>
             </tr>
             @endforeach

@@ -136,4 +136,9 @@ class AdminController extends Controller
         ->get();
         return view('admin.contracts.view-contracts',$data);
     }
+    // delete contract
+    public function deleteContract($id){
+        Contract::destroy($id);
+        return back()->with('success','Bạn đã xóa thành công');
+    }
 }

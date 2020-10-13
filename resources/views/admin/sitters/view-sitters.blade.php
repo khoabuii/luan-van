@@ -78,8 +78,9 @@
                     </div>
                 </td>
                 <td>
-                    <a style="color: rgb(77, 44, 197)" href="{{asset('admin/sitters/detail/')}}/{{$sitter->id}}"> Xem chi tiết</a><br>
-                    / <a style="color:  rgb(77, 44, 197)" href="{{asset('admin/sitters/delete/')}}/{{$sitter->id}}" onclick="return confirm('Bạn chắc chưa?')">Xóa tài khoản</a>
+                    <a style="color: rgb(77, 44, 197)" href="{{asset('admin/sitters/detail/')}}/{{$sitter->id}}"><i class="icon icon-eye-open"></i> Chi tiết</a><br>
+                    / <a style="color:  rgb(77, 44, 197)" href="{{asset('admin/sitters/delete/')}}/{{$sitter->id}}" onclick="return confirm('Bạn chắc chưa?')"><i class="icon icon-remove">
+                        </i> Xóa tài khoản</a>
                 </td>
             </tr>
             @endforeach

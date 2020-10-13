@@ -160,7 +160,13 @@ class ParentsController extends Controller
 
         $data['check_feedback']=DB::table('feedback_sitters')
         ->where('sitter',$id_sitter)->where('parent',$id_parent)->get();
-        // dd($data['check_feedback']);
+
+        $data['check_is_contract']=DB::table('contracts')
+            ->where([
+                'sitter'=>$id,
+                'parent'=>Auth::guard('parents')->user()->id,
+                'status'=>0
+            ])->get();
         return view('parents.sitter_profile',$data);
     }
     //getListSitters
@@ -303,6 +309,15 @@ class ParentsController extends Controller
         $contract->money=$sitter->money;
         $contract->description=$description;
         $contract->status=0;
+        $check_is_sent=DB::table('contracts')
+                ->where([
+                    'sitter'=>$id,
+                    'sitter'=>Auth::guard('parents')->user()->id,
+                    'status'=>0
+                ])->get();
+        if(count($check_is_sent)!=0){
+            return back()->with('errors','Gửi yêu cầu không thành công! Có thể do bạn đã thực hiện yêu cầu hoặc có 1 vấn đề nào đó');
+        }
         $contract->save();
         // content data mail send sitter
         $data['parent_name']=Auth::guard('parents')->user()->name;

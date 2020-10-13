@@ -39,6 +39,11 @@
     </script>
 @endif
 {{-- end section update location --}}
+@if(Session::has('errors'))
+    <script>
+        alert('{{session('errors')}}')
+    </script>
+@endif
 <!-- Page Content -->
 <section class="page-content">
     <div class="container">
@@ -85,7 +90,9 @@
                                         <li><i class="fa fa-clock-o"></i> Tham gia vào {{$parent->created_at}}.</li>
                                     </ul>
                                     <div class="spacer-lg"></div>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contract">
+                                <button type="button"
+                                @if(count($check_is_contract)!=0) disabled @endif
+                                class="btn btn-primary" data-toggle="modal" data-target="#contract">
                                     <span class="fa fa-send"></span> Gửi yêu cầu làm việc
                                 </button>
                                 <a href="{{asset('sitter/chat')}}/{{$parent->id}}" class="btn btn-primary">

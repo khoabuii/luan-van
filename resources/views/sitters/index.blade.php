@@ -1,5 +1,10 @@
 @extends('layouts.sittersLayout.sitter_design')
 @section('content')
+@if(Session::has('success'))
+<script>
+    alert('{{session('success')}}');
+</script>
+@endif
 <section class="page-content">
     <div class="container">
 

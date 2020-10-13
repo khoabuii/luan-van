@@ -196,9 +196,17 @@ class SittersController extends Controller
         ->where('parent',$id)
         ->select('feedback_parents.*','sitters.name','sitters.images')
         ->get();
+
         $data['check_feedback']=DB::table('feedback_parents')
         ->where('sitter',Auth::user()->id)
         ->where('parent',$id)->get();
+
+        $data['check_is_contract']=DB::table('contracts')
+            ->where([
+                'parent'=>$id,
+                'sitter'=>Auth::user()->id,
+                'status'=>0
+        ])->get();
         return view('sitters.parent_profile',$data);
     }
     // post feedback parent profile
@@ -279,16 +287,28 @@ class SittersController extends Controller
         Bên B: ".$parent->name."( có ID người dùng: <b>".$parent->id.") sẽ xem yêu cầu kí kết hợp đồng
         Giá: ".number_format(Auth::user()->money)." VND/Buổi (Có thể tự thỏa thuận)
         Chúng tôi chỉ cung cấp nền tảng, mọi vấn đề xảy ra chúng tôi sẽ không chịu trách nhiệm.";
+
         $contract->money=Auth::user()->money;
         $contract->check=1;
         $contract->description=$description;
         $contract->status=0;
+
+        $check_is_sent=DB::table('contracts')
+            ->where([
+                'parent'=>$id,
+                'sitter'=>Auth::user()->id,
+                'status'=>0
+            ])->get();
+        if(count($check_is_sent)!=0){
+            return back()->with('errors','Gửi yêu cầu không thành công. Có thể do bạn đã thực hiện yêu cầu hoặc có 1 vấn đề nào đó');
+        }
         $contract->save();
         // content data mail send parent
         $data['sitter_name']=Auth::user()->name;
         $data['sitter_id']=Auth::user()->id;
         $data['money']=Auth::user()->money;
         $data['description']=$description;
+        $email=$parent->email;
         // send mail confirm to parent
         Mail::send('sendMailParent',$data, function ($message) {
             $message->from('khoab1606808@gmail.com', 'Khoa Bui');
