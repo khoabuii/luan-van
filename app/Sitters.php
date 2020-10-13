@@ -19,7 +19,7 @@ class Sitters extends Authenticatable
     // protected $guard='sitters';
     protected $primaryKey="id";
     protected $fillable = [
-         'email', 'password',
+         'email', 'password','fcm_token'
     ];
 
     /**

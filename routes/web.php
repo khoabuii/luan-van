@@ -101,7 +101,12 @@ Route::group(['prefix' => 'parent'], function () {
     Route::group(['prefix' => 'contract','middleware'=>'checkLoginParents'], function () {
         Route::get('/sendRequest/{id}','ParentsController@sendRequestContractSitter');
     });
-
+    //chat
+    Route::group(['prefix' => 'chat','middleware'=>'checkLoginParents'], function () {
+        Route::get('/','ParentsController@getChat');
+        Route::get('/{id}','ParentsController@showChatSitter');
+        Route::post('/{id}','ParentsController@postShowChatSitter');
+    });
 
     // delete account
     Route::get('/delete_account','ParentsController@deleteAccount')->middleware('checkLoginParents');
@@ -162,6 +167,12 @@ Route::group(['prefix' => 'sitter'], function () {
     // contract
     Route::group(['prefix' => 'contract','middleware'=>'checkLoginSitters'], function () {
         Route::get('/sendRequest/{id}','SittersController@sendRequestContractParent');
+    });
+    // chat
+    Route::group(['prefix' => 'chat','middleware'=>'checkLoginSitters'], function () {
+        Route::get('/','SittersController@getChat');
+        Route::get('/{id}','SittersController@showChatParent');
+        Route::post('/{id}','SittersController@postShowChatParent');
     });
 
     //delete acc

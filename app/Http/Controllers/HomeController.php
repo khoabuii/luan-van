@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\District;
+use App\Parents;
+use App\Sitters;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -27,5 +30,25 @@ class HomeController extends Controller
             $wards=DB::table('wards')->where('district_id',$request->district_id)->select('id','name')->get();
         }
         return response()->json($wards);
+    }
+    // chat api
+    public function index(Request $request){
+        $input=$request->all();
+        $fcm_token=$input['fcm_token'];
+        $id_sitter=$input['sitter_id'];
+        $id_parent=$input['parent_id'];
+        $sitter=Sitters::findOrFail($id_sitter);
+
+        $sitter->fcm_token=$fcm_token;
+        $sitter->save();
+
+        $parent=Parents::findOrFail($id_parent);
+        $parent->fcm_token=$fcm_token;
+        $parent->save();
+        
+        return response()->json([
+            'success'=>true,
+            'message'=>'Success'
+        ]);
     }
 }

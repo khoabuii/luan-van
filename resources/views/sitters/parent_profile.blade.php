@@ -88,6 +88,9 @@
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contract">
                                     <span class="fa fa-send"></span> Gửi yêu cầu làm việc
                                 </button>
+                                <a href="{{asset('sitter/chat')}}/{{$parent->id}}" class="btn btn-primary">
+                                    <span class="fa fa-inbox"></span>Chat
+                                </a>
                                 </div>
                                 <!-- modal contract -->
                                 <div class="modal fade" id="contract" tabindex="-1" role="dialog" aria-labelledby="contract" aria-hidden="true">

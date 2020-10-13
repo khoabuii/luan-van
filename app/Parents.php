@@ -19,7 +19,7 @@ class Parents extends Authenticatable
     protected $guard='parents';
     protected $primaryKey="id";
     protected $fillable = [
-         'email', 'password',
+         'email', 'password','fcm_token'
     ];
 
     /**

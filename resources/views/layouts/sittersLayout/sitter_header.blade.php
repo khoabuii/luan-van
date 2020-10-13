@@ -68,7 +68,7 @@
                         <li><a href="{{asset('sitter/posts')}}">Xem bài viết</a></li>
                     </ul>
                 </li>
-                <li><a href="blog-right-sidebar.html">Trò chuyện</a></li>
+                <li><a href="{{asset('sitter/chat')}}">Trò chuyện</a></li>
                 <li><a href="{{asset('sitter/profile')}}">Hồ sơ ({{Auth::user()->name}})</a>
                     <ul>
                         <li><a href="{{asset('sitter/profile')}}">Xem hồ sơ</a></li>

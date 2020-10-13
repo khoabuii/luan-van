@@ -6,6 +6,7 @@ use App\Contract;
 use App\feedback_parent;
 use App\img_sitter;
 use App\Location;
+use App\Message;
 use App\Parents;
 use App\Plan;
 use App\Province;
@@ -18,6 +19,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use mysqli;
 use Illuminate\Support\Facades\Storage;
+
+use LaravelFCM\Message\OptionsBuilder;
+use LaravelFCM\Message\PayloadDataBuilder;
+use LaravelFCM\Message\PayloadNotificationBuilder;
+use LaravelFCM\Facades\FCM;
+use Maatwebsite\Excel\Concerns\ToArray;
 
 class SittersController extends Controller
 {
@@ -291,6 +298,59 @@ class SittersController extends Controller
             $message->subject('Xác nhận yêu cầu kí kết làm việc');
         });
         return redirect('/sitter')->with('success','Đã gửi yêu cầu thành công');
+    }
+    // chat
+    public function getChat(){
+        $data['parents']=Parents::all();
+        return view('sitters.chat',$data);
+    }
+    public function showChatParent($id){
+        $data['parents']=Parents::all();
+        $data['parent']=Parents::find($id);
+        $data['chats']=DB::table('message')
+        ->where('sitter',Auth::user()->id)->where('parent',$id)->get();
+        return view('sitters.chatId',$data);
+    }
+    //post chat
+    public function postShowChatParent(Request $request,$id){
+        $input=$request->all();
+        $message=$input['message'];
+        $chat =new Message([
+            'sitter'=>Auth::user()->id,
+            'parent'=>$id,
+            'content'=>$message,
+            'check'=>0
+        ]);
+        $this->broadcastMessage(Auth::user()->id,$id,$message,0);
+
+        $chat->save();
+        return redirect()->back();
+    }
+    //
+    public function broadcastMessage($sitter, $parent,$content,$check){
+        $optionBuilder = new OptionsBuilder();
+        $optionBuilder->setTimeToLive(60*20);
+
+        $notificationBuilder = new PayloadNotificationBuilder('Bạn có tin nhắn mới');
+        $notificationBuilder->setBody($content)
+                    ->setSound('default')
+                    ->setClickAction('https://khoabui.dev/sitter/'.$parent);
+
+        $dataBuilder=new PayloadDataBuilder();
+        $dataBuilder->addData([
+            'sitter'=>$sitter,
+            'parent'=>$parent,
+            'content'=>$content,
+            'check'=>$check
+        ]);
+        $option=$optionBuilder->build();
+        $notification=$notificationBuilder->build();
+        $data=$dataBuilder->build();
+        $tokens=Sitters::all()->pluck('fcm_token')->toArray();
+
+        $downstreamResponse = FCM::sendTo($tokens, $option, $notification, $data);
+
+        return $downstreamResponse->numberSuccess();
     }
 
     //delete account

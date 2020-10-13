@@ -94,24 +94,6 @@
 	<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 	<script src="vendor/jquery.gmap3.min.js"></script>
 
-	<!-- Google Map Init-->
-	<script type="text/javascript">
-		jQuery(function($){
-			$('#map_canvas').gmap3({
-				marker:{
-					address: '40.717599,-74.005136'
-				},
-					map:{
-					options:{
-					zoom: 17,
-					scrollwheel: false,
-					streetViewControl : true
-					}
-				}
-		    });
-		});
-    </script>
-
 	<script>
 		jQuery(function($){
 			$('body').addClass('loading');

@@ -73,7 +73,7 @@
                     </ul>
                 </li>
                 <li><a href="#">Tìm kiếm</a> </li>
-                <li><a href="blog-right-sidebar.html">Trò chuyện</a></li>
+                <li><a href="{{asset('parent/chat')}}">Trò chuyện</a></li>
                 <li><a href="{{asset('parent/profile/')}}">Hồ sơ</a>
                     <ul>
                         <li><a href="{{asset('parent/profile/')}}">Xem hồ sơ</a></li>
