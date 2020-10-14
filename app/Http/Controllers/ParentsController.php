@@ -8,6 +8,7 @@ use App\img_sitter;
 use App\Location;
 use App\Message;
 use App\Parents;
+use App\Plan;
 use App\Post;
 use App\Province;
 use App\save_sitters;
@@ -100,7 +101,62 @@ class ParentsController extends Controller
     public function getProfile(){
         $data['address']=Province::all();
         $data['location']=Location::where('parent',Auth::guard('parents')->user()->id)->select('address')->get();
+
+        $data['feedback']=DB::table('feedback_parents')
+        ->join('sitters','feedback_parents.sitter','=','sitters.id')
+        ->where('parent',Auth::guard('parents')->user()->id)
+        ->select('feedback_parents.*','sitters.id as id_sitter','sitters.name','sitters.images as avatar')
+        ->orderBy('id','desc')
+        ->get();
+
+        $data['activity']=Plan::where('parent',Auth::guard('parents')->user()->id)->get();
         return view('parents.profile.profile',$data);
+    }
+    // post update activity
+    public function updateWorkTime(Request $request){
+        $parent=Auth::guard('parents')->user()->id;
+        $plan=new Plan();
+        $plan->parent=$parent;
+        // time
+        $check_plan=DB::table('plans')->where('parent',$parent)->get();
+        if(count($check_plan)==0){
+            $plan->session1=$request->time1;
+            $plan->session2=$request->time2;
+            $plan->session3=$request->time3;
+            $plan->session4=$request->time4;
+            $plan->session5=$request->time5;
+            $plan->session6=$request->time6;
+            $plan->session7=$request->time7;
+            $plan->session8=$request->time8;
+            $plan->session9=$request->time9;
+            $plan->session10=$request->time10;
+            $plan->session11=$request->time11;
+            $plan->session12=$request->time12;
+            $plan->session13=$request->time13;
+            $plan->session14=$request->time14;
+            $plan->save();
+            return redirect('parent/profile#action');
+        }else{
+            $plan=Plan::find($check_plan[0]->id);
+
+            $plan->session1=$request->time1;
+            $plan->session2=$request->time2;
+            $plan->session3=$request->time3;
+            $plan->session4=$request->time4;
+            $plan->session5=$request->time5;
+            $plan->session6=$request->time6;
+            $plan->session7=$request->time7;
+            $plan->session8=$request->time8;
+            $plan->session9=$request->time9;
+            $plan->session10=$request->time10;
+            $plan->session11=$request->time11;
+            $plan->session12=$request->time12;
+            $plan->session13=$request->time13;
+            $plan->session14=$request->time14;
+            $plan->save();
+            return redirect('parent/profile#action');
+        }
+        return false;
     }
     public function postImageUpdate(Request $request){
         $id_parent=Auth::guard('parents')->user()->id;
@@ -167,6 +223,9 @@ class ParentsController extends Controller
                 'parent'=>Auth::guard('parents')->user()->id,
                 'status'=>0
             ])->get();
+
+        $data['activity']=Plan::where('sitter',$id_sitter)->get();
+
         return view('parents.sitter_profile',$data);
     }
     //getListSitters

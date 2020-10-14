@@ -237,51 +237,202 @@
         </div>
 {{--
         <div class="spacer-xl"></div> --}}
-
         <!-- Person Availability -->
-
-        <!-- Person Availability / End -->
+        <h3><a id="action" href="#action">Khung thời gian cần tìm người </a><button type="button" class="btn btn-small" data-toggle="modal" data-target="#activity">
+            Cập nhật
+          </button></h3>
+          <!-- Modal activity -->
+        <div class="modal fade" id="activity" tabindex="-1" role="dialog" aria-labelledby="activity" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cập nhật khung thời gian cần tìm người</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-schedule">
+                            <thead>
+                                <th class="empty"></th>
+                                <th>Thứ 2</th>
+                                <th>Thứ 3</th>
+                                <th>Thứ 4</th>
+                                <th>Thứ 5</th>
+                                <th>Thứ 6</th>
+                                <th>Thứ 7</th>
+                                <th>Chủ nhật</th>
+                            </thead>
+                            <tbody>
+                             <form action="{{route('post.update_activity.parent')}}" method="post">
+                                    {{csrf_field()}}
+                                <tr>
+                                    <td class="time">Buổi Sáng</td>
+                                    <td><input type="checkbox" name="time1" value="1"></td>
+                                    <td><input type="checkbox" name="time2" value="1"></td>
+                                    <td><input type="checkbox" name="time3" value="1"></td>
+                                    <td><input type="checkbox" name="time4" value="1"></td>
+                                    <td><input type="checkbox" name="time5" value="1"></td>
+                                    <td><input type="checkbox" name="time6" value="1"></td>
+                                    <td><input type="checkbox" name="time7" value="1"></td>
+                                </tr>
+                                <tr>
+                                    <td class="time">Buổi chiều</td>
+                                    <td><input type="checkbox" name="time8" value="1"></td>
+                                    <td><input type="checkbox" name="time9" value="1"></td>
+                                    <td><input type="checkbox" name="time10" value="1"></td>
+                                    <td><input type="checkbox" name="time11" value="1"></td>
+                                    <td><input type="checkbox" name="time12" value="1"></td>
+                                    <td><input type="checkbox" name="time13" value="1"></td>
+                                    <td><input type="checkbox" name="time14" value="1"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- end modal activity -->
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-schedule">
+                <thead>
+                    <th class="empty"></th>
+                    <th>Thứ 2</th>
+                    <th>Thứ 3</th>
+                    <th>Thứ 4</th>
+                    <th>Thứ 5</th>
+                    <th>Thứ 6</th>
+                    <th>Thứ 7</th>
+                    <th>Chủ nhật</th>
+                </thead>
+                <tbody>
+                    @if(count($activity)>0)
+                    <tr>
+                        <td class="time">Buổi Sáng</td>
+                        <td>
+                            @if($activity[0]->session1==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session2==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session3==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session4==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session5==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session6==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session7==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="time">Buổi chiều</td>
+                        <td>
+                            @if($activity[0]->session8==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session9==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session10==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session11==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session12==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session13==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session14==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                    </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+        <div class="table-schedule-legend text-right">
+            <i class="fa fa-circle"></i> &nbsp; Thời gian làm việc
+        </div>
+        <!-- end  -->
         <div class="spacer-xl"></div>
         <h3><a href="#feedback">Đánh giá</a></h3>
-        <div class="row" style="background-color:rgb(245, 245, 245)">
-            <div class="col-md-2">
-                <div class="">
-                    <div class="job-listing-box">
-                        <figure class="job-listing-img">
-                            <img src="{{asset('uploads/sitters_profile/u3yURYlAj4etVyOtkeSHgxqf8qIOE1f2GMaazq5T.jpeg')}}" alt="">
-                        </figure>
-                        <div>
-                            <div class="name"><center><a href="#">Bui Van Khoa</a></center></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-7">
-                <h6> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></h6>
-                <h6 style="color: black">Hello sdhggggggggggggg sdhhh ssagsagsa sgagsgsasfasfas dsff ddf</h6>
-                <span>Đăng vào 2 ngày trước</span>
-            </div>
-        </div>
-        <br>
-        <div class="row" style="background-color:rgb(245, 245, 245)">
-            <div class="col-md-2">
-                <div class="">
-                    <div class="job-listing-box">
-                        <div class="job-listing-img">
-                            <img src="{{asset('uploads/sitters_profile/u3yURYlAj4etVyOtkeSHgxqf8qIOE1f2GMaazq5T.jpeg')}}" width="200px" alt="">
-                        </div>
-                        <div>
-                            <div class="name"><center><a href="#">Bui Van Khoa</a></center></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-7">
-                <h6> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></h6>
-                <h6 style="color: black">Hello sdhggggggggggggg sdhhh ssagsagsa sgagsgsasfasfas dsff ddf</h6>
-                <span>Đăng vào 2 ngày trước</span>
-            </div>
-        </div>
+        @foreach($feedback as $feed)
+          <div class="row" style="background-color:rgb(245, 245, 245)">
+              <div class="col-md-2">
+                  <div class="">
+                      <div class="job-listing-box">
+                          <div class="job-listing-img">
+                              <img src="{{asset('uploads/sitters_profile')}}/{{$feed->avatar}}" width="200px" alt="">
+                          </div>
+                          <div>
+                              <div class="name"><center><a href="#">{{$feed->name}}</a>
+
+                              </center></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-7">
+                  <br>
+                  <h6>@if($feed->rate_parent==1)
+                      <i class="fa fa-star"></i>
+                      @elseif($feed->rate_parent==2)
+                      <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                      @elseif($feed->rate_parent==3)
+                      <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                      @elseif($feed->rate_parent==4)
+                      <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                      @else
+                      <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                      @endif
+                  </h6>
+                  <h6 style="color: black">{!!$feed->content_parent !!}</h6>
+                  <span>Đăng vào {{date_diff(date_create($feed->updated_at), date_create('now'))->d}} ngày trước</span>
+
+              </div>
+          </div> <br>
+          @endforeach
     </div>
 </section>
 <!-- Page Content / End -->

@@ -108,8 +108,8 @@ class SittersController extends Controller
         ->join('parents','feedback_sitters.parent','=','parents.id')
         ->select('feedback_sitters.*','parents.id as id_parent','parents.name','parents.avatar')
         ->orderBy('feedback_sitters.id','desc')->paginate(10);
+
         $data['activity']=Plan::where('sitter',Auth::user()->id)->get();
-        // dd($data['activity']);
         return view('sitters.profile.profile',$data);
     }
     //update profile
@@ -141,13 +141,48 @@ class SittersController extends Controller
     // update work time
     public function updateWorkTime(Request $request){
         $sitter=Auth::user()->id;
-        $time=$request->time;
-        dd(implode(" ",$time));
         $plan=new Plan();
         $plan->sitter=$sitter;
-        $plan->calendar=$time;
-        $plan->save();
-        dd($time);
+        // time
+        $check_plan=DB::table('plans')->where('sitter',$sitter)->get();
+        if(count($check_plan)==0){
+            $plan->session1=$request->time1;
+            $plan->session2=$request->time2;
+            $plan->session3=$request->time3;
+            $plan->session4=$request->time4;
+            $plan->session5=$request->time5;
+            $plan->session6=$request->time6;
+            $plan->session7=$request->time7;
+            $plan->session8=$request->time8;
+            $plan->session9=$request->time9;
+            $plan->session10=$request->time10;
+            $plan->session11=$request->time11;
+            $plan->session12=$request->time12;
+            $plan->session13=$request->time13;
+            $plan->session14=$request->time14;
+            $plan->save();
+            return redirect('sitter/profile#action');
+        }else{
+            $plan=Plan::find($check_plan[0]->id);
+
+            $plan->session1=$request->time1;
+            $plan->session2=$request->time2;
+            $plan->session3=$request->time3;
+            $plan->session4=$request->time4;
+            $plan->session5=$request->time5;
+            $plan->session6=$request->time6;
+            $plan->session7=$request->time7;
+            $plan->session8=$request->time8;
+            $plan->session9=$request->time9;
+            $plan->session10=$request->time10;
+            $plan->session11=$request->time11;
+            $plan->session12=$request->time12;
+            $plan->session13=$request->time13;
+            $plan->session14=$request->time14;
+            $plan->save();
+            return redirect('sitter/profile#action');
+        }
+        return false;
     }
     // update location
     public function postLocationUpdate(Request $request){
@@ -207,6 +242,8 @@ class SittersController extends Controller
                 'sitter'=>Auth::user()->id,
                 'status'=>0
         ])->get();
+
+        $data['activity']=Plan::where('parent',$id)->get();
         return view('sitters.parent_profile',$data);
     }
     // post feedback parent profile
@@ -313,7 +350,7 @@ class SittersController extends Controller
         Mail::send('sendMailParent',$data, function ($message) {
             $message->from('khoab1606808@gmail.com', 'Khoa Bui');
 
-            $message->to('khoabuii98@yahoo.com');
+            $message->to($this->parent->email);
 
             $message->subject('Xác nhận yêu cầu kí kết làm việc');
         });

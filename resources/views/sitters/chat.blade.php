@@ -22,7 +22,7 @@
             @foreach($parents as $parent)
             <div class="chat_list">
                 <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                <div class="chat_img"> <img src="{{asset('uploads/parents_profile/')}}/{{$parent->avatar}}  " alt="sunil"> </div>
                 <a href="{{asset('sitter/chat')}}/{{$parent->id}}"><div class="chat_ib">
                     <h5>{{$parent->name}} <span class="chat_date">Dec 25</span></h5>
                     <p>----------------</p>

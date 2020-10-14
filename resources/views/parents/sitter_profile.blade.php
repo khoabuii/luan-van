@@ -226,26 +226,84 @@
                     <th>Chủ nhật</th>
                 </thead>
                 <tbody>
+                    @if(count($activity)>0)
                     <tr>
                         <td class="time">Buổi Sáng</td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            @if($activity[0]->session1==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session2==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session3==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session4==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session5==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session6==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session7==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td class="time">Buổi chiều</td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
+                        <td>
+                            @if($activity[0]->session8==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session9==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session10==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session11==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session12==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session13==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session14==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
                     </tr>
+                    @endif
                 </tbody>
             </table>
         </div>

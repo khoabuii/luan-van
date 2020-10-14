@@ -182,7 +182,7 @@
         <div class="spacer-xl"></div>
 
         <!-- Person Availability -->
-        <h3><a id="action" href="#action">Hoạt động </a></h3>
+        <h3><a id="action" href="#action">Khung thời gian cần tìm người giữ trẻ </a></h3>
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-schedule">
                 <thead>
@@ -196,32 +196,91 @@
                     <th>Chủ nhật</th>
                 </thead>
                 <tbody>
+                    @if(count($activity)>0)
                     <tr>
                         <td class="time">Buổi Sáng</td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            @if($activity[0]->session1==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session2==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session3==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session4==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session5==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session6==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session7==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td class="time">Buổi chiều</td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
+                        <td>
+                            @if($activity[0]->session8==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session9==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session10==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session11==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session12==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session13==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session14==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
                     </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
         <div class="table-schedule-legend text-right">
             <i class="fa fa-circle"></i> &nbsp; Thời gian làm việc
         </div>
+
         <!-- Person Availability / End -->
         <div class="spacer-xl"></div>
         <h3 id="feedback_parent"><a href="#feedback_parent">Đánh giá</a>

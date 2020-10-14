@@ -7,6 +7,7 @@ use App\feedback_parent;
 use App\feedback_sitter;
 use App\Location;
 use App\Parents;
+use App\Plan;
 use App\Post;
 use App\Sitters;
 use App\User;
@@ -64,6 +65,8 @@ class AdminController extends Controller
         ->select('feedback_sitters.*','parents.id as id_parent','parents.name','parents.avatar')
         ->orderBy('id','desc')
         ->get();
+
+        $data['activity']=Plan::where('sitter',$id)->get();
         return view('admin.sitters.detail-sitter',$data);
     }
     public function deleteFeedbackSitter($id){
@@ -95,6 +98,9 @@ class AdminController extends Controller
         ->select('feedback_parents.*','sitters.id as id_sitter','sitters.name','sitters.images as avatar')
         ->orderBy('id','desc')
         ->get();
+
+        $data['activity']=Plan::where('parent',$id)->get();
+
         $data['posts']=Post::where('parent',$id)->get();
         return view('admin.parents.detail-parent',$data);
     }

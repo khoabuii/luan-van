@@ -288,23 +288,23 @@
                                     {{csrf_field()}}
                                 <tr>
                                     <td class="time">Buổi Sáng</td>
-                                    <td><input type="checkbox" class="large" name="time[]" value="1"></td>
-                                    <td><input type="checkbox" name="time[]" value="2"></td>
-                                    <td><input type="checkbox" name="time[]" value="3"></td>
-                                    <td><input type="checkbox" name="time[]" value="4"></td>
-                                    <td><input type="checkbox" name="time[]" value="5"></td>
-                                    <td><input type="checkbox" name="time[]" value="6"></td>
-                                    <td><input type="checkbox" name="time[]" value="7"></td>
+                                    <td><input type="checkbox" name="time1" value="1"></td>
+                                    <td><input type="checkbox" name="time2" value="1"></td>
+                                    <td><input type="checkbox" name="time3" value="1"></td>
+                                    <td><input type="checkbox" name="time4" value="1"></td>
+                                    <td><input type="checkbox" name="time5" value="1"></td>
+                                    <td><input type="checkbox" name="time6" value="1"></td>
+                                    <td><input type="checkbox" name="time7" value="1"></td>
                                 </tr>
                                 <tr>
                                     <td class="time">Buổi chiều</td>
-                                    <td><input type="checkbox" name="time[]" value="8"></td>
-                                    <td><input type="checkbox" name="time[]" value="9"></td>
-                                    <td><input type="checkbox" name="time[]" value="10"></td>
-                                    <td><input type="checkbox" name="time[]" value="11"></td>
-                                    <td><input type="checkbox" name="time[]" value="12"></td>
-                                    <td><input type="checkbox" name="time[]" value="13"></td>
-                                    <td><input type="checkbox" name="time[]" value="14"></td>
+                                    <td><input type="checkbox" name="time8" value="1"></td>
+                                    <td><input type="checkbox" name="time9" value="1"></td>
+                                    <td><input type="checkbox" name="time10" value="1"></td>
+                                    <td><input type="checkbox" name="time11" value="1"></td>
+                                    <td><input type="checkbox" name="time12" value="1"></td>
+                                    <td><input type="checkbox" name="time13" value="1"></td>
+                                    <td><input type="checkbox" name="time14" value="1"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -332,26 +332,84 @@
                     <th>Chủ nhật</th>
                 </thead>
                 <tbody>
+                    @if(count($activity)>0)
                     <tr>
                         <td class="time">Buổi Sáng</td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            @if($activity[0]->session1==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session2==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session3==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session4==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session5==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session6==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session7==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td class="time">Buổi chiều</td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
-                        <td><i class="fa fa-circle"></i></td>
+                        <td>
+                            @if($activity[0]->session8==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session9==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session10==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session11==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session12==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session13==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if($activity[0]->session14==1)
+                            <i class="fa fa-circle"></i>
+                            @endif
+                        </td>
                     </tr>
+                    @endif
                 </tbody>
             </table>
         </div>

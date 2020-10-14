@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/delete_contract/{id}','AdminController@deleteContract');
     });
 });
+
 // parent
 Route::group(['prefix' => 'parent'], function () {
     Route::get('/','ParentsController@getIndex')->middleware('checkLoginParents');
@@ -70,6 +71,7 @@ Route::group(['prefix' => 'parent'], function () {
         Route::post('/image_update','ParentsController@postImageUpdate');
         Route::post('/location_update','ParentsController@postLocationUpdate');
 
+        Route::post('/update-activity','ParentsController@updateWorkTime')->name('post.update_activity.parent');
         // posts manage
         Route::get('/posts','ParentsController@getPostsParent');
     });
@@ -112,6 +114,7 @@ Route::group(['prefix' => 'parent'], function () {
     // delete account
     Route::get('/delete_account','ParentsController@deleteAccount')->middleware('checkLoginParents');
 });
+
 
 //ajax
 Route::post('showDistricts','HomeController@showDistricts');    // show districts

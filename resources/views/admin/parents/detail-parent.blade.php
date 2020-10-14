@@ -68,6 +68,106 @@
                 </div>
               </div>
               <br>
+              <!-- end modal activity -->
+              <h4>Thời gian cần tìm người</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-schedule">
+                        <thead>
+                            <th class="empty"></th>
+                            <th>Thứ 2</th>
+                            <th>Thứ 3</th>
+                            <th>Thứ 4</th>
+                            <th>Thứ 5</th>
+                            <th>Thứ 6</th>
+                            <th>Thứ 7</th>
+                            <th>Chủ nhật</th>
+                        </thead>
+                        <tbody>
+                            @if(count($activity)>0)
+                            <tr>
+                                <td class="time">Buổi Sáng</td>
+                                <td>
+                                    @if($activity[0]->session1==1)
+                                    <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($activity[0]->session2==1)
+                                    <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($activity[0]->session3==1)
+                                    <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($activity[0]->session4==1)
+                                    <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($activity[0]->session5==1)
+                                    <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($activity[0]->session6==1)
+                                    <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($activity[0]->session7==1)
+                                    <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="time">Buổi chiều</td>
+                                <td>
+                                    @if($activity[0]->session8==1)
+                                        <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($activity[0]->session9==1)
+                                        <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($activity[0]->session10==1)
+                                        <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($activity[0]->session11==1)
+                                        <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($activity[0]->session12==1)
+                                        <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($activity[0]->session13==1)
+                                        <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($activity[0]->session14==1)
+                                        <i class="icon icon-asterisk"></i>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-schedule-legend text-right">
+                    <i class="icon icon-asterisk"></i> &nbsp; Thời gian có thể làm việc
+                </div>
+                <!-- Person Availability / End -->
               <h4 id="feedback">Đánh giá từ người dùng bảo mẫu</h4>
               <div class="row-fluid">
                 <div class="span12">
