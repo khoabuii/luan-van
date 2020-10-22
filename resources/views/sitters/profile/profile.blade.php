@@ -183,10 +183,11 @@
 
                                     <div class="spacer-lg"></div>
 
-                                <a href="{{asset('sitter/profile/update_info')}}" class="btn btn-primary btn-lg"><span class="fa fa-sliders"></span> Cập nhật tài khoản</a>
+                                <a href="{{asset('sitter/profile/update_info')}}" class="btn btn-primary "><span class="fa fa-sliders"></span> Cập nhật tài khoản</a>
                                 <a href="{{asset('sitter/delete_account')}}"
-                                 onclick="return confirm('Khi bạn xóa mọi dữ liệu sẽ không còn trong hệ thống. Bạn có chắc chắn chưa?')" class="btn btn-danger btn-lg"><span class="fa fa-user-times"></span> Xóa tài khoản</a>
-                            </div>
+                                 onclick="return confirm('Khi bạn xóa mọi dữ liệu sẽ không còn trong hệ thống. Bạn có chắc chắn chưa?')" class="btn btn-danger"><span class="fa fa-user-times"></span> Xóa tài khoản</a>
+                                 <a href="{{asset('sitter/contract')}}" class="btn btn-primary "><span class="fa fa-file-word-o"></span> Quản lý hợp đồng </a>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="tab1-2">
                                 <div class="row">

@@ -77,7 +77,7 @@
                     </ul>
                 </li>
                 <li><a href="{{asset('sitter/posts/save')}}">Bài viết đã lưu</a></li>
-                <li><a href="{{asset('sitter/contracts')}}"><i  class="fa fa-life-ring"></i> Thông báo</a></li>
+                <li><a href="{{asset('sitter/contract')}}"><i  class="fa fa-life-ring"></i> Hợp đồng</a></li>
             </ul>
         </div>
     </nav>

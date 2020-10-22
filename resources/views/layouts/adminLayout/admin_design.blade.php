@@ -17,8 +17,10 @@
     <link rel="stylesheet" href="{{asset('admin/css/matrix-media.css')}}" />
     <link href="{{asset('admin/fonts/css/font-awesome.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('/admin/css/jquery.gritter.css')}}" />
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 </head>
 <body>
 @include('layouts.adminLayout.admin_header')

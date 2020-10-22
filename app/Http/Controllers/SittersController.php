@@ -225,7 +225,7 @@ class SittersController extends Controller
         $data['location']=DB::table('location')
         ->where('parent',$id)->get();
 
-        //feedback
+        // view feedback
         $data['feedback']=DB::table('feedback_parents')
         ->join('sitters','feedback_parents.sitter','=','sitters.id')
         ->where('parent',$id)
@@ -250,9 +250,9 @@ class SittersController extends Controller
     public function postFeedbackParent(Request $request,$id_parent){
         $id_sitter=Auth::user()->id;
         $check=DB::table('feedback_parents')
-        ->where('sitter',$id_sitter)->where('parent',$id_parent)
-        ->select('id')
-        ->get();
+            ->where('sitter',$id_sitter)->where('parent',$id_parent)
+            ->select('id')
+            ->get();
         if(count($check)>0){
             $feedback=feedback_parent::find($check[0]->id);
             $feedback->parent=$id_parent;
@@ -272,6 +272,13 @@ class SittersController extends Controller
 
         return redirect('sitter/parent_profile/'.$id_parent.'/#feedback_parent');
     }
+    // delete feedback
+    public function deleteFeedback($id){
+        feedback_parent::destroy($id);
+        // dd($id);
+        return response()->json(array('success'=>true));
+    }
+
     // posts list by parents
     public function getPostsList(){
         $data['posts']=DB::table('posts')
@@ -281,7 +288,6 @@ class SittersController extends Controller
         ->paginate(15);
         $data['check_user']=DB::table('save_posts')
         ->where('sitter',Auth::user()->id)->get();
-        // dd($data['check_user']);
         return view('sitters.posts_list',$data);
     }
     // save post id
@@ -314,6 +320,18 @@ class SittersController extends Controller
         save_post::destroy($id);
         return back()->with('success','Bạn đã xóa thành công');
     }
+    // get contract
+    public function getContracts(){
+        $data['contracts']=DB::table('contracts')
+        ->where('sitter',Auth::user()->id)
+        ->join('sitters','contracts.sitter','=','sitters.id')
+        ->join('parents','contracts.parent','=','parents.id')
+        ->select('contracts.*','sitters.name as sitter_name','sitters.images as sitter_img','parents.name as parent_name','parents.avatar as parent_img')
+        ->get();
+        // dd($data);
+        return view('sitters.profile.contracts',$data);
+    }
+
     //send contract parent
     public function sendRequestContractParent($id){
         $contract=new Contract();
@@ -356,6 +374,23 @@ class SittersController extends Controller
         });
         return redirect('/sitter')->with('success','Đã gửi yêu cầu thành công');
     }
+    // accept contract
+    public function acceptContract($id){
+        $contract=Contract::find($id);
+        $contract->status=1;
+        $contract->save();
+
+        return response()->json(array('success'=>true));
+    }
+    // cancel contract
+    public function cancelContract($id){
+        $contract=Contract::find($id);
+        $contract->status=2;
+        $contract->save();
+
+        return response()->json(array('success'=>true));
+    }
+
     // chat
     public function getChat(){
         $data['parents']=Parents::all();

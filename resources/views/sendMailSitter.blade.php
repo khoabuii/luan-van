@@ -23,6 +23,8 @@
         <p>
             {{$description}}
         </p>
-    <span style="color: rgb(72, 72, 177)65, 65, 85)"><i>Bạn hãy truy cập vào <a href="#">link này</a> để Chấp thuận hoặc từ chối yêu cầu làm việc trên nhé</i></span>
+    <span style="color: rgb(72, 72, 177)65, 65, 85)"><i>Bạn hãy truy cập vào
+        <a href="{{asset('sitter/contract')}}">link này</a> để Chấp thuận hoặc từ chối yêu cầu làm việc trên nhé</i>
+    </span>
 </body>
 </html>

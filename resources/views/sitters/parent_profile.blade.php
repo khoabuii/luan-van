@@ -339,7 +339,8 @@
                           </div>
                           <div>
                               <div class="name"><center><a href="#">{{$feed->name}}</a>
-                                  @if($check_feedback ==null )
+                                  @if(count($check_feedback)==0 )
+
                                   @elseif($feed->sitter == $check_feedback[0]->sitter)
                                       <span style="color: black">(Bạn)</span>
                                   @endif
@@ -364,12 +365,23 @@
                   </h6>
                   <h6 style="color: black">{!!$feed->content_parent !!}</h6>
                   <span>Đăng vào {{date_diff(date_create($feed->updated_at), date_create('now'))->d}} ngày trước</span>
-                  @if($check_feedback ==null)
+                  @if(count($check_feedback)==0)
                   @elseif($feed->sitter == $check_feedback[0]->sitter)
-                      <br><a href="{{asset('sitter/delete_feedback')}}/{{$feed->id}}"><span>Xóa</span></a>
+                    &nbsp;  <button onclick="return delete_feedback_{{$feed->id}}();"><span>Xóa</span></button>
                   @endif
               </div>
           </div> <br>
+          <script>
+              function delete_feedback_{{$feed->id}}(){
+                  $.ajax({
+                      type:'GET',
+                      url:'{{asset('sitter/delete_feedback')}}/{{$feed->id}}',
+                      success:function(data){
+                          location.reload();
+                      }
+                  });
+              }
+          </script>
           @endforeach
     </div>
 </section>

@@ -69,6 +69,7 @@ class AdminController extends Controller
         $data['activity']=Plan::where('sitter',$id)->get();
         return view('admin.sitters.detail-sitter',$data);
     }
+    // delete feedback sitter
     public function deleteFeedbackSitter($id){
         $id_sitter=feedback_sitter::find($id)->sitter;
         feedback_sitter::destroy($id);
@@ -79,7 +80,22 @@ class AdminController extends Controller
         Sitters::destroy($id);
         return back()->with('success','Thao tác thành công');
     }
+    // active sitter
+    public function activeSitter($id){
+        $sitter=Sitters::find($id);
+        $sitter->status=1;
+        $sitter->save();
 
+        return response()->json(array('success'=>true));
+    }
+    // cancel active sitter
+    public function cancelActiveSitter($id){
+        $sitter=Sitters::find($id);
+        $sitter->status=0;
+        $sitter->save();
+
+        return response()->json(array('success'=>true));
+    }
 
     //parents
     public function getParents(){

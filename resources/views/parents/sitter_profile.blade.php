@@ -396,10 +396,24 @@
                 <span>Đăng vào {{date_diff(date_create($feed->updated_at), date_create('now'))->d}} ngày trước</span>
                 @if(count($check_feedback) ==0)
                 @elseif($feed->parent == $check_feedback[0]->parent)
-                    <br><a href="{{asset('parent/delete_feedback')}}/{{$feed->id}}"><span>Xóa</span></a>
+                    &nbsp;
+                    <button onclick="return delete_feedback_{{$feed->id}}();">
+                        <span>Xóa</span>
+                    </button>
                 @endif
             </div>
         </div> <br>
+        <script>
+            function delete_feedback_{{$feed->id}}(){
+                $.ajax({
+                    type:'GET',
+                    url:'{{asset('parent/delete_feedback')}}/{{$feed->id}}',
+                    success:function(data){
+                        location.reload();
+                    }
+                });
+            }
+        </script>
         @endforeach
     </div>
 </section>

@@ -294,6 +294,13 @@ class ParentsController extends Controller
 
         return redirect('parent/sitter_profile/'.$id_sitter.'/#feedback_sitter');
     }
+    // delete feedback
+    public function deleteFeedback($id){
+        feedback_sitter::destroy($id);
+
+        return response()->json(array('success'=>true));
+    }
+
     // posts
     public function getPostsList(){
         $data['posts']=DB::table('posts')
@@ -347,6 +354,7 @@ class ParentsController extends Controller
 
         return view('parents.profile.posts',$data);
     }
+    // show profile parent difficult
     public function getProfileParentId($id){
         $data['parent']=Parents::find($id);
         $data['feedback']=DB::table('feedback_parents')
@@ -356,6 +364,17 @@ class ParentsController extends Controller
         ->get();
         return view('parents.parent_profile',$data);
     }
+    // show contract
+    public function getContract(){
+        $data['contracts']=DB::table('contracts')
+        ->where('parent',Auth::guard('parents')->user()->id)
+        ->join('sitters','contracts.sitter','=','sitters.id')
+        ->select('contracts.*','sitters.name as sitter_name','sitters.images as sitter_img')
+        ->get();
+        return view('parents.profile.contract',$data);
+    }
+
+    // send contract to sitter
     public function sendRequestContractSitter($id){
         $contract=new Contract();
         $contract->parent=Auth::guard('parents')->user()->id;
@@ -393,6 +412,23 @@ class ParentsController extends Controller
         });
         return redirect('/parent')->with('success','Đã gửi yêu cầu thành công');
     }
+    // accept contract
+    public function acceptContract($id){
+        $contract=Contract::find($id);
+        $contract->status=1;
+        $contract->save();
+
+        return response()->json(array('success'=>true));
+    }
+    // cancel contract
+    public function cancelContract($id){
+        $contract=Contract::find($id);
+        $contract->status=2;
+        $contract->save();
+
+        return response()->json(array('success'=>true));
+    }
+
      // chat
      public function getChat(){
         $data['sitters']=Sitters::all();

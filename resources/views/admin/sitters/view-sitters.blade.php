@@ -57,13 +57,13 @@
                     @endif
                 </td>
                 <td>
-                    <div class="btn-group">
+                    <div class="btn-group" id="status">
                             @if($sitter->status==0)
-                             <button class="btn btn-warning" data-toggle="dropdown">
-                               Chưa Xác thực
+                             <button data-toggle="dropdown">
+                               <span id="active" style="color: rgb(97, 97, 31)">Chưa Xác thực</span>
                             @elseif($sitter->status==1)
-                            <button class="btn btn-success" data-toggle="dropdown">
-                                Đã xác thực
+                            <button data-toggle="dropdown">
+                                <span id="un_active" style="color:yellowgreen">Đã xác thực</span>
                             @elseif($sitter->status==2)
                             <button class="btn btn-danger" data-toggle="dropdown">
                                 Bị khóa
@@ -71,9 +71,8 @@
                         </button>
                         {{-- <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button> --}}
                         <ul class="dropdown-menu">
-                          <li><a href="#">Chưa kiểm duyệt</a></li>
-                          <li><a href="#">Xác thực</a></li>
-                          <li><a href="#">Khóa</a></li>
+                          <li><button onclick="return cancel_active_{{$sitter->id}}();">Hủy bỏ xác thực</button></li>
+                          <li><button onclick="return active_{{$sitter->id}}();">Xác thực</button></li>
                         </ul>
                     </div>
                 </td>
@@ -83,6 +82,33 @@
                         </i> Xóa tài khoản</a>
                 </td>
             </tr>
+            {{-- ajax --}}
+            <script>
+                function active_{{$sitter->id}}(){
+                    $.ajax({
+                        type:'GET',
+                        url:'{{asset('admin/sitters/active')}}/{{$sitter->id}}',
+
+                        success:function(html){
+                            document.getElementById("active").innerHTML="Đã xác thực";
+                        },error:function() {
+                            console.log(data);
+                        }
+                    });
+                }
+
+                function cancel_active_{{$sitter->id}}(){
+                    $.ajax({
+                        type:'GET',
+                        url:'{{asset('admin/sitters/cancel_active')}}/{{$sitter->id}}',
+                        success:function(html){
+                            document.getElementById("un_active").innerHTML="Hủy bỏ xác thực";
+                        },error:function() {
+                            console.log(data);
+                        }
+                    });
+                }
+            </script>
             @endforeach
         </tbody>
             </table>

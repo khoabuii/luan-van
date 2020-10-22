@@ -6,7 +6,6 @@
     <div id="content-header">
       <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Phụ huynh</a> <a href="#" class="current">Xem chi tiết</a> </div>
       <h1>Chi tiết Phụ huynh</h1>
-
       @include('noti.errors')
       @include('noti.success')
     </div>
@@ -22,7 +21,6 @@
                 <div class="span4">
                     <img src="{{asset('uploads/parents_profile/')}}/{{$parent->avatar}}" width="100%">
                 </div>
-                {{-- <br> --}}
                 <div class="span8">
                   <table class="table table-bordered table-invoice">
                     <tbody>

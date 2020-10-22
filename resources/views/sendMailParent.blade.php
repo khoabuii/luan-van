@@ -25,7 +25,7 @@
         </p>
     <span style="color: rgb(72, 72, 177)65, 65, 85)">
         <i>Bạn hãy truy cập vào
-            <a href="#" style="color: yellow">link này</a>
+            <a href="{{asset('parent/contract')}}" style="color: yellow">link này</a>
              để Chấp thuận hoặc từ chối yêu cầu làm việc trên nhé
         </i>
     </span>
