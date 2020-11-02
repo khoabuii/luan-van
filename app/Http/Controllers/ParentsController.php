@@ -402,11 +402,13 @@ class ParentsController extends Controller
         $data['parent_id']=Auth::guard('parents')->user()->id;
         $data['money']=$sitter->money;
         $data['description']=$description;
+
+        $email=$sitter->email;
         // send mail confirm to sitter
-        Mail::send('sendMailSitter',$data, function ($message) {
+        Mail::send('sendMailSitter',$data, function ($message) use ($email) {
             $message->from('khoab1606808@gmail.com', 'Khoa Bui');
 
-            $message->to('khoabuii98@yahoo.com');
+            $message->to($email);
 
             $message->subject('Xác nhận yêu cầu kí kết làm việc');
         });

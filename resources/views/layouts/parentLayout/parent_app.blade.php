@@ -65,21 +65,21 @@
         <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-analytics.js"></script>
 
         <script>
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        var firebaseConfig = {
-            apiKey: "AIzaSyCWL1JioFFgVfp7mP05MkSSSoigV6_cVvg",
-            authDomain: "luan-van-e8dfd.firebaseapp.com",
-            databaseURL: "https://luan-van-e8dfd.firebaseio.com",
-            projectId: "luan-van-e8dfd",
-            storageBucket: "luan-van-e8dfd.appspot.com",
-            messagingSenderId: "115901231588",
-            appId: "1:115901231588:web:00c34bc2544ce729ab17f1",
-            measurementId: "G-XD5CCQ9TKC"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            var firebaseConfig = {
+                apiKey: "AIzaSyCWL1JioFFgVfp7mP05MkSSSoigV6_cVvg",
+                authDomain: "luan-van-e8dfd.firebaseapp.com",
+                databaseURL: "https://luan-van-e8dfd.firebaseio.com",
+                projectId: "luan-van-e8dfd",
+                storageBucket: "luan-van-e8dfd.appspot.com",
+                messagingSenderId: "115901231588",
+                appId: "1:115901231588:web:00c34bc2544ce729ab17f1",
+                measurementId: "G-XD5CCQ9TKC"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
         </script>
     </head>
 <body class="boxed">

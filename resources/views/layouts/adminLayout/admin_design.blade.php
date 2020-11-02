@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    {{-- ckeditor --}}
+    <script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
 </head>
 <body>
 @include('layouts.adminLayout.admin_header')
@@ -31,6 +34,7 @@
 
 @include('layouts.adminLayout.admin_footer')
 {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
+<script src="{{asset('/admin/js/bootstrap-wysihtml5.js')}}"></script>
 <script src="{{asset('/admin/js/jquery.min.js')}}"></script>
 <script src="{{asset('/admin/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('/admin/js/jquery.dataTables.min.js')}}"></script>

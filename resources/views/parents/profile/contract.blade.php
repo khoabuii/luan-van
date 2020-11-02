@@ -27,7 +27,7 @@
                             </td>
                             <td class="job_title">
                                 <center>
-                                    <a href="{{asset('sitter/sitter_profile')}}/{{$contract->sitter}}" class="job_title_link">{{$contract->sitter_name}}</a>
+                                    <a href="{{asset('parent/sitter_profile')}}/{{$contract->sitter}}" class="job_title_link">{{$contract->sitter_name}}</a>
                                     @if($contract->check==1)(Người gửi yêu cầu)@endif
                                     <br>
                                     <img src="{{asset('uploads/sitters_profile')}}/{{$contract->sitter_img}}" width="50%">

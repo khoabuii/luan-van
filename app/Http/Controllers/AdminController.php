@@ -14,7 +14,10 @@ use App\User;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Closure;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\SendEmail;
+use App\Mail\TestMail;
 
 class AdminController extends Controller
 {
@@ -162,5 +165,52 @@ class AdminController extends Controller
     public function deleteContract($id){
         Contract::destroy($id);
         return back()->with('success','Bạn đã xóa thành công');
+    }
+
+    // send email message
+    public function getMessage(){
+        if(\Request::is('admin/message')){
+            return view('admin.message.send_all');
+        }
+        elseif(\Request::is('admin/message/parents')){
+            return view('admin.message.send_parent');
+        }
+        elseif(\Request::is('admin/message/sitters')){
+            return view('admin.message.send_sitter');
+        }
+    }
+    //post send email
+    public function postMessage(Request $request){
+        $data['content']=$request->content;
+        $sitter=Sitters::all('email','name');
+        $parent=Parents::all('email','name');
+
+        $email_sitter=[];
+        $email_parent=[];
+        foreach($sitter as $sitter){
+            array_push($email_sitter,[
+                'email'=>$sitter->email,
+                'name'=>$sitter->name
+            ]);
+        }
+        foreach($parent as $parent){
+            array_push($email_parent,[
+                'email'=>$parent->email,
+                'name'=>$parent->name
+            ]);
+        }
+        $email=array_merge($email_sitter,$email_parent);
+        Mail::send('admin.message.mail_content', $data, function ($message,$email) {
+            $message->from('khoab1606808@gmail.com', 'Khoa Bui');
+            $message->sender('john@johndoe.com', 'John Doe');
+            $message->to('john@johndoe.com', 'John Doe');
+            $message->cc('john@johndoe.com', 'John Doe');
+            $message->bcc('john@johndoe.com', 'John Doe');
+            $message->replyTo('john@johndoe.com', 'John Doe');
+            $message->subject('Subject');
+            $message->priority(3);
+            $message->attach('pathToFile');
+        });
+
     }
 }

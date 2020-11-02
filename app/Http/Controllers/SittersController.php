@@ -246,6 +246,7 @@ class SittersController extends Controller
         $data['activity']=Plan::where('parent',$id)->get();
         return view('sitters.parent_profile',$data);
     }
+
     // post feedback parent profile
     public function postFeedbackParent(Request $request,$id_parent){
         $id_sitter=Auth::user()->id;
@@ -272,6 +273,7 @@ class SittersController extends Controller
 
         return redirect('sitter/parent_profile/'.$id_parent.'/#feedback_parent');
     }
+
     // delete feedback
     public function deleteFeedback($id){
         feedback_parent::destroy($id);
@@ -368,7 +370,7 @@ class SittersController extends Controller
         Mail::send('sendMailParent',$data, function ($message) {
             $message->from('khoab1606808@gmail.com', 'Khoa Bui');
 
-            $message->to($this->parent->email);
+            $message->to('khoabuii98@yahoo.com');
 
             $message->subject('Xác nhận yêu cầu kí kết làm việc');
         });
@@ -396,6 +398,7 @@ class SittersController extends Controller
         $data['parents']=Parents::all();
         return view('sitters.chat',$data);
     }
+    // show chat
     public function showChatParent($id){
         $data['parents']=Parents::all();
         $data['parent']=Parents::find($id);

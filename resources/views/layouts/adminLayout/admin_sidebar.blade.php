@@ -36,6 +36,7 @@
             <a href="{{url ('/admin/contract/add')}}">---------</a></li>
         </ul>
       </li>
+
       <li class="submenu <?php if(preg_match("/posts/i", $url)){ ?> active <?php } ?>">
         <a href="#"><i class="icon icon-th-list"></i> <span>Quản lý bài viết</span> <span class="label label-important"></span></a>
         <ul <?php if(preg_match("/posts/i", $url)){ ?> style="display:block;" <?php } ?>>
@@ -46,28 +47,23 @@
         </ul>
       </li>
 
-      {{-- <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Mã giảm giá</span> <span class="label label-important"></span></a>
-        <ul <?php if(preg_match("/coupon/i", $url)){ ?> style="display:block;" <?php } ?>>
-        <li <?php if(preg_match("/add-coupon/i", $url)){ ?> class="active" <?php } ?>>
-          <a href="{{url ('/admin/add-coupon')}}">Thêm mã giảm giá</a></li>
-          <li <?php if(preg_match("/view-coupons/i", $url)){ ?> class="active" <?php } ?>>
-            <a href="{{url ('/admin/view-coupons')}}">Xem danh sách mã giảm giá</a></li>
+      <li class="submenu <?php if(preg_match("/message/i", $url)){ ?> active <?php } ?>">
+        <a href="#"><i class="icon icon-th-list"></i> <span>Gửi thông điệp</span> <span class="label label-important"></span></a>
+        <ul <?php if(preg_match("/message/i", $url)){ ?> style="display:block;" <?php } ?>>
+            <li>
+                <a href="{{url ('/admin/message')}}">Gửi thông điệp cho tất cả</a>
+            </li>
+
+            <li>
+                <a href="{{url ('/admin/message/sitters')}}">Gửi cho nhóm người bảo mẫu</a>
+            </li>
+
+            <li>
+                <a href="{{url ('/admin/message/parents')}}">Gửi cho nhóm người Phụ huynh</a>
+            </li>
         </ul>
       </li>
 
-      <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Đơn hàng</span> <span class="label label-important"></span></a>
-        <ul <?php if(preg_match("/orders/i", $url)){ ?> style="display:block;" <?php } ?>>
-          <li <?php if(preg_match("/view-orders/i", $url)){ ?> class="active" <?php } ?>>
-            <a href="{{url ('/admin/view-orders')}}">Xem danh sách đơn hàng </a></li>
-        </ul>
-      </li>
-
-      <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Thành viên</span> <span class="label label-important"></span></a>
-        <ul <?php if(preg_match("/member/i", $url)){ ?> style="display:block;" <?php } ?>>
-          <li <?php if(preg_match("/view-members/i", $url)){ ?> class="active" <?php } ?>>
-            <a href="{{url ('/admin/view-members')}}">Xem danh sách thành viên</a></li>
-        </ul>
-      </li> --}}
     </ul>
   </div>
   <!--sidebar-menu-->

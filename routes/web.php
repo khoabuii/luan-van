@@ -47,11 +47,20 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/','AdminController@getContracts');
         Route::get('/delete_contract/{id}','AdminController@deleteContract');
     });
+    Route::group(['prefix' => 'message','middleware'=>'checkLoginAdmin'], function () {
+        Route::get('/','AdminController@getMessage');
+        Route::post('/','AdminController@postMessage');
+
+        Route::get('/sitters','AdminController@getMessage');
+
+        Route::get('/parents','AdminController@getMessage');
+
+    });
 });
 
 // parent
 Route::group(['prefix' => 'parent'], function () {
-    Route::get('/','ParentsController@getIndex')->middleware('checkLoginParents');
+    Route::get('/','ParentsController@getIndex')->middleware('checkLoginParents')->name('parent.index');
     // register
     Route::group(['prefix' => 'register'], function () {
         Route::get('/','ParentsController@getRegister');
@@ -85,7 +94,7 @@ Route::group(['prefix' => 'parent'], function () {
     Route::get('parent_profile/{id}','ParentsController@getProfileParentId')->middleware('checkLoginParents');
 
     //save sitter
-    Route::get('/save_sitters','ParentsController@getSaveSitters')->middleware('checkLoginParents');
+    Route::get('/save_sitters','ParentsController@getSaveSitters')->middleware('checkLoginParents')->name('parent.save_sitters');
     Route::get('/save_sitters/{id}','ParentsController@getSaveSittersId')->middleware('checkLoginParents');
     Route::get('/save_sitters/delete/{id}','ParentsController@getDeleteSaveSitter')->middleware('checkLoginParents'); //delete save sitter
 

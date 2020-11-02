@@ -61,23 +61,59 @@
     <nav class="nav-main">
         <div class="container">
             <ul data-breakpoint="992" class="flexnav">
-                <li><a href="{{asset('sitter/')}}">Home</a></li>
-                <li><a href="{{asset('sitter/parents_list')}}">Phụ huynh</a></li>
-                <li><a href="{{asset('sitter/posts')}}">Bài viết</a>
+                <li
+                    @if(Request::is('sitter'))
+                        class="active"
+                     @endif
+                ><a href="{{asset('sitter/')}}">Home</a></li>
+
+                <li
+                    @if(Request::is('sitter/parent_list'))
+                        class="active"
+                    @endif
+                ><a href="{{asset('sitter/parents_list')}}">Phụ huynh</a></li>
+
+                <li
+                    @if(Request::is('sitter/posts'))
+                        class="active"
+                     @endif
+                ><a href="{{asset('sitter/posts')}}">Bài viết</a>
                     <ul>
                         <li><a href="{{asset('sitter/posts')}}">Xem bài viết</a></li>
                     </ul>
                 </li>
-                <li><a href="{{asset('sitter/chat')}}">Trò chuyện</a></li>
-                <li><a href="{{asset('sitter/profile')}}">Hồ sơ ({{Auth::user()->name}})</a>
+
+                <li
+                    @if(Request::is('sitter/chat'))
+                        class="active"
+                    @elseif(Request::is('sitter/chat/*'))
+                        class="active"
+                    @endif
+                ><a href="{{asset('sitter/chat')}}">Trò chuyện</a></li>
+
+                <li
+                    @if(Request::is('sitter/profile'))
+                        class="active"
+                    @elseif(Request::is('sitter/profile/*'))
+                        class="active"
+                    @endif
+                ><a href="{{asset('sitter/profile')}}">Hồ sơ ({{Auth::user()->name}})</a>
                     <ul>
                         <li><a href="{{asset('sitter/profile')}}">Xem hồ sơ</a></li>
                         <li><a href="{{asset('sitter/profile/posts')}}">Đăng bài tuyển dụng</a></li>
                         <li><a href="{{asset('sitter/profile/update')}}">Cập nhật tài khoản</a></li>
                     </ul>
                 </li>
-                <li><a href="{{asset('sitter/posts/save')}}">Bài viết đã lưu</a></li>
-                <li><a href="{{asset('sitter/contract')}}"><i  class="fa fa-life-ring"></i> Hợp đồng</a></li>
+                <li
+                    @if(Request::is('sitter/posts/save'))
+                        class="active"
+                    @endif
+                ><a href="{{asset('sitter/posts/save')}}">Bài viết đã lưu</a></li>
+                <li
+                    @if(Request::is('sitter/contract'))
+                        class="active"
+                    @endif
+                ><a href="{{asset('sitter/contract')}}"><i  class="fa fa-life-ring"></i> Hợp đồng</a></li>
             </ul>
         </div>
     </nav>

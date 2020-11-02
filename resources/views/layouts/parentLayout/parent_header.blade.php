@@ -63,9 +63,25 @@
     <nav class="nav-main">
         <div class="container">
             <ul data-breakpoint="992" class="flexnav">
-                <li><a href="{{asset('/parent')}}">Home</a></li>
-                <li><a href="{{asset('/parent/list_sitters')}}">Sitters</a></li>
-                <li><a href="{{asset('/parent/posts')}}">Bài viết</a>
+                <li
+                    @if(Request::is('parent'))
+                        class="active"
+                     @endif
+                >
+                <a href="{{asset('/parent')}}">Home</a></li>
+                <li
+                    @if(Request::is('parent/list_sitters'))
+                        class="active"
+                    @endif
+                ><a href="{{asset('/parent/list_sitters')}}">Sitters</a></li>
+
+                <li
+                    @if(Request::is('parent/posts'))
+                        class="active"
+                    @elseif(Request::is('parent/posts/*'))
+                        class="active"
+                    @endif
+                ><a href="{{asset('/parent/posts')}}">Bài viết</a>
                     <ul>
                         <li><a href="{{asset('/parent/posts/add')}}">Đăng bài viết mới</a></li>
                         <li><a href="{{asset('/parent/posts')}}">Xem danh sách bài viết</a></li>
@@ -73,16 +89,34 @@
                     </ul>
                 </li>
                 <li><a href="#">Tìm kiếm</a> </li>
-                <li><a href="{{asset('parent/chat')}}">Trò chuyện</a></li>
-                <li><a href="{{asset('parent/profile/')}}">Hồ sơ</a>
+                <li
+                    @if(Request::is('parent/chat/*'))
+                        class="active"
+                    @elseif(Request::is('parent/chat'))
+                        class="active"
+                    @endif
+                ><a href="{{asset('parent/chat')}}">Trò chuyện</a></li>
+                <li
+                    @if(Request::is('parent/profile'))
+                        class="active"
+                    @endif
+                ><a href="{{asset('parent/profile/')}}">Hồ sơ</a>
                     <ul>
                         <li><a href="{{asset('parent/profile/')}}">Xem hồ sơ</a></li>
                         <li><a href="blog-left-sidebar.html">Đăng bài tuyển dụng</a></li>
                         <li><a href="blog-fullwidth.html">Cập nhật tài khoản</a></li>
                     </ul>
                 </li>
-                <li><a href="{{asset('parent/save_sitters')}}">Danh sách đã đánh dấu</a></li>
-                <li><a href="{{asset('parent/contract')}}"><i  class="fa fa-life-ring"></i> Hợp đồng</a></li>
+                <li @if(Request::is('parent/save_sitters'))
+                        class="active"
+                     @endif
+                    >
+                    <a href="{{asset('parent/save_sitters')}}">Danh sách đã đánh dấu</a></li>
+                <li
+                    @if(Request::is('parent/contract'))
+                        class="active"
+                    @endif
+                ><a href="{{asset('parent/contract')}}"><i  class="fa fa-life-ring"></i> Hợp đồng</a></li>
             </ul>
         </div>
     </nav>
