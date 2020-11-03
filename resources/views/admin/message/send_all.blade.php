@@ -1,6 +1,13 @@
 @extends('layouts.adminLayout.admin_design')
 @section('title','Gửi thông điệp cho Phụ huynh & Bảo mẫu')
 @section('content')
+
+@if(session('success'))
+<script>
+    alert('{{session('success')}}');
+</script>
+@endif
+
 <div id="content">
     <div id="content-header">
         <div id="breadcrumb">
@@ -23,9 +30,13 @@
                 <form action="{{asset('admin/message/')}}" method="POST">
                     {{csrf_field()}}
                     <div class="controls">
-                        <textarea class="textarea_editor span12" name="content" id="ckeditor" rows="6" placeholder="Enter text ..."></textarea>
+                        <label for="">Tiêu đề</label>
+                        <input class="span10" required type="text" name="subject">
                     </div>
-                    <button class="btn btn-primary" type="submit">
+                    <div class="controls">
+                        <textarea class="textarea_editor span12" required name="content" id="ckeditor" rows="6" placeholder="Enter text ..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit" onclick="return confirm('Bạn chắc chắn chưa?');">
                         Gửi thông điệp
                     </button>
                 </form>

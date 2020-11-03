@@ -367,10 +367,10 @@ class SittersController extends Controller
         $data['description']=$description;
         $email=$parent->email;
         // send mail confirm to parent
-        Mail::send('sendMailParent',$data, function ($message) {
+        Mail::send('sendMailParent',$data, function ($message) use($email) {
             $message->from('khoab1606808@gmail.com', 'Khoa Bui');
 
-            $message->to('khoabuii98@yahoo.com');
+            $message->to($email);
 
             $message->subject('Xác nhận yêu cầu kí kết làm việc');
         });

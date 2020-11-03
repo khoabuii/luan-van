@@ -52,9 +52,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/','AdminController@postMessage');
 
         Route::get('/sitters','AdminController@getMessage');
+        Route::post('/sitters','AdminController@postMessage');
 
         Route::get('/parents','AdminController@getMessage');
-
+        Route::post('/parents','AdminController@postMessage');
     });
 });
 

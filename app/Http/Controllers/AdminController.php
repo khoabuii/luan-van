@@ -182,35 +182,44 @@ class AdminController extends Controller
     //post send email
     public function postMessage(Request $request){
         $data['content']=$request->content;
-        $sitter=Sitters::all('email','name');
-        $parent=Parents::all('email','name');
+        $subject=$request->subject;
+        $sitter=Sitters::pluck('email')->toArray();
+        $parent=Parents::pluck('email')->toArray();
 
-        $email_sitter=[];
-        $email_parent=[];
-        foreach($sitter as $sitter){
-            array_push($email_sitter,[
-                'email'=>$sitter->email,
-                'name'=>$sitter->name
-            ]);
-        }
-        foreach($parent as $parent){
-            array_push($email_parent,[
-                'email'=>$parent->email,
-                'name'=>$parent->name
-            ]);
-        }
-        $email=array_merge($email_sitter,$email_parent);
-        Mail::send('admin.message.mail_content', $data, function ($message,$email) {
-            $message->from('khoab1606808@gmail.com', 'Khoa Bui');
-            $message->sender('john@johndoe.com', 'John Doe');
-            $message->to('john@johndoe.com', 'John Doe');
-            $message->cc('john@johndoe.com', 'John Doe');
-            $message->bcc('john@johndoe.com', 'John Doe');
-            $message->replyTo('john@johndoe.com', 'John Doe');
-            $message->subject('Subject');
-            $message->priority(3);
-            $message->attach('pathToFile');
-        });
+        $email=array_merge($sitter,$parent);
 
+        $test=['myoneemail@esomething.com', 'myother@esomething.com','myother2@esomething.com'];
+        // dd($email);
+        //send mail for all users
+        if(\Request::is('admin/message')){
+            Mail::send('admin.message.mail_content', $data, function ($message) use ($email,$subject) {
+                $message->from('khoab1606808@gmail.com', 'Khoa Bui');
+
+                $message->cc($email);
+                $message->subject($subject);
+            });
+            // var_dump(Mail::failures());
+            // exit;
+            return back()->with('success','Bạn đã thông báo qua mail cho tất cả thành viên trong hệ thống');
+        }
+        // send mail for parents users
+        elseif(\Request::is('admin/message/parents')){
+            Mail::send('admin.message.mail_content', $data, function ($message) use ($sitter,$subject) {
+                $message->from('khoab1606808@gmail.com', 'Khoa Bui');
+                $message->cc($sitter);
+                $message->subject($subject);
+            });
+            return back()->with('success','Bạn đã thông báo qua email cho tất cả người dùng phụ huynh');
+        }
+        //send mail for sitters users
+        elseif(\Request::is('admin/message/sitters')){
+            Mail::send('admin.message.mail_content', $data, function ($message) use ($parent,$subject) {
+                $message->from('khoab1606808@gmail.com', 'Khoa Bui');
+                $message->cc($parent);
+                $message->subject($subject);
+            });
+            return back()->with('success','Bạn đã thông báo qua email cho tất cả người dùng bảo mẫu');
+        }
+        return false;
     }
 }
