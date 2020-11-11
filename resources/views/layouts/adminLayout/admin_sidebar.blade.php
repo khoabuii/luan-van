@@ -7,9 +7,14 @@
     <ul>
       <li <?php if(preg_match("/dashboard/i", $url)){ ?> class="active" <?php } ?>>
         <a href="{{url('/admin/dashboard')}}"><i class="icon icon-home"></i><span>Trang tổng quan</span></a> </li>
-      <li class="submenu <?php if(preg_match("/sitters/i", $url)){ ?> active <?php } ?>">
+      <li class="submenu @if(Request::is('admin/sitters')) active
+                        @elseif(Request::is('admin/sitters/*')) active
+                        @endif">
         <a href="#"><i class="icon icon-th-list"></i> <span>Bảo mẫu</span> <span class="label label-important"></span></a>
-        <ul <?php if(preg_match("/sitters/i", $url)){ ?> style="display:block;" <?php } ?>>
+        <ul @if(Request::is('admin/sitters')) style="display:block;"
+            @elseif(Request::is('admin/sitters/*')) style="display:block;"
+            @endif
+        >
         <li >
           <a href="{{url ('/admin/sitters')}}">Xem danh sách người bảo mẫu</a></li>
           <li>
@@ -17,9 +22,13 @@
         </ul>
       </li>
 
-      <li class="submenu <?php if(preg_match("/parents/i", $url)){ ?> active <?php } ?>">
+      <li class="submenu @if(Request::is('admin/parents')) active
+                        @elseif(Request::is('admin/parents/*')) active
+                        @endif">
         <a href="#"><i class="icon icon-th-list"></i> <span>Phụ huynh</span> <span class="label label-important"></span></a>
-        <ul <?php if(preg_match("/parents/i", $url)){ ?> style="display:block;" <?php } ?>>
+        <ul @if(Request::is('admin/parents')) style="display:block;"
+                @elseif(Request::is('admin/parents/*')) style="display:block;"
+                @endif>
         <li >
           <a href="{{url ('/admin/parents')}}">Xem danh sách người bảo mẫu</a></li>
           <li>

@@ -12,7 +12,7 @@
                     <thead>
                         <tr>
                             <th>ID Hợp đồng</th>
-                            <th class="expires" width="18%">Phụ huynh</th>
+                            <th class="expires" width="18%">Bảo mẫu</th>
                             <th class="date">Thời gian gửi</th>
                             <th class="status" width=20%>Trạng thái</th>
                             <th class="expires" width="45%">Nội dung chi tiết</th>
@@ -35,16 +35,16 @@
                             </td>
                             <td class="date">{{$contract->created_at}}</td>
                             <td class="status">
-                                <p id="confirm{{$contract->id}}">
+                                <p id="confirm{{$contract->id}}"
                                     @if($contract->status==0)
-                                        Chưa xác nhận
+                                    style="color:rgb(199,201,72)">    Chưa xác nhận
                                     @elseif($contract->status==1)
-                                        Đã xác nhận
+                                    style="color:green">    Đã xác nhận
                                     @elseif($contract->status==2)
-                                        Hủy hợp đồng
+                                    style="color:red">    Hủy hợp đồng
                                     @endif
                                 </p>
-                                @if($contract->check==1)
+                                @if($contract->check==1 && ($contract->status==0 || $contract->status==1))
                                 <ul class="job-dashboard-actions">
                                     <li><button onclick="return action_{{$contract->id}}();">Xác nhận</button></li>
                                     <li><button onclick="return cancel_{{$contract->id}}();">Hủy hợp đồng</button></li>
@@ -61,8 +61,8 @@
                                     type:'GET',
                                     url:'{{asset('parent/contract/accept')}}/{{$contract->id}}',
                                     success:function(data){
-                                        console.log(data)
-                                        document.getElementById('confirm{{$contract->id}}').innerHTML="Đã xác nhận";
+                                        location.reload();
+                                        // document.getElementById('confirm{{$contract->id}}').innerHTML="Đã xác nhận";
                                     }
                                 });
                             }
@@ -72,8 +72,8 @@
                                     type:'GET',
                                     url:'{{asset('parent/contract/cancel')}}/{{$contract->id}}',
                                     success:function(data){
-                                        console.log(data)
-                                        document.getElementById('confirm{{$contract->id}}').innerHTML="Đã Hủy";
+                                        location.reload();
+                                        // document.getElementById('confirm{{$contract->id}}').innerHTML="Đã Hủy";
                                     }
                                 });
                             }

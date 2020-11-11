@@ -198,8 +198,6 @@ class AdminController extends Controller
                 $message->cc($email);
                 $message->subject($subject);
             });
-            // var_dump(Mail::failures());
-            // exit;
             return back()->with('success','Bạn đã thông báo qua mail cho tất cả thành viên trong hệ thống');
         }
         // send mail for parents users

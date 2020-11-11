@@ -24,6 +24,17 @@
 
     {{-- ckeditor --}}
     <script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+
+    {{-- onesignal --}}
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+        window.OneSignal = window.OneSignal || [];
+        OneSignal.push(function() {
+            OneSignal.init({
+            appId: "8ccfdafd-0148-4566-969d-bb60a2b11328",
+            });
+        });
+    </script>
 </head>
 <body>
 @include('layouts.adminLayout.admin_header')

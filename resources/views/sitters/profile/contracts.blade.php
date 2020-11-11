@@ -7,10 +7,6 @@
     <div class="container">
         <h4>Danh sách hợp đồng</h4>
         <div id="job-manager-job-dashboard">
-            {{-- <div class="alert alert-info alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times"></i></button>
-                Your job listings are shown in the table below. Expired listings will be automatically removed after 30 days.
-            </div> --}}
             <div class="table-responsive">
                 <table class="job-manager-jobs table table-bordered table-striped">
                     <thead>
@@ -39,16 +35,16 @@
                             </td>
                             <td class="date">{{$contract->created_at}}</td>
                             <td class="status">
-                                <p id="confirm{{$contract->id}}">
+                                <p id="confirm{{$contract->id}}"
                                     @if($contract->status==0)
-                                        Chưa xác nhận
+                                     style="color:rgb(199,201,72)">   Chưa xác nhận
                                     @elseif($contract->status==1)
-                                        Đã xác nhận
+                                     style="color:green" >  Đã xác nhận
                                     @elseif($contract->status==2)
-                                        Hủy hợp đồng
+                                     style="color:red" > Hủy hợp đồng
                                     @endif
                                 </p>
-                                @if($contract->check==0)
+                                @if($contract->check==0 && ($contract->status==0 || $contract->status==1))
                                 <ul class="job-dashboard-actions">
                                     <li><button onclick="return action_{{$contract->id}}();">Xác nhận</button></li>
                                     <li><button onclick="return cancel_{{$contract->id}}();">Hủy hợp đồng</button></li>
@@ -66,8 +62,7 @@
 
                                     url:'{{asset('sitter/contract/accept')}}/{{$contract->id}}',
                                     success:function(data){
-                                        console.log(data)
-                                        document.getElementById('confirm{{$contract->id}}').innerHTML="Đã xác nhận";
+                                        location.reload();
                                     }
                                 });
                             }
@@ -76,8 +71,7 @@
                                     type:'GET',
                                     url:'{{asset('sitter/contract/cancel')}}/{{$contract->id}}',
                                     success:function(data){
-                                        console.log(data)
-                                        document.getElementById('confirm{{$contract->id}}').innerHTML="Đã Hủy";
+                                        location.reload();
                                     }
                                 });
                             }

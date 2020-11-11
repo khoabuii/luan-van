@@ -230,13 +230,41 @@ class ParentsController extends Controller
     }
     //getListSitters
     public function getListSitters(){
+        $data['location']=Province::all();
         $data['sitters']=DB::table('sitters')
-        ->join('location','sitters.id','=','location.sitter')
-        ->select('sitters.id','sitters.name','sitters.birthDay','sitters.status as status','sitters.created_at','location.address','location.district','location.city','sitters.images as img')
-        ->orderBy('sitters.id','desc')
-        ->paginate(10);
+            ->join('location','sitters.id','=','location.sitter')
+            ->select('sitters.id','sitters.name','sitters.birthDay','sitters.status as status','sitters.created_at','location.address','location.district','location.city','sitters.images as img')
+            ->orderBy('sitters.id','desc')
+            ->paginate(10);
         return view('parents.list_sitters',$data);
     }
+    // search sitter
+    function searchSitter(Request $request){
+        $data['location']=Province::all();
+        $name=$request->name;
+        $province_id=$request->province;
+        $name=str_replace('','%',$name);
+        if($province_id =="0"){
+            $data['sitters']=DB::table('sitters')->where('name','like','%'.$name.'%')
+            ->join('location','sitters.id','=','location.sitter')
+            ->select('sitters.id','sitters.name','sitters.birthDay','sitters.status as status','sitters.created_at','location.address','location.district','location.city','sitters.images as img')
+            ->orderBy('sitters.id','desc')
+            ->paginate(10);
+        return view('parents.list_sitters',$data);
+
+        }else{
+            $data['sitters']=DB::table('sitters')
+                ->join('location','sitters.id','=','location.sitter')
+                ->select('sitters.id','sitters.name','sitters.birthDay','sitters.status as status','sitters.created_at','location.address','location.district','location.city','sitters.images as img')
+                ->orderBy('sitters.id','desc')
+                ->where('sitters.name','like','%'.$name.'%')
+                ->where('location.city','like',$province_id)
+                ->paginate(10);
+            return view('parents.list_sitters',$data);
+        }
+
+    }
+
     //get Save Sitters
     public function getSaveSitters(){
         $data['save_list']=DB::table('save_sitters')

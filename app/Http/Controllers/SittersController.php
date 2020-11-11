@@ -211,14 +211,39 @@ class SittersController extends Controller
         $location->save();
         return back()->with('update','Đã cập nhật vị trí');
     }
+    // list parent
     public function getParentsList(){
+        $data['location']=Province::all();
         $data['parents']=DB::table('parents')
-        ->join('location','parents.id','=','location.parent')
-        ->select('parents.id','parents.name','parents.avatar as img','parents.created_at','location.district','location.city','location.address')
-        ->paginate(10);
+            ->join('location','parents.id','=','location.parent')
+            ->select('parents.id','parents.name','parents.avatar as img','parents.created_at','location.district','location.city','location.address')
+            ->paginate(10);
         return view('sitters.parents_list',$data);
     }
+    public function searchParent(Request $request){
+        $data['location']=Province::all();
+        $name=$request->name;
+        $province_id=$request->province;
+        $name=str_replace('','%',$name);
+        if($province_id =="0"){
+            $data['parents']=DB::table('parents')->where('name','like','%'.$name.'%')
+            ->join('location','parents.id','=','location.parent')
+            ->select('parents.id','parents.name','parents.avatar as img','parents.created_at','location.district','location.city','location.address')
+            ->orderBy('parents.id','desc')
+            ->paginate(10);
+        return view('sitters.parents_list',$data);
 
+        }else{
+            $data['parents']=DB::table('parents')
+                ->join('location','parents.id','=','location.parent')
+                ->select('parents.id','parents.name','parents.avatar as img','parents.created_at','location.district','location.city','location.address')
+                ->orderBy('parents.id','desc')
+                ->where('parents.name','like','%'.$name.'%')
+                ->where('location.city','like',$province_id)
+                ->paginate(10);
+            return view('sitters.parents_list',$data);
+            }
+    }
     // parent profile
     public function getParentProfile($id){
         $data['parent']=Parents::find($id);

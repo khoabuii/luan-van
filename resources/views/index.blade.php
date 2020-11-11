@@ -46,7 +46,9 @@
 	<![endif]-->
 
 	<!-- Favicons
-	================================================== -->
+    ================================================== -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
 	<link rel="shortcut icon" href="{{asset('homepage/images/favicon.ico')}}">
 	<link rel="apple-touch-icon" href="{{asset('homepage/images/apple-touch-icon.png')}}">
 	<link rel="apple-touch-icon" sizes="72x72" href="{{asset('homepage/images/apple-touch-icon-72x72.png')}}">
@@ -375,7 +377,7 @@
 	</div>
 	<!-- Javascript Files
 	================================================== -->
-	<script src="{{asset('homepage/vendor/jquery-1.11.0.min.js')}}"></script>
+	{{-- <script src="{{asset('homepage/vendor/jquery-1.11.0.min.js')}}"></script> --}}
 	<script src="{{asset('homepage/vendor/jquery-migrate-1.2.1.min.js')}}"></script>
 	<script src="{{asset('homepage/vendor/bootstrap.js')}}"></script>
 	<script src="{{asset('homepage/vendor/jquery.flexnav.min.js')}}"></script>

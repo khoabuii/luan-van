@@ -84,6 +84,17 @@
     </script>
     <!-- axios -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    {{-- onesignal --}}
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+        window.OneSignal = window.OneSignal || [];
+        OneSignal.push(function() {
+            OneSignal.init({
+            appId: "8ccfdafd-0148-4566-969d-bb60a2b11328",
+            });
+        });
+    </script>
 </head>
 <body class="boxed">
 

@@ -88,6 +88,8 @@ Route::group(['prefix' => 'parent'], function () {
     });
     // list_babysitter
     Route::get('/list_sitters','ParentsController@getListSitters')->middleware('checkLoginParents');
+    // search sitter
+    Route::get('/search_sitter','ParentsController@searchSitter');
 
     // profile_sitter
     Route::get('sitter_profile/{id}','ParentsController@getSitterProfile')->middleware('checkLoginParents');
@@ -174,6 +176,8 @@ Route::group(['prefix' => 'sitter'], function () {
 
     // parents list
     Route::get('/parents_list','SittersController@getParentsList')->middleware('checkLoginSitters');
+    // search parent
+    Route::get('/search_parent','SittersController@searchParent');
 
     // parent profile
     Route::get('/parent_profile/{id}','SittersController@getParentProfile')->middleware('checkLoginSitters');

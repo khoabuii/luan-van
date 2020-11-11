@@ -81,6 +81,17 @@
             firebase.initializeApp(firebaseConfig);
             firebase.analytics();
         </script>
+
+        {{-- onesignal --}}
+        <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+        <script>
+            window.OneSignal = window.OneSignal || [];
+            OneSignal.push(function() {
+                OneSignal.init({
+                appId: "8ccfdafd-0148-4566-969d-bb60a2b11328",
+                });
+            });
+        </script>
     </head>
 <body class="boxed">
 
@@ -108,7 +119,7 @@
 	</div>
 	<!-- Javascript Files
 	================================================== -->
-	<script src="{{asset('homepage/vendor/jquery-1.11.0.min.js')}}"></script>
+	{{-- <script src="{{asset('homepage/vendor/jquery-1.11.0.min.js')}}"></script> --}}
 	<script src="{{asset('homepage/vendor/jquery-migrate-1.2.1.min.js')}}"></script>
 	<script src="{{asset('homepage/vendor/bootstrap.js')}}"></script>
 	<script src="{{asset('homepage/vendor/jquery.flexnav.min.js')}}"></script>

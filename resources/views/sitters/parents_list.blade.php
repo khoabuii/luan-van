@@ -24,32 +24,29 @@
 <section class="page-content">
     <div class="container">
         <div class="job_listings">
-            <form class="job_filters">
-
+            <form class="job_filters" action="{{asset('sitter/search_parent')}}" method="GET">
                 <div class="search_jobs">
                     <div class="search_keywords">
                         <label for="search_keywords">Keywords</label>
-                        <input type="text" name="search_keywords" id="search_keywords" placeholder="All Pet Sitters" class="form-control" value="" />
+                        <input type="text" name="name" id="search_keywords" placeholder="All Pet Sitters" class="form-control" value="" />
                     </div>
 
                     <div class="search_type">
                         <label>Service</label>
                         <span class="select-style">
-                            <select class="form-control">
-                                <option value="0">All Categories</option>
-                                <option value="1">Summer Babysitting Jobs</option>
-                                <option value="2">Infant Babysitting Jobs</option>
-                                <option value="3">Part Time Babysitting Jobs</option>
-                                <option value="4">English-Speaking Babysitting Jobs</option>
-                                <option value="5">Live-In Babysitting Jobs</option>
+                            <select class="form-control" name="province">
+                                <option value="0">Tất cả địa điểm</option>
+                                @foreach($location as $location)
+                                    <option value="{{$location->id}}">{{$location->name}}</option>
+                                @endforeach
                             </select>
                         </span>
                     </div>
 
-                    <div class="search_location">
+                    {{-- <div class="search_location">
                         <label for="search_location">Location</label>
                         <input type="text" name="search_location" id="search_location" placeholder="Any Location" class="form-control" value="" />
-                    </div>
+                    </div> --}}
                     <div class="search_submit">
                         <button class="btn btn-block btn-primary" type="submit">Search</button>
                     </div>
