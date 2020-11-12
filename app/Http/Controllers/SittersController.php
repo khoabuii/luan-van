@@ -9,6 +9,7 @@ use App\Location;
 use App\Message;
 use App\Parents;
 use App\Plan;
+use App\Post;
 use App\Province;
 use App\save_post;
 use App\Sitters;
@@ -265,8 +266,8 @@ class SittersController extends Controller
             ->where([
                 'parent'=>$id,
                 'sitter'=>Auth::user()->id,
-                'status'=>0
-        ])->get();
+                'status'=>0||1
+            ])->get();
 
         $data['activity']=Plan::where('parent',$id)->get();
         return view('sitters.parent_profile',$data);
@@ -308,15 +309,51 @@ class SittersController extends Controller
 
     // posts list by parents
     public function getPostsList(){
-        $data['posts']=DB::table('posts')
+        $data['parents']=DB::table('posts')
         ->join('parents','posts.parent','=','parents.id')
-        ->select('posts.*','parents.name','parents.avatar')
+        ->select('posts.*','parents.name as parent_name','parents.avatar as parent_avatar')
         ->orderBy('posts.id','desc')
-        ->paginate(15);
+        ->get();
+
+        $data['sitters']=DB::table('posts')
+        ->join('sitters','posts.sitter','=','sitters.id')
+        ->select('posts.*','sitters.name as sitter_name','sitters.images as sitter_avatar')
+        ->orderBy('posts.id','desc')
+        ->get();
+
+        $posts=array();
+        $posts=array_merge($data['parents']->toArray(),$data['sitters']->toArray());
+        $data['posts']=$posts;
+
         $data['check_user']=DB::table('save_posts')
         ->where('sitter',Auth::user()->id)->get();
         return view('sitters.posts_list',$data);
     }
+    // add post
+    public function addPost(Request $request){
+        $this->validate($request,[
+            'title'=>'min:5',
+            'image'=>'image'
+        ],[
+            'title.min'=>'Tiêu đề tối thiểu 5 kí tự',
+            'image.image'=>'Hình ảnh không đúng định dạng'
+        ]);
+        $post=new Post();
+        $post->title=$request->title;
+        $post->sitter=Auth::user()->id;
+        $file=request()->file('image');
+        if($file !=null){
+            $file=$file->store('posts',['disk'=>'uploads']);
+            $file=substr($file,6);
+        }
+
+        $post->images=$file;
+        $post->content=$request->description;
+        $post->save();
+
+        return back()->with('success','Bạn đã đăng thành công');
+    }
+
     // save post id
     public function getSavePostId($id){
         $id_sitter=Auth::user()->id;

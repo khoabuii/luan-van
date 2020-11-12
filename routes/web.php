@@ -190,6 +190,8 @@ Route::group(['prefix' => 'sitter'], function () {
     // group post
     Route::group(['prefix' => 'posts','middleware'=>'checkLoginSitters'], function () {
         Route::get('/','SittersController@getPostsList');
+        Route::post('/add','SittersController@addPost');
+
         Route::get('/save/{id}','SittersController@getSavePostId');
         Route::get('/save','SittersController@getSaveList');
 

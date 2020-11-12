@@ -70,20 +70,55 @@
             <div class="content col-md-8">
                 <!-- Post (Standard Format) -->
                 @foreach($posts as $post)
+                @if($post->parent)
+                    <article class="entry entry__standard entry__with-icon">
+                        <header class="entry-header">
+                            <div class="entry-icon visible-md visible-lg">
+                                <img src="{{asset('uploads/parents_profile/')}}/{{$post->parent_avatar}}" alt="" width="140%" height="160%">
+                            </div>
+                            <a href="{{asset('parent/posts/view/')}}/{{$post->id}}"><h2>{{$post->title}}</h2></a>
+                            <div class="entry-meta">
+                                <span class="entry-author"><i class="fa fa-user"></i>
+                                    @if($post->parent==Auth::guard('parents')->user()->id)
+                                        Tôi
+                                    @else
+                                        <a href="{{asset('parent/parent_profile/')}}/{{$post->parent}}">{{$post->parent_name}}
+                                        </a>
+                                    @endif
+                                </span>
+                                <span class="entry-comments"><i class="fa fa-comments"></i> <a href="#">0 Comments</a></span>
+                                <span class=""><i class="fa fa-back-in-time"></i>
+                                    @if(date_diff(date_create($post->created_at), date_create('now'))->d==0)
+                                        Hôm nay
+                                    @else
+                                        {{date_diff(date_create($post->created_at), date_create('now'))->d}} ngày trước
+                                    @endif
+                                </span>
+                                <span>
+                                    Phụ huynh
+                                </span>
+                            </div>
+                        </header>
+                        <div class="excerpt">
+                            {!!$post->content !!}
+                            @if($post->images !=null)
+                                <figure class="alignnone entry-thumb">
+                                    <img src="{{asset('uploads/posts/')}}/{{$post->images}}" width="50%" alt="">
+                                </figure>
+                            @endif
+                        </div>
+                    </article>
+                @elseif($post->sitter)
                 <article class="entry entry__standard entry__with-icon">
                     <header class="entry-header">
                         <div class="entry-icon visible-md visible-lg">
-                            <img src="{{asset('uploads/parents_profile/')}}/{{$post->avatar}}" alt="" width="140%" height="160%">
+                            <img src="{{asset('uploads/sitters_profile/')}}/{{$post->sitter_avatar}}" alt="" width="140%" height="160%">
                         </div>
                         <a href="{{asset('parent/posts/view/')}}/{{$post->id}}"><h2>{{$post->title}}</h2></a>
                         <div class="entry-meta">
                             <span class="entry-author"><i class="fa fa-user"></i>
-                                @if($post->parent==Auth::guard('parents')->user()->id)
-                                    Tôi
-                                @else
-                                    <a href="{{asset('parent/parent_profile/')}}/{{$post->parent}}">{{$post->name}}
-                                    </a>
-                                 @endif
+                                <a href="{{asset('parent/sitter_profile/')}}/{{$post->sitter}}">{{$post->sitter_name}}
+                                </a>
                             </span>
                             <span class="entry-comments"><i class="fa fa-comments"></i> <a href="#">0 Comments</a></span>
                             <span class=""><i class="fa fa-back-in-time"></i>
@@ -92,6 +127,9 @@
                                 @else
                                     {{date_diff(date_create($post->created_at), date_create('now'))->d}} ngày trước
                                 @endif
+                            </span>
+                            <span style="color: rgb(32, 122, 59)74, 97, 97)">
+                                Bảo mẫu
                             </span>
                         </div>
                     </header>
@@ -103,7 +141,11 @@
                             </figure>
                         @endif
                     </div>
+                    <footer class="entry-footer">
+                        <a href="{{asset('sitter/posts/save')}}/{{$post->id}}" class="btn btn-primary">Lưu</a>
+                    </footer>
                 </article>
+                @endif
                 @endforeach
                 <div class="text-center">
                     <ul class="pagination-custom list-unstyled list-inline">

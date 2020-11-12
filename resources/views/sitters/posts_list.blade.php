@@ -16,9 +16,49 @@
             <div class="col-md-6">
                 <ul class="breadcrumb">
                     <li>
+                        <button type="button" class="btn btn-primary fa fa-pencil-square-o"
+                        data-toggle="modal" data-target=".post_add"> ĐĂNG BÀI VIẾT
+                        </button>
                     </li>
                 </ul>
         @include('noti.errors')
+                 <!-- modal feedback -->
+        <div class="modal fade post_add" id="post_add" tabindex="-1" role="dialog" aria-labelledby="post_add" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="post_add">Đăng bài viết mới</h5>
+                  </button>
+                </div>
+                <div class="modal-body">
+                <form action="{{asset('sitter/posts/add')}}" method="POST" enctype="multipart/form-data">
+                      {{csrf_field()}}
+                   <div class="form-group">
+                        <label for="" class="col-form-label">Tiêu đề</label>
+                        <input type="text" class="form-control" name="title">
+                   </div>
+                   <label for="company_logo">Hình ảnh:</label>
+                    <div class="field">
+                        <input type="file" class="form-control hidden" name="image" id="img" onchange="changeImg(this)"/>
+                        <img id="avatar" class="thumbnail" width="140px" src="{{asset('homepage/images/seo.png')}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="message-text" class="col-form-label" >Nội dung chi tiết:</label>
+                      <textarea class="form-control" id="ckeditor" name="description" cols="50"></textarea>
+                      <script>CKEDITOR.replace('ckeditor');</script>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Đăng</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- end modal feedback-->
+            </div>
+        </div>
     </div>
 </section>
 <!-- Page Heading / End -->
@@ -30,15 +70,16 @@
             <div class="content col-md-8">
                 <!-- Post (Standard Format) -->
                 @foreach($posts as $post)
+                @if($post->parent)
                 <article class="entry entry__standard entry__with-icon">
                     <header class="entry-header">
                         <div class="entry-icon visible-md visible-lg">
-                            <img src="{{asset('uploads/parents_profile/')}}/{{$post->avatar}}" alt="" width="140%" height="160%">
+                            <img src="{{asset('uploads/parents_profile/')}}/{{$post->parent_avatar}}" alt="" width="140%" height="160%">
                         </div>
                         <a href="{{asset('sitter/posts/view/')}}/{{$post->id}}"><h2>{{$post->title}}</h2></a>
                         <div class="entry-meta">
                             <span class="entry-author"><i class="fa fa-user"></i>
-                                <a href="{{asset('sitter/parent_profile/')}}/{{$post->parent}}">{{$post->name}}
+                                <a href="{{asset('sitter/parent_profile/')}}/{{$post->parent}}">{{$post->parent_name}}
                                 </a>
                             </span>
                             <span class="entry-comments"><i class="fa fa-comments"></i> <a href="#">0 Comments</a></span>
@@ -48,6 +89,9 @@
                                 @else
                                     {{date_diff(date_create($post->created_at), date_create('now'))->d}} ngày trước
                                 @endif
+                            </span>
+                            <span style="color: rgb(32, 122, 59)74, 97, 97)">
+                                Phụ huynh
                             </span>
                         </div>
                     </header>
@@ -63,12 +107,54 @@
                         <a href="{{asset('sitter/posts/save')}}/{{$post->id}}" class="btn btn-primary">Lưu</a>
                     </footer>
                 </article>
+                @elseif($post->sitter)
+                <article class="entry entry__standard entry__with-icon">
+                    <header class="entry-header">
+                        <div class="entry-icon visible-md visible-lg">
+                            <img src="{{asset('uploads/sitters_profile/')}}/{{$post->sitter_avatar}}" alt="" width="140%" height="160%">
+                        </div>
+                        <a href="{{asset('sitter/posts/view/')}}/{{$post->id}}"><h2>{{$post->title}}</h2></a>
+                        <div class="entry-meta">
+                            <span class="entry-author"><i class="fa fa-user"></i>
+                                @if($post->sitter==Auth::user()->id)
+                                    Tôi
+                                @else
+                                    <a href="{{asset('sitter/sitter_profile/')}}/{{$post->sitter}}">{{$post->sitter_name}}
+                                    </a>
+                                @endif
+                            </span>
+                            <span class="entry-comments"><i class="fa fa-comments"></i> <a href="#">0 Comments</a></span>
+                            <span class=""><i class="fa fa-back-in-time"></i>
+                                @if(date_diff(date_create($post->created_at), date_create('now'))->d==0)
+                                    Hôm nay
+                                @else
+                                    {{date_diff(date_create($post->created_at), date_create('now'))->d}} ngày trước
+                                @endif
+                            </span>
+                            <span style="color: rgb(32, 122, 59)74, 97, 97)">
+                                Bảo mẫu
+                            </span>
+                        </div>
+                    </header>
+                    <div class="excerpt">
+                        {!!$post->content !!}
+                        @if($post->images !=null)
+                            <figure class="alignnone entry-thumb">
+                                <img src="{{asset('uploads/posts/')}}/{{$post->images}}" width="50%" alt="">
+                            </figure>
+                        @endif
+                    </div>
+                    <footer class="entry-footer">
+                        <a href="{{asset('sitter/posts/save')}}/{{$post->id}}" class="btn btn-primary">Lưu</a>
+                    </footer>
+                </article>
+                @endif
                 @endforeach
-                <div class="text-center">
+                {{-- <div class="text-center">
                     <ul class="pagination-custom list-unstyled list-inline">
-                        {{$posts->links()}}
+
                     </ul>
-                </div>
+                </div> --}}
             </div>
 
             <aside class="sidebar col-md-4">

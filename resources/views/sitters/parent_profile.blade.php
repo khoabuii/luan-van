@@ -89,6 +89,12 @@
 
                                         <li><i class="fa fa-clock-o"></i> Tham gia vào {{$parent->created_at}}.</li>
                                     </ul>
+                                    @if(count($check_is_contract)!=0)
+                                        <span style="color: rgb(182, 97, 27)">
+                                            Bạn đã hoặc đang làm việc với người này, hãy đánh giá cho mọi người cùng biết nhé!
+                                        </span>
+                                    @endif
+
                                     <div class="spacer-lg"></div>
                                 <button type="button"
                                 @if(count($check_is_contract)!=0) disabled @endif
@@ -284,7 +290,9 @@
         <!-- Person Availability / End -->
         <div class="spacer-xl"></div>
         <h3 id="feedback_parent"><a href="#feedback_parent">Đánh giá</a>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedback">Gửi đánh giá của bạn</button>
+            @if(count($check_is_contract)!=0)
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedback">Gửi đánh giá của bạn</button>
+            @endif
         </h3>
         <!-- modal feedback -->
         <div class="modal fade" id="feedback" tabindex="-1" role="dialog" aria-labelledby="feedback" aria-hidden="true">

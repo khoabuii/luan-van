@@ -98,7 +98,17 @@
                                         </li>
                                         <li><i class="fa fa-clock-o"></i> Tham gia vào {{$sitter->created_at}}.</li>
                                         <li><i class="fa fa-money"></i>{{number_format($sitter->money)}} VND/Buổi</li>
+                                        <li>
+
+                                        </li>
                                     </ul>
+
+                                    @if(count($check_is_contract)!=0)
+                                        <span style="color: rgb(182, 97, 27)">
+                                            Bạn đã hoặc đang làm việc với người này, hãy đánh giá cho mọi người cùng biết nhé!
+                                        </span>
+                                    @endif
+
                                     <div class="spacer-lg"></div>
                                     @if(count($check)>0)
                                         <span class="btn btn-primary fa fa-check"> Đã lưu</span>
@@ -313,9 +323,12 @@
         <!-- Person Availability / End -->
         <div class="spacer-xl"></div>
         <h3 id="feedback_sitter"><a href="#feedback_sitter">Đánh giá</a>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedback">
-                @if(count($check_feedback)>0)Chỉnh sửa nhận xét của bạn @else Gửi đánh giá của bạn @endif</button>
-        </h3>
+            @if(count($check_is_contract) !=0)
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedback">
+                    @if(count($check_feedback)>0)Chỉnh sửa nhận xét của bạn @else Gửi đánh giá của bạn @endif
+                </button>
+            @endif
+            </h3>
         <small style="color: rgb(66, 25, 25)">Lưu ý: Mỗi người chỉ có thể đánh giá duy nhất 1 lần</small>
         <!-- modal feedback -->
         <div class="modal fade" id="feedback" tabindex="-1" role="dialog" aria-labelledby="feedback" aria-hidden="true">

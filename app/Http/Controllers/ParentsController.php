@@ -221,7 +221,7 @@ class ParentsController extends Controller
             ->where([
                 'sitter'=>$id,
                 'parent'=>Auth::guard('parents')->user()->id,
-                'status'=>0
+                'status'=>0||1
             ])->get();
 
         $data['activity']=Plan::where('sitter',$id_sitter)->get();
@@ -292,7 +292,7 @@ class ParentsController extends Controller
     // get delete save sitter
     public function getDeleteSaveSitter($id){
         save_sitters::destroy($id);
-        return back()->with('success','Bạn đã xóa thành công');
+        return response()->json(array('success'=>true));
     }
 
     // post rate sitters profile
@@ -331,11 +331,22 @@ class ParentsController extends Controller
 
     // posts
     public function getPostsList(){
-        $data['posts']=DB::table('posts')
+        $data['parents']=DB::table('posts')
         ->join('parents','posts.parent','=','parents.id')
-        ->select('posts.*','parents.name','parents.avatar')
+        ->select('posts.*','parents.name as parent_name','parents.avatar as parent_avatar')
         ->orderBy('posts.id','desc')
-        ->paginate(15);
+        ->get();
+
+        $data['sitters']=DB::table('posts')
+        ->join('sitters','posts.sitter','=','sitters.id')
+        ->select('posts.*','sitters.name as sitter_name','sitters.images as sitter_avatar')
+        ->orderBy('posts.id','desc')
+        ->get();
+
+        $posts=array();
+        $posts=array_merge($data['parents']->toArray(),$data['sitters']->toArray());
+        $data['posts']=$posts;
+        
         return view('parents.posts.posts_list',$data);
     }
     // post add

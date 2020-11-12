@@ -60,7 +60,7 @@
         <a href="#"><i class="icon icon-th-list"></i> <span>Gửi thông điệp</span> <span class="label label-important"></span></a>
         <ul <?php if(preg_match("/message/i", $url)){ ?> style="display:block;" <?php } ?>>
             <li>
-                <a href="{{url ('/admin/message')}}">Gửi thông điệp cho tất cả</a>
+                <a href="{{url ('/admin/message')}}">Gửi Email cho tất cả người dùng</a>
             </li>
 
             <li>

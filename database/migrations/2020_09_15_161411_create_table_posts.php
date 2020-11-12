@@ -21,6 +21,9 @@ class CreateTablePosts extends Migration
             // foreign parents
             $table->foreign('parent')->references('id')->on('parents')->onDelete('cascade');
             //
+            // $table->bigInteger('sitter')->unsigned()->nullable();
+            // $table->foreign('sitter')->references('id')->on('sitters')->onDelete('cascade');
+
             $table->text('content');
             $table->timestamps();
         });

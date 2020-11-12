@@ -43,11 +43,25 @@
                         @else
                             <span>Thêm vào {{date_diff(date_create($list->updated_at), date_create('now'))->d}} ngày trước</span><br>
                         @endif
+                        <span><button onclick="return delete_{{$list->id}}();">Xóa</button></span>
                         <br>
-                        <a href="{{asset('parent/save_sitters/delete')}}/{{$list->id}}">Xóa</a>
                     </div>
                 </div>
             </li>
+            <script>
+                function delete_{{$list->id}}(){
+                    $.ajax({
+                        type: 'GET',
+                        url: '{{asset('parent/save_sitters/delete')}}/{{$list->id}}',
+                        success: function(data){
+                            location.reload();
+                        },
+                        error:function(){
+                            location.reload();
+                        }
+                    });
+                }
+            </script>
             @endforeach
         </ul>
 
