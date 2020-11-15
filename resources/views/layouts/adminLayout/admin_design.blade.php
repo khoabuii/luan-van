@@ -35,6 +35,9 @@
             });
         });
     </script>
+    {{-- chart --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
 </head>
 <body>
 @include('layouts.adminLayout.admin_header')
@@ -58,6 +61,8 @@
 <script src="{{asset('/admin/js/matrix.popover.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
 <script>
     $( function() {
       $( "#expiry_date" ).datepicker({

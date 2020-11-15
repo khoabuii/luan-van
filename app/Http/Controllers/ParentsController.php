@@ -346,7 +346,7 @@ class ParentsController extends Controller
         $posts=array();
         $posts=array_merge($data['parents']->toArray(),$data['sitters']->toArray());
         $data['posts']=$posts;
-        
+
         return view('parents.posts.posts_list',$data);
     }
     // post add
@@ -384,6 +384,15 @@ class ParentsController extends Controller
             return abort(404);
         }
     }
+    // sitter post
+    public function sitterPost($id){
+        $data['sitter']=DB::table('sitters')->where('id',$id)->get();
+        $data['posts']=DB::table('posts')
+            ->where('sitter',$id)
+            ->get();
+        return view('parents.posts.sitter_posts',$data);
+    }
+
     // post parent
     public function getPostsParent(){
         $id_parent=Auth::guard('parents')->user()->id;

@@ -123,6 +123,10 @@
                                 <a href="{{asset('parent/chat')}}/{{$sitter->id}}" class="btn btn-primary">
                                     <span class="fa fa-inbox"></span>Chat
                                 </a>
+
+                                <a href="{{asset('parent/posts/sitter')}}/{{$sitter->id}}" class="btn btn-primary">
+                                    <span class="fa fa-newspaper-o"></span>Bài viết
+                                </a>
                             </div>
                         </div>
                         <!-- modal contract -->

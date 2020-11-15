@@ -187,6 +187,8 @@
                                 <a href="{{asset('sitter/delete_account')}}"
                                  onclick="return confirm('Khi bạn xóa mọi dữ liệu sẽ không còn trong hệ thống. Bạn có chắc chắn chưa?')" class="btn btn-danger"><span class="fa fa-user-times"></span> Xóa tài khoản</a>
                                  <a href="{{asset('sitter/contract')}}" class="btn btn-primary "><span class="fa fa-file-word-o"></span> Quản lý hợp đồng </a>
+                                 <br>
+                                 <a href="{{asset('sitter/posts/me')}}" class="btn btn-primary "><span class="fa "></span> Quản lý Bài viết </a>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="tab1-2">

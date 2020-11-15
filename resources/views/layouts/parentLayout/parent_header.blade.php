@@ -85,7 +85,7 @@
                     <ul>
                         <li><a href="{{asset('/parent/posts/add')}}">Đăng bài viết mới</a></li>
                         <li><a href="{{asset('/parent/posts')}}">Xem danh sách bài viết</a></li>
-                        <li><a href="{{asset('/parent/profile/post')}}">Bài viết của tôi</a></li>
+                        <li><a href="{{asset('/parent/profile/posts')}}">Bài viết của tôi</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Tìm kiếm</a> </li>

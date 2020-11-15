@@ -16,8 +16,8 @@ use Illuminate\Http\Request;
 use Closure;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
-use App\Jobs\SendEmail;
-use App\Mail\TestMail;
+use Carbon\Carbon;
+use Carbon\Doctrine\CarbonType;
 
 class AdminController extends Controller
 {
@@ -26,11 +26,7 @@ class AdminController extends Controller
         return view('admin.admin_login');
     }
     public function postLogin(Request $request){
-        // if(Session('admin')){
-        //     return redirect('admin/dashboard');
-        // }
         $email=$request->email;
-        // $password=md5($request->email);
         $password='827ccb0eea8a706c4c34a16891f84e7b';
         $user=User::where('email',$email)->where('password',$password)->get();
         if(count($user)>0){
@@ -50,6 +46,17 @@ class AdminController extends Controller
         $data['sitters']=Sitters::all();
         $data['parents']=Parents::all();
         $data['contracts']=Contract::all();
+        $data['posts']=Post::all();
+
+        $data['posts_parents']=Post::where('parent')->get();
+        $data['posts_sitters']=Post::where('sitter')->get();
+
+        $firstDateMonth="2018-1-1";
+        $nowDate=Carbon::now()->toDateString();
+
+        $data['sitters_now']=Sitters::whereBetween('created_at',[$firstDateMonth,$nowDate])
+            ->get();
+        $data['parents_now']=Parents::whereBetween('created_at',[$firstDateMonth,$nowDate])->get();
         return view('admin.dashboard',$data);
     }
     // sitter

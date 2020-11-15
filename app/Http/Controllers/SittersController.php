@@ -353,6 +353,18 @@ class SittersController extends Controller
 
         return back()->with('success','Bạn đã đăng thành công');
     }
+    public function parentPosts($id){
+        $data['parent']=DB::table('parents')->where('id',$id)->get();
+        $data['posts']=DB::table('posts')
+            ->where('parent',$id)
+            ->get();
+        return view('sitters.parent_posts',$data);
+    }
+    // my posts
+    public function myPosts(){
+        $data['posts']=DB::table('posts')->where('sitter',Auth::user()->id)->get();
+        return view('sitters.myPosts',$data);
+    }
 
     // save post id
     public function getSavePostId($id){

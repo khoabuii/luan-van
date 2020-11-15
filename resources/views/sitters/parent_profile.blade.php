@@ -104,6 +104,11 @@
                                 <a href="{{asset('sitter/chat')}}/{{$parent->id}}" class="btn btn-primary">
                                     <span class="fa fa-inbox"></span>Chat
                                 </a>
+
+                                <a href="{{asset('sitter/posts/parent')}}/{{$parent->id}}" class="btn btn-primary">
+                                    <span class="fa fa-pencil"></span>Bài đăng
+                                </a>
+                                
                                 </div>
                                 <!-- modal contract -->
                                 <div class="modal fade" id="contract" tabindex="-1" role="dialog" aria-labelledby="contract" aria-hidden="true">
