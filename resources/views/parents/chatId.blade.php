@@ -41,24 +41,6 @@
         </div>
         <div class="mesgs">
             <div class="msg_history" id="messages">
-            {{-- @foreach($chats as $chat)
-            @if($chat->check==0)
-            <div class="incoming_msg">
-                <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="received_msg">
-                <div class="received_withd_msg">
-                    <p>{{$chat->content}}</p>
-                    <span class="time_date"> 11:01 AM    |    June 9</span></div>
-                </div>
-            </div>
-            @elseif($chat->check==1)
-            <div class="outgoing_msg">
-                <div class="sent_msg">
-                <p>{{$chat->content}}</p>
-                <span class="time_date"> 11:01 AM    |    June 9</span> </div>
-            </div>
-            @endif
-             @endforeach --}}
              <script>
                 var sitter_id='{{$id_sitter}}';
                 var parent_id='{{Auth::guard('parents')->user()->id}}';
@@ -67,9 +49,16 @@
                 var time=today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' | '+today.getHours()+':'+today.getMinutes();
 
                 function sendMessage() {
+                    $.ajax({
+                        type:'GET',
+                        url:"{{asset('parent/chat/sentNoti/15')}}",
+                        success: function(data){
+
+                        }
+                    });
+
                     // get message
                     var message = document.getElementById("message").value;
-
                     // save in database
                     firebase.database().ref(title).push().set({
                         "sitter": sitter_id,
@@ -90,7 +79,6 @@
                     var time=snapshot.val().time;
                     if(snapshot.val().check==0){
                         html +='<div class="incoming_msg" ';
-                        // html +='<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" width="10%"> </div>';
                         html += '<div class="received_msg">';
                         html += '<div class="received_withd_msg">';
                         html +='<p>';
@@ -102,7 +90,6 @@
                         html +=  '  </div>';
                         html +='</div>';
                     }else{
-                        console.log(message);
                         html +='<div class="outgoing_msg">';
                         html +='<div class="sent_msg">';
                         html +='<p id="message-'+snapshot.key+'">';

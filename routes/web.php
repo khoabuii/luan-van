@@ -57,6 +57,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/parents','AdminController@getMessage');
         Route::post('/parents','AdminController@postMessage');
     });
+    Route::get('test_noti','AdminController@notiToAll');
 });
 
 // parent
@@ -131,7 +132,7 @@ Route::group(['prefix' => 'parent'], function () {
     Route::group(['prefix' => 'chat','middleware'=>'checkLoginParents'], function () {
         Route::get('/','ParentsController@getChat');
         Route::get('/{id}','ParentsController@showChatSitter');
-        Route::post('/{id}','ParentsController@postShowChatSitter');
+        Route::get('/sentNoti/{id}','ParentsController@sentNoti');
     });
     // delete account
     Route::get('/delete_account','ParentsController@deleteAccount')->middleware('checkLoginParents');
@@ -214,7 +215,7 @@ Route::group(['prefix' => 'sitter'], function () {
     Route::group(['prefix' => 'chat','middleware'=>'checkLoginSitters'], function () {
         Route::get('/','SittersController@getChat');
         Route::get('/{id}','SittersController@showChatParent');
-        Route::post('/{id}','SittersController@postShowChatParent');
+        Route::get('/sentNoti/{id}','SittersController@sentNoti');
     });
 
     //delete acc

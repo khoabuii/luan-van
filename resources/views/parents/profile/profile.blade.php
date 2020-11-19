@@ -406,7 +406,7 @@
                               <img src="{{asset('uploads/sitters_profile')}}/{{$feed->avatar}}" width="200px" alt="">
                           </div>
                           <div>
-                              <div class="name"><center><a href="#">{{$feed->name}}</a>
+                              <div class="name"><center><a href="{{asset('parent/sitter_profile')}}/{{$feed->sitter}}">{{$feed->name}}</a>
 
                               </center></div>
                           </div>
@@ -461,7 +461,6 @@
     // show districts
     $("select[name='provinces']").change(function(){
         var province_id = $(this).val();
-        // console.log(province_id);
         var token = $("input[name='_token']").val();
         $.ajax({
             url: url_districts,

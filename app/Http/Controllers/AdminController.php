@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Carbon\Doctrine\CarbonType;
-
+use OneSignal;
 class AdminController extends Controller
 {
     //
@@ -226,5 +226,15 @@ class AdminController extends Controller
             return back()->with('success','Bạn đã thông báo qua email cho tất cả người dùng bảo mẫu');
         }
         return false;
+    }
+    public function notiToAll(){
+        OneSignal::sendNotificationToAll(
+            "Some Message",
+            $url = null,
+            $data = null,
+            $buttons = null,
+            $schedule = null
+        );
+        return "";
     }
 }

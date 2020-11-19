@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+
+use OneSignal;
 use mysqli;
 use Illuminate\Support\Facades\Storage;
 
@@ -270,6 +272,16 @@ class SittersController extends Controller
             ])->get();
 
         $data['activity']=Plan::where('parent',$id)->get();
+
+        if(count($data['feedback'])!=0){
+            $rate_parent=DB::table('feedback_parents')
+            ->where('parent',$id)
+            ->groupBy('parent')
+            ->selectRaw('sum( rate_parent) as sum')
+            ->get('sum');
+
+            $data['avg_rate']=$rate_parent->sum('sum')/count($data['feedback']);
+        }
         return view('sitters.parent_profile',$data);
     }
 
@@ -480,46 +492,22 @@ class SittersController extends Controller
         ->where('sitter',Auth::user()->id)->where('parent',$id)->get();
         return view('sitters.chatId',$data);
     }
-    //post chat
-    public function postShowChatParent(Request $request,$id){
-        $input=$request->all();
-        $message=$input['message'];
-        $chat =new Message([
-            'sitter'=>Auth::user()->id,
-            'parent'=>$id,
-            'content'=>$message,
-            'check'=>0
-        ]);
-        $this->broadcastMessage(Auth::user()->id,$id,$message,0);
+    // sent Notification to parent
+    public function sentNoti($id){
+        $my_id=Auth::user()->id;
 
-        $chat->save();
-        return redirect()->back();
-    }
-    //
-    public function broadcastMessage($sitter, $parent,$content,$check){
-        $optionBuilder = new OptionsBuilder();
-        $optionBuilder->setTimeToLive(60*20);
+        $parent=Parents::find($id);
+        $parent_name=$parent->name;
+        $sitter=Sitters::find($my_id)->name;
 
-        $notificationBuilder = new PayloadNotificationBuilder('Bạn có tin nhắn mới');
-        $notificationBuilder->setBody($content)
-                    ->setSound('default')
-                    ->setClickAction('https://khoabui.dev/sitter/'.$parent);
-
-        $dataBuilder=new PayloadDataBuilder();
-        $dataBuilder->addData([
-            'sitter'=>$sitter,
-            'parent'=>$parent,
-            'content'=>$content,
-            'check'=>$check
-        ]);
-        $option=$optionBuilder->build();
-        $notification=$notificationBuilder->build();
-        $data=$dataBuilder->build();
-        $tokens=Sitters::all()->pluck('fcm_token')->toArray();
-
-        $downstreamResponse = FCM::sendTo($tokens, $option, $notification, $data);
-
-        return $downstreamResponse->numberSuccess();
+        OneSignal::sendNotificationToAll(
+            "Bạn nhận được tin nhắn từ Bảo mẫu ".$sitter." ",
+            $url = "/parent/chat/".$my_id."",
+            $data = null,
+            $buttons = null,
+            $schedule = null
+        );
+        return response()->json(array('success'=>true));
     }
 
     //delete account

@@ -88,6 +88,12 @@
                                         </li>
 
                                         <li><i class="fa fa-clock-o"></i> Tham gia vào {{$parent->created_at}}.</li>
+                                        <li>
+                                            <i class="fa fa-plus-square"></i>Điểm đánh giá TB:
+                                            @if(count($feedback)!=0)
+                                                <b>{{$avg_rate}} / 5 <i class="fa fa-star"></i></b>
+                                            @endif
+                                        </li>
                                     </ul>
                                     @if(count($check_is_contract)!=0)
                                         <span style="color: rgb(182, 97, 27)">
@@ -108,7 +114,7 @@
                                 <a href="{{asset('sitter/posts/parent')}}/{{$parent->id}}" class="btn btn-primary">
                                     <span class="fa fa-pencil"></span>Bài đăng
                                 </a>
-                                
+
                                 </div>
                                 <!-- modal contract -->
                                 <div class="modal fade" id="contract" tabindex="-1" role="dialog" aria-labelledby="contract" aria-hidden="true">

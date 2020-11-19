@@ -99,7 +99,10 @@
                                         <li><i class="fa fa-clock-o"></i> Tham gia vào {{$sitter->created_at}}.</li>
                                         <li><i class="fa fa-money"></i>{{number_format($sitter->money)}} VND/Buổi</li>
                                         <li>
-
+                                            <i class="fa fa-plus-square"></i>Điểm đánh giá TB:
+                                            @if(count($feedback)!=0)
+                                                <b>{{$avg_rate}} / 5 <i class="fa fa-star"></i></b>
+                                            @endif
                                         </li>
                                     </ul>
 

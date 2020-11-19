@@ -48,6 +48,13 @@
                     var today=new Date();
                     var time=today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' | '+today.getHours()+':'+today.getMinutes();
                     function sendMessage() {
+                        $.ajax({
+                        type:'GET',
+                        url:"{{asset('sitter/chat/sentNoti/1')}}",
+                        success: function(data){
+
+                        }
+                    });
                         // get message
                         var message = document.getElementById("message").value;
                         document.getElementById("message").value="";
@@ -59,7 +66,7 @@
                             "message": message,
                             "time":time
                         });
-                        
+
                         return false;
                     }
                 </script>

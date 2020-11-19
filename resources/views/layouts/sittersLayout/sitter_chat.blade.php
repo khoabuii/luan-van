@@ -225,6 +225,9 @@
         OneSignal.push(function() {
             OneSignal.init({
             appId: "8ccfdafd-0148-4566-969d-bb60a2b11328",
+            notifyButton: {
+                enable: true,
+            },
             });
         });
     </script>
