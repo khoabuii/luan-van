@@ -20,7 +20,9 @@
                                 <label class="pull-left">
                                     Mật khẩu <span class="required">*</span>
                                 </label>
-                                <span class="pull-right"><a href="#">Quên mật khẩu?</a></span>
+                                <span class="pull-right small">
+                                    <button class="" class="small" type="button" data-toggle="modal" data-target="#forgetPass">Quên mật khẩu?</button>
+                                </span>
                             </div>
                             <input type="password" name="password" placeholder="Nhập mật khẩu" class="form-control">
                         </div>
@@ -32,6 +34,33 @@
                     </form>
                 </div>
             </div>
+
+            <!-- MODAL PASSWORD RESET -->
+            <div class="modal fade" id="forgetPass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Quên mật khẩu</h5>
+                    </div>
+                    <div class="modal-body">
+                      <form action="{{asset('parent/login/reset_password')}}" method="POST">
+                        {{csrf_field()}}
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Địa chỉ Email</label>
+                            <input type="email" class="form-control" name="email_reset">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Xác nhận</button>
+                    </div>
+                      </form>
+                  </div>
+                </div>
+              </div>
+            <!-- END MODAL PASSWORD RESET -->
+
             <div class="col-md-7">
                 <div class="spacer-lg visible-sm visible-xs"></div>
                 <div class="box">

@@ -153,11 +153,28 @@ class AdminController extends Controller
     }
     // view all post parent
     public function allPost(){
-        $data['posts']=DB::table('posts')
+        $data['parents']=DB::table('posts')
         ->join('parents','posts.parent','=','parents.id')
-        ->select('posts.*','parents.id as id_parent','parents.name','parents.avatar')
+        ->select('posts.*','parents.id as id_parent','parents.name as parent_name','parents.avatar as parent_img')
+        ->orderByDesc('posts.id')
         ->get();
+
+        $data['sitters']=DB::table('posts')
+        ->join('sitters','posts.sitter','=','sitters.id')
+        ->select('posts.*','sitters.id as id_sitter','sitters.name as sitter_name','sitters.images as sitter_img')
+        ->orderByDesc('posts.id')
+        ->get();
+
+        $posts=array();
+        $posts=array_merge($data['parents']->toArray(),$data['sitters']->toArray());
+        $data['posts']=$posts;
+
         return view('admin.posts.view-posts',$data);
+    }
+    // delete posts
+    public function deletePost($id){
+        $this->deletePostParent($id);
+        return back()->with('delete','Đã xóa bài viết thành công');
     }
     // contracts
     public function getContracts(){
@@ -196,7 +213,6 @@ class AdminController extends Controller
         $email=array_merge($sitter,$parent);
 
         $test=['myoneemail@esomething.com', 'myother@esomething.com','myother2@esomething.com'];
-        // dd($email);
         //send mail for all users
         if(\Request::is('admin/message')){
             Mail::send('admin.message.mail_content', $data, function ($message) use ($email,$subject) {

@@ -101,7 +101,7 @@
                     <ul>
                         <li><a href="{{asset('sitter/profile')}}">Xem hồ sơ</a></li>
                         <li><a href="{{asset('sitter/profile/posts')}}">Đăng bài tuyển dụng</a></li>
-                        <li><a href="{{asset('sitter/profile/update')}}">Cập nhật tài khoản</a></li>
+                        <li><a href="{{asset('sitter/profile/update_info')}}">Cập nhật tài khoản</a></li>
                     </ul>
                 </li>
                 <li

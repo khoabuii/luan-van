@@ -13,11 +13,15 @@ use App\Post;
 use App\Province;
 use App\save_sitters;
 use App\Sitters;
+use App\PasswordReset;
+
+use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Str;
 use OneSignal;
 use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
@@ -113,7 +117,36 @@ class ParentsController extends Controller
         $data['activity']=Plan::where('parent',Auth::guard('parents')->user()->id)->get();
         return view('parents.profile.profile',$data);
     }
-    // post update activity
+    // view update info
+    public function getUpdateInfo(){
+        return view('parents.profile.update');
+    }
+    // post update profile
+    public function postUpdateInfo(Request $request){
+        $id=Auth::guard('parents')->user()->id;
+        $parent=Parents::find($id);
+
+        $parent->name=$request->name;
+        $parent->birthDay=$request->birthDay;
+        $parent->address=$request->address;
+
+        if($request->changePassword !=null){
+            $parent->password=bcrypt($request->re_new_password);
+        }
+        $parent->description=$request->description;
+
+        $file=request()->file('images');
+        if($file !=null){
+            $file=$file->store('parents_profile',['disk'=>'uploads']);
+            $file=substr($file,16);
+            $parent->avatar=$file;
+        }
+        $parent->save();
+
+        return redirect('parent/profile');
+    }
+
+    ////////////// post update activity ///////////////////////////////
     public function updateWorkTime(Request $request){
         $parent=Auth::guard('parents')->user()->id;
         $plan=new Plan();
@@ -159,6 +192,7 @@ class ParentsController extends Controller
         }
         return false;
     }
+    ///////////// Post update image/////////////////////////////////
     public function postImageUpdate(Request $request){
         $id_parent=Auth::guard('parents')->user()->id;
         $img=parents::findOrFail($id_parent);
@@ -170,6 +204,7 @@ class ParentsController extends Controller
         $img->save();
         return back();
     }
+    //////////////// post update location ////////////////////////////////
     public function postLocationUpdate(Request $request){
         $location=new Location();
         $parent_id=Auth::guard('parents')->user()->id;
@@ -196,7 +231,7 @@ class ParentsController extends Controller
         $location->save();
         return back()->with('update','Đã cập nhật vị trí');
     }
-    // get sitter profile
+    /////////////// get sitter profile //////////////////////////////////
     public function getSitterProfile($id){
         $id_sitter=$id;
         $id_parent=Auth::guard('parents')->user()->id;
@@ -232,7 +267,7 @@ class ParentsController extends Controller
             ->groupBy('sitter')
             ->selectRaw('sum( rate_sitter) as sum')
             ->get('sum');
-            
+
             $data['avg_rate']=$rate_sitter->sum('sum')/count($data['feedback']);
         }
 
@@ -240,7 +275,7 @@ class ParentsController extends Controller
 
         return view('parents.sitter_profile',$data);
     }
-    //getListSitters
+    /////////////// get List Sitters ////////////////////////////////////////////
     public function getListSitters(){
         $data['location']=Province::all();
         $data['sitters']=DB::table('sitters')
@@ -341,7 +376,7 @@ class ParentsController extends Controller
         return response()->json(array('success'=>true));
     }
 
-    // posts
+    // posts List
     public function getPostsList(){
         $data['parents']=DB::table('posts')
         ->join('parents','posts.parent','=','parents.id')
@@ -496,6 +531,7 @@ class ParentsController extends Controller
         $data['sitters']=Sitters::all();
         return view('parents.chat',$data);
     }
+
     // show chat by ID sitter
     public function showChatSitter($id){
         $data['sitters']=Sitters::all();
@@ -504,6 +540,7 @@ class ParentsController extends Controller
         ->where('sitter',$id)->get();
         return view('parents.chatId',$data);
     }
+
     // sent notification sitter
     public function sentNoti($id){
         $my_id=Auth::guard('parents')->user()->id;
@@ -530,4 +567,45 @@ class ParentsController extends Controller
         Parents::destroy($id);
         return redirect('parent/login')->with('success','Bạn đã xóa tài khoản của mình');
     }
+    ////////////////////// password reset //////////////////////////////
+    public function sendMailToReset(Request $request){
+        $email_reset=$request->email_reset;
+        $parent=Parents::where('email',$email_reset)->firstOrFail();
+        $passwordReset = PasswordReset::updateOrCreate([
+            'email' => $parent->email,
+        ], [
+            'token' => Str::random(60),
+        ]);
+
+        $token=PasswordReset::where('email',$email_reset)->select('token')->first('token');
+        $data['url']=url('parent/login/reset_password/'.$token->token);
+        if ($passwordReset) {
+            Mail::send('sendMailPassReset', $data, function ($message)use($email_reset) {
+
+                $message->from('khoab1606808@gmail.com', 'Khoa Bui');
+
+                $message->to($email_reset);
+
+                $message->subject('Khôi phục mật khẩu của bạn');
+            });
+        }
+        return back()->with('pass_reset','Chúng tôi đã gửi mail cho bạn để xác nhận');
+    }
+    public function resetPassword(Request $request, $token){
+        $passwordReset = PasswordReset::where('token', $token)->firstOrFail();
+        if (Carbon::parse($passwordReset->updated_at)->addMinutes(720)->isPast()) {
+            $passwordReset->delete();
+
+            return response()->json([
+                'message' => 'This password reset token is invalid.',
+            ], 422);
+        }
+        $parent = Parents::where('email', $passwordReset->email)->firstOrFail();
+        $parent->password=bcrypt('123456');
+        $parent->save();
+        $passwordReset->delete();
+
+        return redirect('parent/login')->with('pass_reset','Mật khẩu mới của bạn là \n 123456');
+    }
+
 }

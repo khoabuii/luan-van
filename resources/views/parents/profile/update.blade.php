@@ -1,4 +1,4 @@
-@extends('layouts.sittersLayout.sitter_app')
+@extends('layouts.parentLayout.parent_app')
 @section('title','Update Profile')
 @section('content')
 <!-- Page Heading -->
@@ -29,7 +29,7 @@
                     <fieldset>
                         <label>Your Email</label>
                         <div class="field">
-                            <input type="email" class="form-control" disabled  value="{{Auth::user()->email}}" />
+                            <input type="email" class="form-control" disabled  value="{{Auth::guard('parents')->user()->email}}" />
                         </div>
                     </fieldset>
 
@@ -39,46 +39,23 @@
                             <div class="col-md-4">
                                 <label for="job_title">Họ tên</label>
                                 <div class="field">
-                                    <input type="text" class="form-control" name="name" value="{{Auth::user()->name}}"/>
+                                    <input type="text" class="form-control" name="name" value="{{Auth::guard('parents')->user()->name}}"/>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label for="job_title">Ngày sinh</label>
                                 <div class="field">
-                                    <input type="date" class="form-control" name="birthDay" value="{{Auth::user()->birthDay}}"/>
+                                    <input type="date" class="form-control" name="birthDay" value="{{Auth::guard('parents')->user()->birthDay}}"/>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <label for="">Giới tính</label>
-                                <div class="field">
-                                    &nbsp;&nbsp;&nbsp; <input type="radio" value="0" name="gender" checked> Nam<br>
-                                    &nbsp;&nbsp;&nbsp; <input type="radio" value="1" name="gender"> Nữ
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
 
-                    <fieldset>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <label for="job_title">Học vấn</label>
-                                <div class="field">
-                                    <input type="text" class="form-control" name="education" value="{{Auth::user()->education}}"/>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label for="job_title">Tiền công / buổi</label>
-                                <div class="field">
-                                    <input type="number" class="form-control" name="money" value="{{Auth::user()->money}}"/>
-                                </div>
-                            </div>
                         </div>
                     </fieldset>
 
                     <fieldset class="fieldset-job_location">
-                        <label for="job_location">Quê quán</label>
+                        <label for="job_location">Địa chỉ</label>
                         <div class="field">
-                            <input type="text" value="{{Auth::user()->address}}" class="form-control" name="address" />
+                            <input type="text" value="{{Auth::guard('parents')->user()->address}}" class="form-control" name="address" />
                         </div>
                     </fieldset>
                     <div class="row">
@@ -119,7 +96,7 @@
                     <fieldset class="fieldset-job_description">
                         <label>Description</label>
                         <div class="field">
-                            <textarea name="description" cols="30" rows="10" id="" class="form-control">{{Auth::user()->description}}
+                            <textarea name="description" cols="30" rows="10" id="" class="form-control">{{Auth::guard('parents')->user()->description}}
                             </textarea>
                         </div>
                     </fieldset>

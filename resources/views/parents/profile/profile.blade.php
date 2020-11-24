@@ -170,6 +170,11 @@
                                     <a href="{{asset('parent/delete_account')}}"
                                  onclick="return confirm('Khi bạn xóa mọi dữ liệu sẽ không còn trong hệ thống. Bạn có chắc chắn chưa?')"
                                   class="btn btn-danger"><span class="fa fa-user-times"></span> Xóa tài khoản</a>
+                                  <br> <br>
+                                  <a href="{{asset('parent/profile/update_info')}}" class="btn btn-primary">
+                                    <span class="fa fa"></span>
+                                    Cập nhật tài khoản
+                                </a>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="tab1-2">

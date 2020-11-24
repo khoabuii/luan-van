@@ -42,6 +42,7 @@ Route::group(['prefix' => 'admin'], function () {
     });
     Route::group(['prefix' => 'posts','middleware'=>'checkLoginAdmin'], function () {
         Route::get('/','AdminController@allPost');
+        Route::get('/delete/{id}','AdminController@deletePost');
     });
     Route::group(['prefix' => 'contracts','middleware'=>'checkLoginAdmin'], function () {
         Route::get('/','AdminController@getContracts');
@@ -73,6 +74,9 @@ Route::group(['prefix' => 'parent'], function () {
     Route::group(['prefix' => 'login'], function () {
         Route::get('/','ParentsController@getRegister');
         Route::post('/','ParentsController@postLogin');
+
+        Route::post('reset_password','ParentsController@sendMailToReset');
+        Route::get('reset_password/{token}','ParentsController@resetPassword');
     });
     //logout
     Route::get('/logout','ParentsController@logout');
@@ -86,6 +90,10 @@ Route::group(['prefix' => 'parent'], function () {
         Route::post('/update-activity','ParentsController@updateWorkTime')->name('post.update_activity.parent');
         // posts manage
         Route::get('/posts','ParentsController@getPostsParent');
+
+        //update info
+        Route::get('/update_info','ParentsController@getUpdateInfo');
+        Route::post('/update_info','ParentsController@postUpdateInfo');
     });
     // list_babysitter
     Route::get('/list_sitters','ParentsController@getListSitters')->middleware('checkLoginParents');
@@ -145,13 +153,16 @@ Route::post('showWards','HomeController@showWards');    // show wards
 //
 
 
-//babysitter
+// babysitter
 Route::group(['prefix' => 'sitter'], function () {
     Route::get('/','SittersController@getIndex')->middleware('checkLoginSitters');
     // login
     Route::group(['prefix' => 'login'], function () {
         Route::get('/','SittersController@getRegister');
         Route::post('/','SittersController@postLogin');
+
+        Route::post('reset_password','SittersController@sendMailToReset');
+        Route::get('reset_password/{token}','SittersController@resetPassword');
     });
     Route::group(['prefix' => 'register'], function () {
         Route::get('/','SittersController@getRegister');

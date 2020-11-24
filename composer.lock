@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3bc6b37fad17fccb6fd7599d3e8505ce",
+    "content-hash": "64b65dca4f3cb48c18e8e43384df9d65",
     "packages": [
         {
             "name": "apility/laravel-fcm",
@@ -7309,6 +7309,7 @@
                 "faker",
                 "fixtures"
             ],
+            "abandoned": true,
             "time": "2019-12-12T13:22:17+00:00"
         },
         {

@@ -1,6 +1,11 @@
 @extends('layouts.adminLayout.admin_design')
 @section('title','Xem danh sách bài viết')
 @section('content')
+@if(session('delete'))
+<script>
+    alert('{{session('delete')}}');
+</script>
+@endif
 <div id="content">
     <div id="content-header">
         <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
@@ -22,20 +27,27 @@
         <thead>
             <tr>
                 <th class="span3">Người đăng</th>
-                <th>Tiêu đề</th>
+                <th class="span4">Tiêu đề</th>
                 <th>Nội dung</th>
-                <th>Ngày đăng</th>
-                <th>Action</th>
+                <th class="span2">Ngày đăng</th>
+                <th class="span2">Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach($posts as $post)
             <tr class="gradeX">
                 <td class="span3">
-                    <center>
-                    <img src="{{asset('uploads/parents_profile')}}/{{$post->avatar}}" width="50%"><br>
-                    <a href="{{asset('admin/parents/detail')}}/{{$post->id_parent}}" style="color: blueviolet">{{$post->name}}</a>
-                    </center>
+                    @if($post->parent !=null)
+                        <center>
+                            <img src="{{asset('uploads/parents_profile')}}/{{$post->parent_img}}" width="50%"><br>
+                            <a href="{{asset('admin/parents/detail')}}/{{$post->parent}}" style="color: blueviolet">{{$post->parent_name}}</a>(Phụ huynh)
+                        </center>
+                    @elseif($post->sitter !=null)
+                        <center>
+                            <img src="{{asset('uploads/sitters_profile')}}/{{$post->sitter_img}}" width="50%"><br>
+                            <a href="{{asset('admin/sitters/detail')}}/{{$post->sitter}}" style="color: blueviolet">{{$post->sitter_name}}</a>(Bảo mẫu)
+                        </center>
+                    @endif
                 </td>
                 <td>
                     {{$post->title}}
@@ -52,8 +64,8 @@
                 <td>
                     <a href="{{asset('admin/posts/detail')}}/{{$post->id}}" style="color: blueviolet">
                         <i class="icon icon-eye-open"></i> Xem chi tiết</a> /
-                    <a href="{{asset('admin/parents/detail/delete_post')}}/{{$post->id}}" style="color: blueviolet" onclick="return confirm('Bạn có chắc chưa?')">
-                        <i class="icon icon-eye-open"></i>Xóa</a>
+                    <a href="{{asset('admin/posts/delete')}}/{{$post->id}}" style="color: blueviolet" onclick="return confirm('Bạn có chắc chưa?')">
+                        <i class="icon icon-remove"></i> Xóa</a>
                 </td>
             </tr>
             @endforeach

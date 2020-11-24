@@ -6,19 +6,22 @@ use App\Contract;
 use App\feedback_parent;
 use App\img_sitter;
 use App\Location;
-use App\Message;
 use App\Parents;
 use App\Plan;
 use App\Post;
 use App\Province;
 use App\save_post;
 use App\Sitters;
+use App\PasswordReset;
+use App\Notifications\ResetPasswordRequest;
+
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use OneSignal;
 use mysqli;
 use Illuminate\Support\Facades\Storage;
@@ -120,6 +123,41 @@ class SittersController extends Controller
         $id=Auth::user()->id;
         $data['address']=Province::all();
         return view('sitters.profile.update',$data);
+    }
+    // post update profile
+    public function postUpdateProfile(Request $request){
+        $id=Auth::user()->id;
+        $sitter=Sitters::find($id);
+
+        $sitter->name=$request->name;
+        $sitter->birthDay=$request->birthDay;
+        $sitter->gender=$request->gender;
+        $sitter->education=$request->education;
+        $sitter->money=$request->money;
+        $sitter->address=$request->address;
+
+        // dd($request->changePassword);
+        // change password
+        if($request->changePassword !=null){
+            $sitter->password=bcrypt($request->re_new_password);
+        }
+        $sitter->description=$request->description;
+
+        $file=request()->file('images');
+        if($file !=null){
+            $file=$file->store('sitters_profile',['disk'=>'uploads']);
+            $file=substr($file,16);
+            $sitter->images=$file;
+
+            $img=new img_sitter();
+            $img->sitter_id=$id;
+            $img->img=$file;
+
+            $img->save();
+        }
+        $sitter->save();
+
+        return redirect('sitter/profile');
     }
     // post update images
     public function postImagesProfile(Request $request){
@@ -515,5 +553,46 @@ class SittersController extends Controller
         $id=Auth::user()->id;
         Sitters::destroy($id);
         return redirect('sitter/login')->with('success','Bạn đã xóa tài khoản của mình');
+    }
+
+    /////////////// PASSWORD RESET ////////////////////
+    public function sendMailToReset(Request $request){
+        $email_reset=$request->email_reset;
+        $sitter=Sitters::where('email',$email_reset)->firstOrFail();
+        $passwordReset = PasswordReset::updateOrCreate([
+            'email' => $sitter->email,
+        ], [
+            'token' => Str::random(60),
+        ]);
+
+        $token=PasswordReset::where('email',$email_reset)->select('token')->first('token');
+        $data['url']=url('sitter/login/reset_password/'.$token->token);
+        if ($passwordReset) {
+            Mail::send('sendMailPassReset', $data, function ($message)use($email_reset) {
+
+                $message->from('khoab1606808@gmail.com', 'Khoa Bui');
+
+                $message->to($email_reset);
+
+                $message->subject('Khôi phục mật khẩu của bạn');
+            });
+        }
+        return back()->with('pass_reset','Chúng tôi đã gửi mail cho bạn để xác nhận');
+    }
+    public function resetPassword(Request $request, $token){
+        $passwordReset = PasswordReset::where('token', $token)->firstOrFail();
+        if (Carbon::parse($passwordReset->updated_at)->addMinutes(720)->isPast()) {
+            $passwordReset->delete();
+
+            return response()->json([
+                'message' => 'This password reset token is invalid.',
+            ], 422);
+        }
+        $sitter = Sitters::where('email', $passwordReset->email)->firstOrFail();
+        $sitter->password=bcrypt('123456');
+        $sitter->save();
+        $passwordReset->delete();
+
+        return redirect('sitter/login')->with('pass_reset','Mật khẩu mới của bạn là \n 123456');
     }
 }

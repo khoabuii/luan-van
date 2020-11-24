@@ -104,7 +104,7 @@
                     <ul>
                         <li><a href="{{asset('parent/profile/')}}">Xem hồ sơ</a></li>
                         <li><a href="blog-left-sidebar.html">Đăng bài tuyển dụng</a></li>
-                        <li><a href="blog-fullwidth.html">Cập nhật tài khoản</a></li>
+                        <li><a href="{{asset('parent/profile/update_info')}}">Cập nhật tài khoản</a></li>
                     </ul>
                 </li>
                 <li @if(Request::is('parent/save_sitters'))
