@@ -122,6 +122,8 @@ Route::group(['prefix' => 'parent'], function () {
 
         //delete post
         Route::get('/delete/{id}','ParentsController@getDeletePost');
+
+        Route::get('/comment/{id}','ParentsController@postComment');
     });
     // rate sitters
     Route::post('/rate_sitter/{id}','ParentsController@postRateSitter')->middleware('checkLoginParents');
@@ -131,6 +133,8 @@ Route::group(['prefix' => 'parent'], function () {
     // contract
     Route::group(['prefix' => 'contract','middleware'=>'checkLoginParents'], function () {
         Route::get('/','ParentsController@getContract');
+        Route::get('/{id}','ParentsController@detailContract');
+
         Route::get('/sendRequest/{id}','ParentsController@sendRequestContractSitter');
 
         Route::get('/accept/{id}','ParentsController@acceptContract');
@@ -213,6 +217,8 @@ Route::group(['prefix' => 'sitter'], function () {
         Route::get('/parent/{id}','SittersController@parentPosts');
 
         Route::get('/me','SittersController@myPosts');
+
+        Route::get('/comment/{id}','ParentsController@postComment');
     });
     // contract
     Route::group(['prefix' => 'contract','middleware'=>'checkLoginSitters'], function () {

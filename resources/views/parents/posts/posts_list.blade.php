@@ -86,7 +86,8 @@
                                         </a>
                                     @endif
                                 </span>
-                                <span class="entry-comments"><i class="fa fa-comments"></i> <a href="#">0 Comments</a></span>
+                                <span class="entry-comments"><i class="fa fa-comments"></i>
+                                    <a data-toggle="modal" data-target="#comment_{{$post->id}}"> Comments</a></span>
                                 <span class=""><i class="fa fa-back-in-time"></i>
                                     @if(date_diff(date_create($post->created_at), date_create('now'))->d==0)
                                         Hôm nay
@@ -120,7 +121,7 @@
                                 <a href="{{asset('parent/sitter_profile/')}}/{{$post->sitter}}">{{$post->sitter_name}}
                                 </a>
                             </span>
-                            <span class="entry-comments"><i class="fa fa-comments"></i> <a href="#">0 Comments</a></span>
+                            <span class="entry-comments"><i class="fa fa-comments"></i> <a data-toggle="modal" data-target="#comment_{{$post->id}}"> Comments</a></span>
                             <span class=""><i class="fa fa-back-in-time"></i>
                                 @if(date_diff(date_create($post->created_at), date_create('now'))->d==0)
                                     Hôm nay
@@ -147,8 +148,73 @@
                 </article>
                 @endif
                 @endforeach
+                <!-- modal comment -->
+                @foreach($posts as $post)
+                    <div class="modal fade" id="comment_{{$post->id}}" tabindex="-1" role="dialog" aria-labelledby="comments" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="modal-title">
+                                        <h4>Bình luận bài viết:<span style="color: brown">{{$post->title}}</span> </h4>
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- content comments -->
+                                    @foreach($comments as $comment)
+                                    @if($comment->posts==$post->id)
+                                        <div class="modal-header">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    @if(!empty($comment->sitter))
+                                                        <h5>{{$comment->sitter_name}} <p style="color: black">(Bảo mẫu)</p></h5>
+                                                    @elseif(!empty($comment->parent))
+                                                        <h5>{{$comment->parent_name}} <p style="color: black">(Phụ huynh)</p></h5>
+                                                    @endif
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <span>{{$comment->content}} </span><br>
+                                                    Vào lúc: <i>{{$comment->created_at}}</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @endforeach
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="{{asset('parent/posts/comment/')}}/{{$post->id}}" method="GET">
+                                        {{csrf_field()}}
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <div class="form-group">
+                                                    <textarea name="content" placeholder="Nhập bình luận" cols="70" rows="2" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <input type="submit" class="btn btn-primary" value="Gửi">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        function sendComment({{$post->id}}) {
+                            $.ajax({
+                                type: 'POST',
+                                url: "{{asset('parent/posts/comment/7')}}",
+                                success: function(data){
+                                    alert(url);
+                                    document.getElementsByName("content").value="";
+                                }
+                            })
+                        }
+                    </script>
+                @endforeach
+                <!-- end modal comment -->
                 <div class="text-center">
-                    <ul class="pagination-custom list-unstyled list-inline">
+                    {{-- <ul class="pagination-custom list-unstyled list-inline">
                         <li><a href="#" class="btn btn-sm">&laquo;</a></li>
                         <li class="active"><a href="#" class="btn btn-sm">1</a></li>
                         <li><a href="#" class="btn btn-sm">2</a></li>
@@ -156,7 +222,7 @@
                         <li><a href="#" class="btn btn-sm">4</a></li>
                         <li><a href="#" class="btn btn-sm">5</a></li>
                         <li><a href="#" class="btn btn-sm">&raquo;</a></li>
-                    </ul>
+                    </ul> --}}
                 </div>
             </div>
 

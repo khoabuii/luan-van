@@ -53,7 +53,6 @@
                         type:'GET',
                         url:"{{asset('parent/chat/sentNoti/15')}}",
                         success: function(data){
-
                         }
                     });
 
@@ -97,7 +96,7 @@
                         html +='</p>';
                         html +=  '<span class="time_date">';
                         html += time;
-                        html += '   <button data-id="'+snapshot.key+'" onclick="deleteMessage(this);">Xóa</button></small> </span></div>';
+                        html += '   <button data-id="'+snapshot.key+'" onclick="deleteMessage(this);">X</button></small> </span></div>';
                         html +='</div>';
                     }
                     document.getElementById("messages").innerHTML += html;

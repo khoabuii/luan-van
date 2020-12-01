@@ -15,16 +15,20 @@ class CreateTableComments extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->BigInteger('sitter')->unsigned();
+
+            $table->BigInteger('sitter')->unsigned()->nullable();
             // foreign sitters
             $table->foreign('sitter')->references('id')->on('sitters')->onDelete('cascade');
             //
 
-            $table->BigInteger('parent_post')->unsigned();
+            $table->bigInteger('parent')->unsigned()->nullable();
+            $table->foreign('parent')->references('id')->on('parents')->onDelete('cascade');
+
+            $table->BigInteger('posts')->unsigned()->nullable();
             // foreign post
-            $table->foreign('parent_post')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('posts')->references('id')->on('posts')->onDelete('cascade');
             //
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Contract;
 use App\feedback_sitter;
 use App\img_sitter;
@@ -28,6 +29,7 @@ use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
 use LaravelFCM\Facades\FCM;
 use Maatwebsite\Excel\Concerns\ToArray;
+
 class ParentsController extends Controller
 {
     //
@@ -394,7 +396,28 @@ class ParentsController extends Controller
         $posts=array_merge($data['parents']->toArray(),$data['sitters']->toArray());
         $data['posts']=$posts;
 
+            // comments
+        $comments['parents']=DB::table('comments')
+        ->join('sitters','sitters.id','=','comments.sitter')
+        ->select('comments.*','sitters.name as sitter_name')->get();
+
+        $comments['sitters']=DB::table('comments')
+        ->join('parents','parents.id','=','comments.parent')
+        ->select('comments.*','parents.name as parent_name')->get();
+
+        $data['comments']=array_merge($comments['parents']->toArray(),$comments['sitters']->toArray());
         return view('parents.posts.posts_list',$data);
+    }
+    // comment of post parent
+    public function postComment($id, Request $request){
+        $comment=new Comment();
+        $comment->posts=$id;
+        $comment->parent=Auth::guard('parents')->user()->id;
+        $comment->content=$request->content;
+        $comment->save();
+
+        // return response()->json(array(['success'=>true]));
+        return back()->with('success','Bình luận đã được gửi');
     }
     // post add
     public function postAddPost(Request $request){
@@ -465,10 +488,20 @@ class ParentsController extends Controller
         ->where('parent',Auth::guard('parents')->user()->id)
         ->join('sitters','contracts.sitter','=','sitters.id')
         ->select('contracts.*','sitters.name as sitter_name','sitters.images as sitter_img')
+        ->orderByDesc('created_at')
         ->get();
         return view('parents.profile.contract',$data);
     }
+    // detail contract
+    public function detailContract($id){
+        $contract=DB::table('contracts')
+            ->where('contracts.id',(int)$id)
+            ->join('sitters','sitters.id','=','contracts.sitter')
+            ->select('contracts.*','sitters.name','sitters.images')
+            ->first();
 
+        dd($contract);
+    }
     // send contract to sitter
     public function sendRequestContractSitter($id){
         $contract=new Contract();

@@ -96,7 +96,7 @@
                             html +=' </p>';
                             html +=  '<span class="time_date">';
                             html += time;
-                            html += '   <small><button class="" data-id="'+snapshot.key+'" onclick="deleteMessage(this);">Xóa</button></small> </span></div>';
+                            html += '   <small><button class="" data-id="'+snapshot.key+'" onclick="deleteMessage(this);">X</button></small> </span></div>';
                             html +='</div>';
                         }
                         document.getElementById("messages").innerHTML += html;

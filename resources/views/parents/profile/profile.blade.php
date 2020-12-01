@@ -166,13 +166,11 @@
                                         <span class="fa fa-pencil-square-o"></span>
                                         Quản lý bài viết
                                     </a>
-                                    <a href="#" class="btn btn-primary"><span class="fa fa-sliders"></span>Update tài khoản</a>
                                     <a href="{{asset('parent/delete_account')}}"
                                  onclick="return confirm('Khi bạn xóa mọi dữ liệu sẽ không còn trong hệ thống. Bạn có chắc chắn chưa?')"
                                   class="btn btn-danger"><span class="fa fa-user-times"></span> Xóa tài khoản</a>
-                                  <br> <br>
                                   <a href="{{asset('parent/profile/update_info')}}" class="btn btn-primary">
-                                    <span class="fa fa"></span>
+                                    <span class="fa fa-sliders"></span>
                                     Cập nhật tài khoản
                                 </a>
                                 </div>

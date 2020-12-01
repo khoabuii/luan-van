@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Contract;
 use App\feedback_parent;
 use App\img_sitter;
@@ -377,7 +378,29 @@ class SittersController extends Controller
 
         $data['check_user']=DB::table('save_posts')
         ->where('sitter',Auth::user()->id)->get();
+
+           // comments
+           $comments['parents']=DB::table('comments')
+           ->join('sitters','sitters.id','=','comments.sitter')
+           ->select('comments.*','sitters.name as sitter_name')->get();
+
+           $comments['sitters']=DB::table('comments')
+           ->join('parents','parents.id','=','comments.parent')
+           ->select('comments.*','parents.name as parent_name')->get();
+
+           $data['comments']=array_merge($comments['parents']->toArray(),$comments['sitters']->toArray());
         return view('sitters.posts_list',$data);
+    }
+     // comment of post parent
+    public function postComment($id, Request $request){
+        $comment=new Comment();
+        $comment->posts=$id;
+        $comment->sitter=Auth::user()->id;
+        $comment->content=$request->content;
+        $comment->save();
+
+        // return response()->json(array(['success'=>true]));
+        return back()->with('success','Bình luận đã được gửi');
     }
     // add post
     public function addPost(Request $request){

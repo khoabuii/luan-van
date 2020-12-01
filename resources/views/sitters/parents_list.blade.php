@@ -48,7 +48,7 @@
                         <input type="text" name="search_location" id="search_location" placeholder="Any Location" class="form-control" value="" />
                     </div> --}}
                     <div class="search_submit">
-                        <button class="btn btn-block btn-primary" type="submit">Search</button>
+                        <button class="btn btn-block btn-primary" type="submit">Tìm kiếm</button>
                     </div>
                 </div>
             </form>
