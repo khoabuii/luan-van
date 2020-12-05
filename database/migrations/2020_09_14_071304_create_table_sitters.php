@@ -31,6 +31,7 @@ class CreateTableSitters extends Migration
             $table->text('education')->nullable();
             $table->string('rate_avg')->nullable();
             $table->string('images')->nullable();
+            $table->integer('exp')->nullable();
             $table->longText('fcm_token')->nullable();
             // foreign images
             //

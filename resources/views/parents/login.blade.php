@@ -65,7 +65,7 @@
                 <div class="spacer-lg visible-sm visible-xs"></div>
                 <div class="box">
                     <h3>Đăng ký</h3>
-                    <form action="" method="POST" role="form">
+                    <form action="{{asset('parent/register')}}" method="POST" role="form">
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-8">
@@ -104,10 +104,16 @@
                                     <input type="number" name="phone" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="">Tình độ học vấn</label>
                                     <input type="text" name="education" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Bạn có bao nhiêu trẻ con?</label>
+                                    <input type="number" name="child" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -169,7 +175,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="">Mô tả chi tiết bản thân</label>
+                            <label for="">Mô tả chi tiết</label>
                             <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea>
                         </div>
                         <span class="required">*</span><small> Những trường này là bắt buộc</small>

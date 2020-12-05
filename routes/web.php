@@ -30,6 +30,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/active/{id}','AdminController@activeSitter'); // active
         Route::get('/cancel_active/{id}','AdminController@cancelActiveSitter'); // cancel active
         Route::get('/block/{id}','AdminController@getBlockSitter'); //block
+        //skill
+        Route::get('/skill','AdminController@showSkill');
+        Route::post('/skill/add','AdminController@addSkill');
+        Route::get('/skill/delete/{id}','AdminController@deleteSkill');
     });
 
     Route::group(['prefix' => 'parents','middleware'=>'checkLoginAdmin'], function () {
@@ -178,6 +182,8 @@ Route::group(['prefix' => 'sitter'], function () {
     Route::group(['prefix' => 'profile','middleware'=>'checkLoginSitters'], function () {
         // view profile
         Route::get('/','SittersController@getProfile');
+        // add skill
+        Route::get('/add_skill','SittersController@addSkill')->name('addSkill');
         // update profile
         Route::get('/update_info','SittersController@getUpdateProfile');
         Route::post('/update_info','SittersController@postUpdateProfile');
@@ -218,7 +224,7 @@ Route::group(['prefix' => 'sitter'], function () {
 
         Route::get('/me','SittersController@myPosts');
 
-        Route::get('/comment/{id}','ParentsController@postComment');
+        Route::get('/comment/{id}','SittersController@postComment');
     });
     // contract
     Route::group(['prefix' => 'contract','middleware'=>'checkLoginSitters'], function () {

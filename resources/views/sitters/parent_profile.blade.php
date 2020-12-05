@@ -94,6 +94,9 @@
                                                 <b>{{$avg_rate}} / 5 <i class="fa fa-star"></i></b>
                                             @endif
                                         </li>
+                                        <li>
+                                            <i class="fa fa-child"></i> Có {{$parent->child}} người con
+                                        </li>
                                     </ul>
                                     @if(count($check_is_contract)!=0)
                                         <span style="color: rgb(182, 97, 27)">

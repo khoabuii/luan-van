@@ -15,7 +15,8 @@ use App\save_post;
 use App\Sitters;
 use App\PasswordReset;
 use App\Notifications\ResetPasswordRequest;
-
+use App\Skill;
+use App\Skill_Sitter;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -61,7 +62,8 @@ class SittersController extends Controller
     public function postRegister(Request $request){
         $this->validate($request,[
             'email'=>'unique:sitters,email',
-            're-password'=>'same:password'
+            're-password'=>'same:password',
+            'phone'=>'max:11|min:9'
         ],[
             'email.unique'=>'Email đã tồn tại'
         ]);
@@ -89,8 +91,17 @@ class SittersController extends Controller
         $sitter->address=$address;
         $sitter->money=$request->money;
         $sitter->description=$request->description;
-
         $sitter->save();
+
+        // save location table
+        $location=new Location();
+        $location->sitter=$sitter->id;
+        $location->address=$address;
+        $location->city=$request->provinces;
+        $location->district=$request->districts;
+        $location->ward=$request->wards;
+        $location->save();
+
         return redirect('/sitter/login')->with('success','Đăng ký thành công, xin mời đăng nhập tại đây');
     }
     public function postLogin(Request $request){
@@ -117,6 +128,13 @@ class SittersController extends Controller
         ->orderBy('feedback_sitters.id','desc')->paginate(10);
 
         $data['activity']=Plan::where('sitter',Auth::user()->id)->get();
+        $data['skills']=Skill::all();
+
+        $data['my_skill']=DB::table('skill_sitter')
+        ->where('sitter',Auth::user()->id)
+        ->join('skill','skill.id','=','skill_sitter.skill')
+        ->select('skill.name as name')->get();
+
         return view('sitters.profile.profile',$data);
     }
     //update profile
@@ -617,5 +635,20 @@ class SittersController extends Controller
         $passwordReset->delete();
 
         return redirect('sitter/login')->with('pass_reset','Mật khẩu mới của bạn là \n 123456');
+    }
+
+    // add skill
+    public function addSkill(Request $request){
+        $skill=$request->skill;
+        Skill_Sitter::where('sitter',Auth::user()->id)->delete();
+        $i=0;
+        while($i<count($skill)){
+            $skill_sitter=new Skill_Sitter();
+            $skill_sitter->sitter=Auth::user()->id;
+            $skill_sitter->skill=$skill[$i];
+            $skill_sitter->save();
+            $i++;
+        }
+        return back();
     }
 }

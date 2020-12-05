@@ -160,6 +160,9 @@
                                         </div>
                                         <!--end modal location-->
                                         <li><i class="fa fa-clock-o"></i> Tham gia vào {{Auth::guard('parents')->user()->created_at}}.</li>
+                                        <li>
+                                            <i class="fa fa-child"></i> Có {{Auth::guard('parents')->user()->child}} người con
+                                        </li>
                                     </ul>
                                     <div class="spacer-lg"></div>
                                     <a href="{{asset('parent/profile/posts')}}" class="btn btn-primary">

@@ -35,6 +35,8 @@ class ParentsController extends Controller
     //
     public function getIndex(){
         $id_parent=Auth::guard('parents')->user()->id;
+
+        $data['location']=Province::all();
         $data['your_province']=Location::where('parent',$id_parent)->select('city','address')->get();
         if(count($data['your_province']) !=0){
             $data['sitters_id']=Location::where('city',$data['your_province'][0]->city)->select('sitter')->get();
@@ -59,9 +61,11 @@ class ParentsController extends Controller
     public function postRegister(Request $request){
         $this->validate($request,[
             'email'=>'unique:parents,email',
-            're-password'=>'same:password'
+            're-password'=>'same:password',
+            'phone'=>'min:9,max:10'
         ],[
-            'email.unique'=>'Email đã tồn tại'
+            'email.unique'=>'Email đã tồn tại',
+
         ]);
         $parent=new Parents();
         $parent->name=$request->name;
@@ -69,6 +73,7 @@ class ParentsController extends Controller
         $parent->email=$request->email;
         $parent->password=bcrypt($request->password);
         $parent->phone=$request->phone;
+        $parent->child=$request->child;
         // address
         $province=$request->provinces;
         $province=DB::table('provinces')->where('id',$province)->select('name')->get();
@@ -82,6 +87,16 @@ class ParentsController extends Controller
         $parent->address=$address;
         $parent->description=$request->description;
         $parent->save();
+
+        // save location table
+        $location= new Location();
+        $location->parent=$parent->id;
+        $location->address=$parent->address;
+        $location->city=$request->provinces;
+        $location->district=$request->districts;
+        $location->ward=$request->wards;
+
+        $location->save();
 
         return redirect('/parent/login')->with('success','Đăng ký thành công, vui lòng đăng nhập');
     }
@@ -275,6 +290,10 @@ class ParentsController extends Controller
 
         $data['activity']=Plan::where('sitter',$id_sitter)->get();
 
+        $data['sitter_skill']=DB::table('skill_sitter')
+        ->where('sitter',$id_sitter)
+        ->join('skill','skill.id','=','skill_sitter.skill')
+        ->select('skill.name as name')->get();
         return view('parents.sitter_profile',$data);
     }
     /////////////// get List Sitters ////////////////////////////////////////////

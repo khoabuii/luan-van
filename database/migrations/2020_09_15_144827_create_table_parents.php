@@ -28,6 +28,7 @@ class CreateTableParents extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->text('description')->nullable();
             $table->string('phone')->nullable();
+            $table->integer('child')->nullable();
             $table->longText('fcm_token')->nullable();
             $table->timestamps();
         });

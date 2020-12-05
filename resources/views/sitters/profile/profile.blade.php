@@ -85,6 +85,7 @@
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab1-1" data-toggle="tab">Thông tin chính</a></li>
+                            <li><a href="#tab1-3" data-toggle="tab">Các kỷ năng</a></li>
                             <li><a href="#tab1-2" data-toggle="tab">Thông tin khác</a></li>
                         </ul>
                         <!-- Tab panes -->
@@ -191,6 +192,28 @@
                                  <a href="{{asset('sitter/posts/me')}}" class="btn btn-primary "><span class="fa fa-archive"></span> Quản lý Bài viết </a>
                                 </div>
                             </div>
+                            <div class="tab-pane fade" id="tab1-3">
+                                <div class="row">
+                                    <div class="col-sm-4 col-md-4">
+                                        @foreach($my_skill as $skill)
+                                            <h4>{{$skill->name}}</h4>
+                                        @endforeach
+                                    </div>
+                                    <div class="col-sm-6 col-md-6">
+                                        <form action="{{Route('addSkill')}}" method="get" >
+                                            {{csrf_field()}}
+                                            <select multiple="multiple" name="skill[]" id="skill" class="form-control">
+                                                @foreach($skills as $skill)
+                                                    <option value="{{$skill->id}}">{{$skill->name}}</option>
+                                                @endforeach
+                                            </select>
+                                    </div>
+                                    <div class="col-sm-1 col-md-1">
+                                        <input type="submit" value="Xác nhận">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="tab-pane fade" id="tab1-2">
                                 <div class="row">
                                     <div class="col-sm-4 col-md-4">
@@ -202,6 +225,23 @@
                                         <h4>Số điện thoại</h4>
                                         <div class="list list__arrow">
                                             {{Auth::user()->phone}}
+                                        </div>
+                                        <br>
+                                        <h4>Kinh nghiệm</h4>
+                                        <div class="list list__arrow">
+                                            @if(Auth::user()->exp==0)
+                                            Chưa có kinh nghiệm
+                                            @elseif(Auth::user()->exp==1)
+                                            Dưới 1 năm kinh nghiệm
+                                            @elseif(Auth::user()->exp==2)
+                                            1-2 năm
+                                            @elseif(Auth::user()->exp==3)
+                                            3 năm kinh nghiệm
+                                            @elseif(Auth::user()->exp==4)
+                                            4 năm Kinh nghiệm
+                                            @elseif(Auth::user()->exp==5)
+                                            5 năm kinh nghiệm
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-sm-4 col-md-4">

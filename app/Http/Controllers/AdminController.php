@@ -10,6 +10,7 @@ use App\Parents;
 use App\Plan;
 use App\Post;
 use App\Sitters;
+use App\Skill;
 use App\User;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
@@ -252,5 +253,27 @@ class AdminController extends Controller
             $schedule = null
         );
         return "";
+    }
+    // show view manager skill
+    public function showSkill(){
+        $data['skills']=Skill::all();
+        return view('admin.sitters.skill',$data);
+    }
+    //add skill
+    public function addSkill(Request $request){
+        $skill=new Skill();
+        $this->validate($request,[
+            'name'=>'unique:skill,name'
+        ],[
+            'name.unique'=>'Skill bị trùng'
+        ]);
+        $skill->name=$request->name;
+        $skill->save();
+        return back()->with('success','Đã thêm thành công');
+    }
+    // delete skill
+    public function deleteSkill($id){
+        Skill::destroy($id);
+        return back()->with('success','Đã xóa thành công');
     }
 }

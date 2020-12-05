@@ -7,6 +7,24 @@
 @endif
 <section class="page-content">
     <div class="container">
+        <form action="{{asset('parent/search_sitter')}}" method="GET">
+            <center><h2>Bạn muốn tìm Bảo mẫu ở đâu?</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <select class="form-control" name="province" style="color: rgb(10, 128, 128)">
+                        <option value="0">Tất cả đại điểm</option>
+                        @foreach($location as $location)
+                            <option value="{{$location->id}}">{{$location->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-block btn-primary" type="submit">Tìm kiếm</button>
+                </div>
+            </div>
+            </center>
+        </form>
+        <br>
         <div class="row">
             <div class="col-md-4">
                 <!-- Icon Box -->

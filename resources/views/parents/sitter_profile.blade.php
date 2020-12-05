@@ -68,6 +68,7 @@
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab1-1" data-toggle="tab">Thông tin chính</a></li>
+                            <li><a href="#tab1-3" data-toggle="tab">Kỷ năng</a></li>
                             <li><a href="#tab1-2" data-toggle="tab">Thông tin khác</a></li>
                         </ul>
                         <!-- Tab panes -->
@@ -97,7 +98,14 @@
                                             </span>
                                         </li>
                                         <li><i class="fa fa-clock-o"></i> Tham gia vào {{$sitter->created_at}}.</li>
-                                        <li><i class="fa fa-money"></i>{{number_format($sitter->money)}} VND/Buổi</li>
+                                        <li><i class="fa fa-money"></i>{{number_format($sitter->money)}} VND/Giờ</li>
+                                        <li><i class="fa fa-line-chart"></i>
+                                            @if($sitter->exp==0)
+                                                Chưa có kinh nghiệm
+                                            @else
+                                                Có {{$sitter->exp}} năm Kinh nghiệm
+                                            @endif
+                                        </li>
                                         <li>
                                             <i class="fa fa-plus-square"></i>Điểm đánh giá TB:
                                             @if(count($feedback)!=0)
@@ -157,6 +165,15 @@
                                 </div>
                             </div>
                         <!-- end modal-->
+                        <div class="tab-pane fade" id="tab1-3">
+                            <div class="row">
+                                @foreach($sitter_skill as $skill)
+                                <div class="col-sm-3 col-md-3">
+                                    <h4>{{$skill->name}}</h4>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
                             <div class="tab-pane fade" id="tab1-2">
                                 <div class="row">
                                     <div class="col-sm-4 col-md-4">

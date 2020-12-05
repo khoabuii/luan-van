@@ -3,11 +3,11 @@
 @section('content')
 <!-- Page Content -->
 @if(session('pass_reset'))
-<script>
-    alert('{{session('pass_reset')}}');
-</script>
+    <script>
+        alert('{{session('pass_reset')}}');
+    </script>
 @endif
-
+@include('noti.errors')
 <section class="page-content">
     <div class="container">
         <div class="row">
@@ -15,7 +15,6 @@
             <div class="col-md-5">
                 <div class="box">
                     <h3>Đăng nhập</h3>
-                    @include('noti.errors')
                     <form action="{{asset('sitter/login')}}" method="POST" role="form">
                         {{csrf_field()}}
                         <div class="form-group">
@@ -108,10 +107,22 @@
                                     <input type="number" name="phone" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Tình độ học vấn</label>
                                     <input type="text" name="education" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Kinh nghiệm</label>
+                                    <select name="exp" id="" class="form-control">
+                                        <option value="0" selected>Chưa có kinh nghiệm</option>
+                                        <option value="1">Dưới 1 năm</option>
+                                        <option value="2">1-2 năm</option>
+                                        <option value="4">4 năm kinh nghiệm</option>
+                                        <option value="5">Trên 5 năm kinh nghiệm</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -177,12 +188,12 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Thù lao mong muốn</label>
-                                    <input type="text" name="money" class="form-control">VND/Buổi
+                                    <input type="text" name="money" class="form-control">VND/Giờ
                                 </div>
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label for="">Mô tả chi tiết bản thân</label>
+                                    <label for="">Mô tả chi tiết</label>
                                     <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea>
                                 </div>
                             </div>
