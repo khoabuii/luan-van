@@ -98,13 +98,15 @@
                                             <i class="fa fa-child"></i> Có {{$parent->child}} người con
                                         </li>
                                     </ul>
-                                    @if(count($check_is_contract)!=0)
-                                        <span style="color: rgb(182, 97, 27)">
-                                            Bạn đã hoặc đang làm việc với người này, hãy đánh giá cho mọi người cùng biết nhé!
-                                        </span>
-                                    @endif
-
+                                    @auth
+                                        @if(count($check_is_contract)!=0)
+                                            <span style="color: rgb(182, 97, 27)">
+                                                Bạn đã hoặc đang làm việc với người này, hãy đánh giá cho mọi người cùng biết nhé!
+                                            </span>
+                                        @endif
+                                    @endAuth
                                     <div class="spacer-lg"></div>
+                                @auth
                                 <button type="button"
                                 @if(count($check_is_contract)!=0) disabled @endif
                                 class="btn btn-primary" data-toggle="modal" data-target="#contract">
@@ -117,8 +119,9 @@
                                 <a href="{{asset('sitter/posts/parent')}}/{{$parent->id}}" class="btn btn-primary">
                                     <span class="fa fa-pencil"></span>Bài đăng
                                 </a>
-
+                                @endAuth
                                 </div>
+                                @auth
                                 <!-- modal contract -->
                                 <div class="modal fade" id="contract" tabindex="-1" role="dialog" aria-labelledby="contract" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -143,6 +146,7 @@
                                     </div>
                                 </div>
                                 <!-- end modal-->
+                                @endAuth
                             </div>
                             <div class="tab-pane fade" id="tab1-2">
                                 <div class="row">
@@ -303,6 +307,7 @@
 
         <!-- Person Availability / End -->
         <div class="spacer-xl"></div>
+        @auth
         <h3 id="feedback_parent"><a href="#feedback_parent">Đánh giá</a>
             @if(count($check_is_contract)!=0)
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedback">Gửi đánh giá của bạn</button>
@@ -405,6 +410,7 @@
               }
           </script>
           @endforeach
+        @endauth
     </div>
 </section>
 <!-- Page Content / End -->

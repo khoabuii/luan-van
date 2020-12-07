@@ -34,20 +34,21 @@ class ParentsController extends Controller
 {
     //
     public function getIndex(){
-        $id_parent=Auth::guard('parents')->user()->id;
-
         $data['location']=Province::all();
-        $data['your_province']=Location::where('parent',$id_parent)->select('city','address')->get();
-        if(count($data['your_province']) !=0){
-            $data['sitters_id']=Location::where('city',$data['your_province'][0]->city)->select('sitter')->get();
-            $data['sitters_near']=DB::table('location')
-            ->join('sitters','location.sitter','=','sitters.id')
-            ->where('city',$data['your_province'][0]->city)
-            ->select('sitters.id as id','sitters.name as name','sitters.gender','sitters.status as status','sitters.description','sitters.images as img')
-            ->orderBy('location.id','desc')->take(8)->get();
-            $data['location_name']=Province::where('id',$data['your_province'][0]->city)->select('name')->get();
-        }
+        if(Auth::guard('parents')->check()){
+            $id_parent=Auth::guard('parents')->user()->id;
 
+            $data['your_province']=Location::where('parent',$id_parent)->select('city','address')->get();
+            if(count($data['your_province']) !=0){
+                $data['sitters_id']=Location::where('city',$data['your_province'][0]->city)->select('sitter')->get();
+                $data['sitters_near']=DB::table('location')
+                ->join('sitters','location.sitter','=','sitters.id')
+                ->where('city',$data['your_province'][0]->city)
+                ->select('sitters.id as id','sitters.name as name','sitters.gender','sitters.status as status','sitters.description','sitters.images as img')
+                ->orderBy('location.id','desc')->take(8)->get();
+                $data['location_name']=Province::where('id',$data['your_province'][0]->city)->select('name')->get();
+            }
+        }
         return view('parents.index',$data);
     }
     public function getRegister(){
@@ -251,13 +252,17 @@ class ParentsController extends Controller
     /////////////// get sitter profile //////////////////////////////////
     public function getSitterProfile($id){
         $id_sitter=$id;
-        $id_parent=Auth::guard('parents')->user()->id;
-        $data['check']=save_sitters::where('parent',$id_parent)
-        ->where('sitter',$id_sitter)->get();
 
         $data['sitter']=Sitters::findOrFail($id);
         $data['img_sitter']=img_sitter::where('sitter_id',$id)->select('img')->get();
         $data['location']=Location::where('sitter',$id)->get();
+
+        $data['activity']=Plan::where('sitter',$id_sitter)->get();
+
+        $data['sitter_skill']=DB::table('skill_sitter')
+        ->where('sitter',$id_sitter)
+        ->join('skill','skill.id','=','skill_sitter.skill')
+        ->select('skill.name as name')->get();
 
         //feedback
         $data['feedback']=DB::table('feedback_sitters')
@@ -266,17 +271,6 @@ class ParentsController extends Controller
         ->select('feedback_sitters.*','parents.id as id_parent','parents.name','parents.avatar')
         ->orderBy('id','desc')
         ->get();
-
-        $data['check_feedback']=DB::table('feedback_sitters')
-        ->where('sitter',$id_sitter)->where('parent',$id_parent)->get();
-
-        $data['check_is_contract']=DB::table('contracts')
-            ->where([
-                'sitter'=>$id,
-                'parent'=>Auth::guard('parents')->user()->id,
-                'status'=>0||1
-            ])->get();
-
 
         if(count($data['feedback'])!=0){
             $rate_sitter=DB::table('feedback_sitters')
@@ -287,13 +281,23 @@ class ParentsController extends Controller
 
             $data['avg_rate']=$rate_sitter->sum('sum')/count($data['feedback']);
         }
+        // Auth parent
+        if(Auth::guard('parents')->check()){
+            $id_parent=Auth::guard('parents')->user()->id;
+            $data['check']=save_sitters::where('parent',$id_parent)
+            ->where('sitter',$id_sitter)->get();
 
-        $data['activity']=Plan::where('sitter',$id_sitter)->get();
+            $data['check_feedback']=DB::table('feedback_sitters')
+            ->where('sitter',$id_sitter)->where('parent',$id_parent)->get();
 
-        $data['sitter_skill']=DB::table('skill_sitter')
-        ->where('sitter',$id_sitter)
-        ->join('skill','skill.id','=','skill_sitter.skill')
-        ->select('skill.name as name')->get();
+            $data['check_is_contract']=DB::table('contracts')
+                ->where([
+                    'sitter'=>$id,
+                    'parent'=>$id_parent,
+                    'status'=>0||1
+                ])->get();
+        }
+
         return view('parents.sitter_profile',$data);
     }
     /////////////// get List Sitters ////////////////////////////////////////////

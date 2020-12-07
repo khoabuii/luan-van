@@ -38,16 +38,19 @@ class SittersController extends Controller
 {
     //
     public function getIndex(){
-        $data['id_sitter']=Auth::user()->id;
-        $data['your_province']=Location::where('sitter',$data['id_sitter'])->select('city','address')->get();
-        $data['location_name']=Province::where('id',$data['your_province'][0]->city)->select('name')->get();
-        if(count($data['your_province']) !=0){
-            $data['parent_near']=DB::table('location')
-            ->join('parents','location.parent','=','parents.id')
-            ->where('city',$data['your_province'][0]->city)
-            ->select('parents.id as id','parents.name as name','parents.description','parents.avatar as img','parents.created_at')
-            ->orderBy('location.id','desc')->take(8)->get();
-            return view('sitters.index',$data);
+        $data['location']=Province::all();
+        if(Auth::check()){
+            $data['id_sitter']=Auth::user()->id;
+            $data['your_province']=Location::where('sitter',$data['id_sitter'])->select('city','address')->get();
+            $data['location_name']=Province::where('id',$data['your_province'][0]->city)->select('name')->get();
+            if(count($data['your_province']) !=0){
+                $data['parent_near']=DB::table('location')
+                ->join('parents','location.parent','=','parents.id')
+                ->where('city',$data['your_province'][0]->city)
+                ->select('parents.id as id','parents.name as name','parents.description','parents.avatar as img','parents.created_at')
+                ->orderBy('location.id','desc')->take(8)->get();
+                return view('sitters.index',$data);
+            }
         }
         return view('sitters.index',$data);
     }
@@ -309,6 +312,7 @@ class SittersController extends Controller
         $data['parent']=Parents::find($id);
         $data['location']=DB::table('location')
         ->where('parent',$id)->get();
+        $data['activity']=Plan::where('parent',$id)->get();
 
         // view feedback
         $data['feedback']=DB::table('feedback_parents')
@@ -316,20 +320,7 @@ class SittersController extends Controller
         ->where('parent',$id)
         ->select('feedback_parents.*','sitters.name','sitters.images')
         ->get();
-
-        $data['check_feedback']=DB::table('feedback_parents')
-        ->where('sitter',Auth::user()->id)
-        ->where('parent',$id)->get();
-
-        $data['check_is_contract']=DB::table('contracts')
-            ->where([
-                'parent'=>$id,
-                'sitter'=>Auth::user()->id,
-                'status'=>0||1
-            ])->get();
-
-        $data['activity']=Plan::where('parent',$id)->get();
-
+        
         if(count($data['feedback'])!=0){
             $rate_parent=DB::table('feedback_parents')
             ->where('parent',$id)
@@ -339,9 +330,21 @@ class SittersController extends Controller
 
             $data['avg_rate']=$rate_parent->sum('sum')/count($data['feedback']);
         }
+
+        if(Auth::check()){
+            $data['check_feedback']=DB::table('feedback_parents')
+            ->where('sitter',Auth::user()->id)
+            ->where('parent',$id)->get();
+
+            $data['check_is_contract']=DB::table('contracts')
+                ->where([
+                    'parent'=>$id,
+                    'sitter'=>Auth::user()->id,
+                    'status'=>0||1
+                ])->get();
+        }
         return view('sitters.parent_profile',$data);
     }
-
     // post feedback parent profile
     public function postFeedbackParent(Request $request,$id_parent){
         $id_sitter=Auth::user()->id;

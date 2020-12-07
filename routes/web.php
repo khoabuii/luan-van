@@ -67,7 +67,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 // parent
 Route::group(['prefix' => 'parent'], function () {
-    Route::get('/','ParentsController@getIndex')->middleware('checkLoginParents')->name('parent.index');
+    Route::get('/','ParentsController@getIndex')->name('parent.index');
     // register
     Route::group(['prefix' => 'register'], function () {
         Route::get('/','ParentsController@getRegister');
@@ -105,7 +105,7 @@ Route::group(['prefix' => 'parent'], function () {
     Route::get('/search_sitter','ParentsController@searchSitter');
 
     // profile_sitter
-    Route::get('sitter_profile/{id}','ParentsController@getSitterProfile')->middleware('checkLoginParents');
+    Route::get('sitter_profile/{id}','ParentsController@getSitterProfile');
     // view profile parent by ID
     Route::get('parent_profile/{id}','ParentsController@getProfileParentId')->middleware('checkLoginParents');
 
@@ -132,7 +132,7 @@ Route::group(['prefix' => 'parent'], function () {
     // rate sitters
     Route::post('/rate_sitter/{id}','ParentsController@postRateSitter')->middleware('checkLoginParents');
     // delete feedback
-    Route::get('/delete_feedback/{id}','ParentsController@deleteFeedback');
+    Route::get('/delete_feedback/{id}','ParentsController@deleteFeedback')->middleware('checkLoginParents');
 
     // contract
     Route::group(['prefix' => 'contract','middleware'=>'checkLoginParents'], function () {
@@ -154,7 +154,6 @@ Route::group(['prefix' => 'parent'], function () {
     Route::get('/delete_account','ParentsController@deleteAccount')->middleware('checkLoginParents');
 });
 
-
 //ajax
 Route::post('showDistricts','HomeController@showDistricts');    // show districts
 Route::post('showWards','HomeController@showWards');    // show wards
@@ -163,7 +162,7 @@ Route::post('showWards','HomeController@showWards');    // show wards
 
 // babysitter
 Route::group(['prefix' => 'sitter'], function () {
-    Route::get('/','SittersController@getIndex')->middleware('checkLoginSitters');
+    Route::get('/','SittersController@getIndex');
     // login
     Route::group(['prefix' => 'login'], function () {
         Route::get('/','SittersController@getRegister');
@@ -203,12 +202,13 @@ Route::group(['prefix' => 'sitter'], function () {
     Route::get('/search_parent','SittersController@searchParent');
 
     // parent profile
-    Route::get('/parent_profile/{id}','SittersController@getParentProfile')->middleware('checkLoginSitters');
+    Route::get('/parent_profile/{id}','SittersController@getParentProfile');
+    
     // post feedback to parent profile
     Route::post('/feedback_parent/{id_parent}','SittersController@postFeedbackParent')->middleware('checkLoginSitters');
 
     // delete feedback
-    Route::get('/delete_feedback/{id}','SittersController@deleteFeedback');
+    Route::get('/delete_feedback/{id}','SittersController@deleteFeedback')->middleware('checkLoginSitters');
 
     // group post
     Route::group(['prefix' => 'posts','middleware'=>'checkLoginSitters'], function () {

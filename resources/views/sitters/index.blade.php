@@ -7,7 +7,24 @@
 @endif
 <section class="page-content">
     <div class="container">
-
+        <form action="{{asset('sitter/search_parent')}}" method="GET">
+            <center><h2>Bạn muốn tìm Phụ huynh ở đâu?</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <select class="form-control" name="province" style="color: rgb(10, 128, 128)">
+                        <option value="0">Tất cả đại điểm</option>
+                        @foreach($location as $location)
+                            <option value="{{$location->id}}">{{$location->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-block btn-primary" type="submit">Tìm kiếm</button>
+                </div>
+            </div>
+            </center>
+        </form>
+        <br>
         <div class="row">
             <div class="col-md-4">
                 <!-- Icon Box -->
@@ -40,26 +57,8 @@
                 <!-- Icon Box / End -->
             </div>
         </div>
-
-        {{-- <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <!-- Call to Action -->
-                <div class="call-to-action call-to-action__no-bg centered">
-                    <div class="cta-txt">
-                        <h1>Chào mừng bạn đã đến website của chúng tôi!</h1>
-                        <p>Chúng tôi hy vọng sẽ mang lại trãi nghiệm tốt nhất cho bạn. Hãy đăng ký tham gia vào hệ thống của chúng tôi nhé! </p>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="cta-btn">
-                            <a href="#" class="btn btn-primary btn-lg">Hãy trãi nghiệm dịch vụ của chúng tôi</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Call to Action / End -->
-            </div>
-        </div> --}}
-
         <div class="spacer-lg"></div>
+        @Auth
         <h2>Phụ huynh gần bạn</h2>
         <div class="row">
         @if(count($your_province)!=0)
@@ -87,7 +86,7 @@
             <div class="clearfix visible-xs"></div>
             <div class="spacer visible-xs"></div>
         </div>
-
+        @endAuth
         <div class="spacer-xl"></div>
 
         <div class="row">

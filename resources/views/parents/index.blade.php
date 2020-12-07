@@ -58,6 +58,7 @@
             </div>
         </div>
         <div class="spacer-lg"></div>
+        @Auth('parents')
         @if(count($your_province) !=0)
         <h2>Bảo mẫu gần bạn ({{$location_name[0]->name}})</h2>
         <div class="row">
@@ -88,6 +89,7 @@
             <div class="spacer visible-xs"></div>
         </div>
         @endif
+        @endAuth
         <div class="spacer-xl"></div>
 
         <div class="row">

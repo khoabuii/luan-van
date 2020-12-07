@@ -113,7 +113,7 @@
                                             @endif
                                         </li>
                                     </ul>
-
+                                    @Auth('parents')
                                     @if(count($check_is_contract)!=0)
                                         <span style="color: rgb(182, 97, 27)">
                                             Bạn đã hoặc đang làm việc với người này, hãy đánh giá cho mọi người cùng biết nhé!
@@ -140,6 +140,7 @@
                                 </a>
                             </div>
                         </div>
+
                         <!-- modal contract -->
                             <div class="modal fade" id="contract" tabindex="-1" role="dialog" aria-labelledby="contract" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -165,6 +166,8 @@
                                 </div>
                             </div>
                         <!-- end modal-->
+                        @endAuth
+
                         <div class="tab-pane fade" id="tab1-3">
                             <div class="row">
                                 @foreach($sitter_skill as $skill)
@@ -346,6 +349,7 @@
         </div>
         <!-- Person Availability / End -->
         <div class="spacer-xl"></div>
+        @Auth('parents')
         <h3 id="feedback_sitter"><a href="#feedback_sitter">Đánh giá</a>
             @if(count($check_is_contract) !=0)
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedback">
@@ -452,6 +456,7 @@
             }
         </script>
         @endforeach
+        @endAuth
     </div>
 </section>
 <!-- Page Content / End -->
