@@ -141,6 +141,13 @@ class ParentsController extends Controller
     }
     // post update profile
     public function postUpdateInfo(Request $request){
+        $this->validate($request,[
+            'new_password'=>'same:re_new_password',
+            'images'=>'image'
+        ],[
+            'new_password.same'=>'Mật khẩu không trùng khớp',
+            'images.image'=>'Hình ảnh không đúng định dạng'
+        ]);
         $id=Auth::guard('parents')->user()->id;
         $parent=Parents::find($id);
 
@@ -300,7 +307,7 @@ class ParentsController extends Controller
 
         return view('parents.sitter_profile',$data);
     }
-    /////////////// get List Sitters ////////////////////////////////////////////
+    //////////////////////////// get List Sitters ////////////////////////////////////////////
     public function getListSitters(){
         $data['location']=Province::all();
         $data['sitters']=DB::table('sitters')
@@ -315,26 +322,42 @@ class ParentsController extends Controller
         $data['location']=Province::all();
         $name=$request->name;
         $province_id=$request->province;
+        $age_min=$request->age_min;
+        $age_max=$request->age_max;
+        $gender=$request->gender;
         $name=str_replace('','%',$name);
-        if($province_id =="0"){
+
+        if($name==null && $province_id==null && $age_min==null && $age_max==null && $gender==null){
             $data['sitters']=DB::table('sitters')->where('name','like','%'.$name.'%')
             ->join('location','sitters.id','=','location.sitter')
             ->select('sitters.id','sitters.name','sitters.birthDay','sitters.status as status','sitters.created_at','location.address','location.district','location.city','sitters.images as img')
             ->orderBy('sitters.id','desc')
             ->paginate(10);
-        return view('parents.list_sitters',$data);
-
-        }else{
+        }
+        elseif($gender !=null ){
             $data['sitters']=DB::table('sitters')
                 ->join('location','sitters.id','=','location.sitter')
                 ->select('sitters.id','sitters.name','sitters.birthDay','sitters.status as status','sitters.created_at','location.address','location.district','location.city','sitters.images as img')
                 ->orderBy('sitters.id','desc')
-                ->where('sitters.name','like','%'.$name.'%')
-                ->where('location.city','like',$province_id)
+                ->where('sitters.gender','like',(int)$gender)
                 ->paginate(10);
-            return view('parents.list_sitters',$data);
+        }elseif($province_id !=null){ // check province and name sitter
+            $data['sitters']=DB::table('sitters')
+                ->join('location','sitters.id','=','location.sitter')
+                ->select('sitters.id','sitters.name','sitters.birthDay','sitters.status as status','sitters.created_at','location.address','location.district','location.city','sitters.images as img')
+                ->orderBy('sitters.id','desc')
+                ->where('location.city','like',$province_id)
+                ->where('sitters.name','like','%'.$name.'%')
+                ->paginate(10);
+        }elseif($age_min !=null){
+            $data['sitters']=DB::table('sitters')
+                ->join('location','sitters.id','=','location.sitter')
+                ->select('sitters.id','sitters.name','sitters.birthDay','sitters.status as status','sitters.created_at','location.address','location.district','location.city','sitters.images as img')
+                ->orderBy('sitters.id','desc')
+                ->where('sitters.age','<',$age_min)
+                ->paginate(10);
         }
-
+        return view('parents.list_sitters',$data);
     }
 
     //get Save Sitters
@@ -569,6 +592,7 @@ class ParentsController extends Controller
     public function acceptContract($id){
         $contract=Contract::find($id);
         $contract->status=1;
+        $contract->is_work=1;
         $contract->save();
 
         return response()->json(array('success'=>true));
@@ -661,7 +685,7 @@ class ParentsController extends Controller
         $parent->save();
         $passwordReset->delete();
 
-        return redirect('parent/login')->with('pass_reset','Mật khẩu mới của bạn là \n 123456');
+        return redirect('parent/login')->with('pass_reset','Mật khẩu mới của bạn là \n 123456'); 
     }
 
 }

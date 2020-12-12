@@ -28,11 +28,11 @@
                 <div class="search_jobs">
                     <div class="search_keywords">
                         <label for="search_keywords">Keywords</label>
-                        <input type="text" name="name" id="search_keywords" placeholder="All Pet Sitters" class="form-control" value="" />
+                        <input type="text" name="name" id="search_keywords" placeholder="Nhập tên Phụ huynh" class="form-control" value="{{old('name')}}" />
                     </div>
 
                     <div class="search_type">
-                        <label>Service</label>
+                        <label>Nơi làm việc</label>
                         <span class="select-style">
                             <select class="form-control" name="province">
                                 <option value="0">Tất cả địa điểm</option>
@@ -43,10 +43,19 @@
                         </span>
                     </div>
 
-                    {{-- <div class="search_location">
-                        <label for="search_location">Location</label>
-                        <input type="text" name="search_location" id="search_location" placeholder="Any Location" class="form-control" value="" />
-                    </div> --}}
+                    <div class="search_type">
+                        <label for="">Số trẻ tối đa</label>
+                        <span class="select-style">
+                            <select class="form-control" name="child">
+                                <option value="0">Số trẻ - Không giới hạn</option>
+                                <option value="1">Chỉ 1 trẻ</option>
+                                <option value="2">Từ 2 trẻ trở xuống</option>
+                                <option value="3">Từ 3 trẻ trở xuống</option>
+                                <option value="4">Từ 4 trẻ trở xuống</option>
+                                <option value="5">Từ 5 trẻ trở xuống</option>
+                            </select>
+                        </span>
+                    </div>
                     <div class="search_submit">
                         <button class="btn btn-block btn-primary" type="submit">Tìm kiếm</button>
                     </div>
@@ -64,14 +73,16 @@
                                 <strong></strong>
                             </div>
                         </div>
+
                         <div class="location" style="width:30%">
                             <i class="fa fa-map-marker"></i> {{strstr($parent->address,',')}}
                         </div>
+
                         <div class="meta">
                             @if(date_diff(date_create($parent->created_at), date_create('now'))->d !=0)
                                 <h5>{{date_diff(date_create($parent->created_at), date_create('now'))->d}} ngày trước</h5>
                             @elseif(date_diff(date_create($parent->created_at), date_create('now'))->d==0)
-                                <h5>{{date_diff(date_create($parent->created_at), date_create('now'))->h}} giờ trước</h5>
+                                <h5>Hôm nay</h5>
                             @endif
                         </div>
                     </a>

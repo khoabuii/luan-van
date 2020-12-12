@@ -112,14 +112,14 @@
                 <h2>Lời khuyên của chúng tôi</h2>
                 <ul class="latest-posts-list">
                     <li>
-                        <figure class="thumbnail"><a href="#"><img src="{{asset('homepage/images/samples/post-img-1-sm.jpg')}}" alt=""></a></figure>
+                        <figure class="thumbnail"><a href="{{asset('posts/what_is_babysitter')}}"><img src="{{asset('homepage/images/samples/post-img-1-sm.jpg')}}" alt=""></a></figure>
                         <span class="date">24/07/2020</span>
-                        <h5 class="title"><a href="#">Tìm babysitter như thế nào cho hiệu quả nhất</a></h5>
+                        <h5 class="title"><a href="{{asset('posts/what_is_babysitter')}}">Tìm babysitter như thế nào cho hiệu quả nhất</a></h5>
                     </li>
                     <li>
-                        <figure class="thumbnail"><a href="#"><img src="{{asset('homepage/images/samples/post-img-2-sm.jpg')}}" alt=""></a></figure>
+                        <figure class="thumbnail"><a href="{{asset('posts/what_is_babysitter')}}"><img src="{{asset('homepage/images/samples/post-img-2-sm.jpg')}}" alt=""></a></figure>
                         <span class="date">16/07/2020</span>
-                        <h5 class="title"><a href="#">Trẻ biến ăn thì giải quyết thế nào.</a></h5>
+                        <h5 class="title"><a href="{{asset('posts/what_is_babysitter')}}">Trẻ biến ăn thì giải quyết thế nào.</a></h5>
                     </li>
                 </ul>
             </div>

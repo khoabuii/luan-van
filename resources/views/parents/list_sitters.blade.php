@@ -23,31 +23,48 @@
 <!-- Page Content -->
 <section class="page-content">
     <div class="container">
+        <form class="job_filters" action="{{asset('parent/search_sitter')}}" method="GET">
+            <div style="padding: 2pc">
+                <div class="row">
 
-        <div class="job_listings">
-            <form class="job_filters" action="{{asset('parent/search_sitter')}}" method="GET">
-                <div class="search_jobs">
-                    <div class="search_keywords">
-                        <label for="search_keywords">Keywords</label>
-                        <input type="text" name="name" id="search_keywords" placeholder="All Sitters" class="form-control" value="" />
-                    </div>
-
-                    <div class="search_type">
-                        {{-- <label>Service</label> --}}
-                        <span class="select-style">
+                    <div class="col-md-5">
+                        <div class="col-md-5">
+                            <input type="text" name="name" id="search_keywords" placeholder="Tên bảo mẫu" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-6">
                             <select class="form-control" name="province">
-                                <option value="0">Tất cả đại điểm</option>
+                                <option value="">Tất cả đại điểm</option>
                                 @foreach($location as $location)
                                     <option value="{{$location->id}}">{{$location->name}}</option>
                                 @endforeach
                             </select>
-                        </span>
+                        </div>
                     </div>
-                    <div class="search_submit">
-                        <button class="btn btn-block btn-primary" type="submit">Tìm kiếm</button>
+
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <input type="number" name="age_min" id="" placeholder="Tuổi tối thiểu" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="number" name="age_max" placeholder="Tuổi tối đa" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <select name="gender" id="" class="form-control">
+                                    <option value="">Giới tính</option>
+                                    <option value="0">Nam</option>
+                                    <option value="1">Nữ</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-block btn-primary" type="submit">Tìm kiếm</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </form>
+
+                 </div>
+            </div>
+        </form>
 <br>
             <ul class="job_listings">
                 @foreach($sitters as $sitter)
@@ -74,8 +91,6 @@
                 </li>
                 @endforeach
             </ul>
-        </div>
-
         <div class="spacer"></div>
 
         <div class="text-center">

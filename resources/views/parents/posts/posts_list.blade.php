@@ -142,9 +142,9 @@
                             </figure>
                         @endif
                     </div>
-                    <footer class="entry-footer">
+                    {{-- <footer class="entry-footer">
                         <a href="{{asset('sitter/posts/save')}}/{{$post->id}}" class="btn btn-primary">Lưu</a>
-                    </footer>
+                    </footer> --}}
                 </article>
                 @endif
                 @endforeach

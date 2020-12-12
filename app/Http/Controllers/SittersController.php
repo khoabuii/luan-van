@@ -148,6 +148,13 @@ class SittersController extends Controller
     }
     // post update profile
     public function postUpdateProfile(Request $request){
+        $this->validate($request,[
+            'new_password'=>'same:re_new_password',
+            'images'=>'image'
+        ],[
+            'new_password.same'=>'Mật khẩu không trùng khớp',
+            'images.image'=>'Hình ảnh không đúng định dạng'
+        ]);
         $id=Auth::user()->id;
         $sitter=Sitters::find($id);
 
@@ -158,8 +165,6 @@ class SittersController extends Controller
         $sitter->money=$request->money;
         $sitter->address=$request->address;
 
-        // dd($request->changePassword);
-        // change password
         if($request->changePassword !=null){
             $sitter->password=bcrypt($request->re_new_password);
         }
@@ -286,17 +291,17 @@ class SittersController extends Controller
     public function searchParent(Request $request){
         $data['location']=Province::all();
         $name=$request->name;
+        $child=$request->child;
         $province_id=$request->province;
         $name=str_replace('','%',$name);
-        if($province_id =="0"){
+        if($province_id =="0" && $child=="0"){
             $data['parents']=DB::table('parents')->where('name','like','%'.$name.'%')
             ->join('location','parents.id','=','location.parent')
             ->select('parents.id','parents.name','parents.avatar as img','parents.created_at','location.district','location.city','location.address')
             ->orderBy('parents.id','desc')
             ->paginate(10);
-        return view('sitters.parents_list',$data);
 
-        }else{
+        }elseif($province_id !="0" && $child=="0"){
             $data['parents']=DB::table('parents')
                 ->join('location','parents.id','=','location.parent')
                 ->select('parents.id','parents.name','parents.avatar as img','parents.created_at','location.district','location.city','location.address')
@@ -304,8 +309,42 @@ class SittersController extends Controller
                 ->where('parents.name','like','%'.$name.'%')
                 ->where('location.city','like',$province_id)
                 ->paginate(10);
-            return view('sitters.parents_list',$data);
-            }
+
+        }elseif($province_id !="0" && ($child !="0" && $child !=null)){
+            $data['parents']=DB::table('parents')
+                ->join('location','parents.id','=','location.parent')
+                ->select('parents.id','parents.name','parents.avatar as img','parents.created_at','location.district','location.city','location.address')
+                ->orderBy('parents.id','desc')
+                ->where('parents.name','like','%'.$name.'%')
+                ->where('location.city','like',$province_id)
+                ->where('parents.child','<=',$child)
+                ->paginate(10);
+
+        }elseif($province_id == "0" && ($child !="0" && $child !=null)){
+            $data['parents']=DB::table('parents')
+                ->join('location','parents.id','=','location.parent')
+                ->select('parents.id','parents.name','parents.avatar as img','parents.created_at','location.district','location.city','location.address')
+                ->orderBy('parents.id','desc')
+                ->where('parents.name','like','%'.$name.'%')
+                ->where('parents.child','<=',$child)
+                ->paginate(10);
+        }
+        elseif($province_id != "0"){
+            $data['parents']=DB::table('parents')
+                ->join('location','parents.id','=','location.parent')
+                ->select('parents.id','parents.name','parents.avatar as img','parents.created_at','location.district','location.city','location.address')
+                ->orderBy('parents.id','desc')
+                ->where('parents.name','like','%'.$name.'%')
+                ->where('location.city','like',$province_id)
+                ->paginate(10);
+        }else{
+            $data['parents']=DB::table('parents')
+                ->join('location','parents.id','=','location.parent')
+                ->select('parents.id','parents.name','parents.avatar as img','parents.created_at','location.district','location.city','location.address')
+                ->orderBy('parents.id','desc')
+                ->paginate(10);
+        }
+        return view('sitters.parents_list',$data);
     }
     // parent profile
     public function getParentProfile($id){
@@ -320,7 +359,7 @@ class SittersController extends Controller
         ->where('parent',$id)
         ->select('feedback_parents.*','sitters.name','sitters.images')
         ->get();
-        
+
         if(count($data['feedback'])!=0){
             $rate_parent=DB::table('feedback_parents')
             ->where('parent',$id)
@@ -343,6 +382,7 @@ class SittersController extends Controller
                     'status'=>0||1
                 ])->get();
         }
+
         return view('sitters.parent_profile',$data);
     }
     // post feedback parent profile
@@ -498,7 +538,6 @@ class SittersController extends Controller
         ->join('parents','contracts.parent','=','parents.id')
         ->select('contracts.*','sitters.name as sitter_name','sitters.images as sitter_img','parents.name as parent_name','parents.avatar as parent_img')
         ->get();
-        // dd($data);
         return view('sitters.profile.contracts',$data);
     }
 
@@ -548,6 +587,7 @@ class SittersController extends Controller
     public function acceptContract($id){
         $contract=Contract::find($id);
         $contract->status=1;
+        $contract->is_work=1;
         $contract->save();
 
         return response()->json(array('success'=>true));

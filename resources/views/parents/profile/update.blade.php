@@ -18,6 +18,9 @@
         </div>
     </div>
 </section>
+@if(session('errors'))
+ @include('noti.errors')
+@endif
 <!-- Page Heading / End -->
 <section class="page-content">
     <div class="container">
@@ -67,14 +70,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <fieldset class="fieldset-job_type">
-                                <label for="job_type">Mật khẩu cũ</label>
-                                <div class="field">
-                                    <input type="password" disabled name="old_password" class="form-control password" />
-                                </div>
-                            </fieldset>
-                        </div>
                         <div class="col-md-4">
                             <fieldset class="fieldset-job_type">
                                 <label for="job_type">Mật khẩu mới</label>

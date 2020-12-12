@@ -157,6 +157,8 @@ Route::group(['prefix' => 'parent'], function () {
 //ajax
 Route::post('showDistricts','HomeController@showDistricts');    // show districts
 Route::post('showWards','HomeController@showWards');    // show wards
+
+Route::get('/posts/what_is_babysitter','HomeController@postsTest');
 //
 
 
@@ -203,7 +205,7 @@ Route::group(['prefix' => 'sitter'], function () {
 
     // parent profile
     Route::get('/parent_profile/{id}','SittersController@getParentProfile');
-    
+
     // post feedback to parent profile
     Route::post('/feedback_parent/{id_parent}','SittersController@postFeedbackParent')->middleware('checkLoginSitters');
 

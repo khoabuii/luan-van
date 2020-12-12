@@ -534,7 +534,7 @@
  <!-- Map Init-->
  <script>
     var mapObj = null;
-    var defaultCoord = [10.0352419,105.7773227]; // coord mặc định, 9 giữa HCMC
+    var defaultCoord = [10.0352419,105.7773227]; // coord mặc định, 9 giữa Can Tho City
     var zoomLevel = 13;
     var mapConfig = {
         attributionControl: false, // để ko hiện watermark nữa

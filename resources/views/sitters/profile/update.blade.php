@@ -19,6 +19,7 @@
     </div>
 </section>
 <!-- Page Heading / End -->
+@include('noti.errors')
 <section class="page-content">
     <div class="container">
         <div class="row">
@@ -67,7 +68,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <label for="job_title">Tiền công / buổi</label>
+                                <label for="job_title">Tiền công / Giờ</label>
                                 <div class="field">
                                     <input type="number" class="form-control" name="money" value="{{Auth::user()->money}}"/>
                                 </div>

@@ -26,6 +26,7 @@ class CreateTableContracts extends Migration
             $table->tinyInteger('status')->nullable();
             $table->string('money')->nullable();
             $table->tinyInteger('check')->nullable();
+            $table->tinyInteger('is_work')->default(0)->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });

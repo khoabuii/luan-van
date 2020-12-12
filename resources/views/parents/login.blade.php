@@ -2,6 +2,11 @@
 @section('title','Login')
 @section('content')
 <!-- Page Content -->
+@if(session('pass_reset'))
+    <script>
+        alert('{{session('pass_reset')}}');
+    </script>
+@endif
 <section class="page-content">
     <div class="container">
         <div class="row">

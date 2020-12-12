@@ -45,10 +45,15 @@ class HomeController extends Controller
         $parent=Parents::findOrFail($id_parent);
         $parent->fcm_token=$fcm_token;
         $parent->save();
-        
+
         return response()->json([
             'success'=>true,
             'message'=>'Success'
         ]);
+    }
+
+    // posts test
+    public function postsTest(){
+        return view('posts_test');
     }
 }
