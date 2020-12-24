@@ -1,7 +1,6 @@
 @extends('layouts.parentLayout.parent_app')
 @section('title','Danh sách bảo mẫu')
 @section('content')
-
     <!-- Page Heading -->
     <section class="page-heading">
         <div class="container">
@@ -35,7 +34,12 @@
                             <select class="form-control" name="province">
                                 <option value="">Tất cả đại điểm</option>
                                 @foreach($location as $location)
-                                    <option value="{{$location->id}}">{{$location->name}}</option>
+                                    <option
+                                    value="{{$location->id}}"
+                                    @if($province==$location->id)
+                                        selected
+                                    @endif
+                                        >{{$location->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -52,8 +56,16 @@
                             <div class="col-md-3">
                                 <select name="gender" id="" class="form-control">
                                     <option value="">Giới tính</option>
-                                    <option value="0">Nam</option>
-                                    <option value="1">Nữ</option>
+                                    <option
+                                        @if($gender==0)
+                                            selected
+                                        @endif
+                                            value="0">Nam</option>
+                                    <option
+                                        @if($gender==1)
+                                            selected
+                                        @endif
+                                    value="1">Nữ</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -98,7 +110,6 @@
                 {{$sitters->links()}}
             </ul>
         </div>
-
     </div>
 </section>
 <!-- Page Content / End -->

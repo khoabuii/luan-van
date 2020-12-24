@@ -16,6 +16,11 @@
     <div class="widget-box">
     <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
     <h5>Danh sách các Hợp đồng làm việc</h5>
+    <button class="btn btn-primary">
+        <a href="{{url('admin/contracts/pdf')}}">
+            Xuất file PDF
+        </a>
+    </button>
     </div>
     <div class="widget-content nopadding">
     <table class="table table-bordered data-table">

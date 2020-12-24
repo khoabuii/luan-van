@@ -17,6 +17,7 @@
     <div class="widget-box">
     <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
     <h5>Danh sách các bảo mẫu</h5>
+    <button class="btn btn-primary"><a href="{{Route('exportListSitter')}}">Xuất File PDF</a></button>
     </div>
     <div class="widget-content nopadding">
     <table class="table table-bordered data-table">
@@ -60,10 +61,10 @@
                     <div class="btn-group" id="status">
                             @if($sitter->status==0)
                              <button data-toggle="dropdown">
-                               <span id="active" style="color: rgb(97, 97, 31)">Chưa Xác thực</span>
+                               <span id="active_{{$sitter->id}}" style="color: rgb(97, 97, 31)">Chưa Xác thực</span>
                             @elseif($sitter->status==1)
                             <button data-toggle="dropdown">
-                                <span id="un_active" style="color:yellowgreen">Đã xác thực</span>
+                                <span id="un_active_{{$sitter->id}}" style="color:yellowgreen">Đã xác thực</span>
                             @elseif($sitter->status==2)
                             <button class="btn btn-danger" data-toggle="dropdown">
                                 Bị khóa
@@ -88,11 +89,12 @@
                     $.ajax({
                         type:'GET',
                         url:'{{asset('admin/sitters/active')}}/{{$sitter->id}}',
+                        success:function(data){
 
-                        success:function(html){
-                            document.getElementById("active").innerHTML="Đã xác thực";
+                           location.reload();
+                            document.getElementById("active_{{$sitter->id}}").innerHTML="Đã xác thực";
                         },error:function() {
-                            console.log(data);
+
                         }
                     });
                 }
@@ -101,10 +103,11 @@
                     $.ajax({
                         type:'GET',
                         url:'{{asset('admin/sitters/cancel_active')}}/{{$sitter->id}}',
-                        success:function(html){
-                            document.getElementById("un_active").innerHTML="Hủy bỏ xác thực";
+                        success:function(data){
+                            // location.reload();
+                            document.getElementById("un_active_{{$sitter->id}}").innerHTML="Hủy bỏ xác thực";
                         },error:function() {
-                            console.log(data);
+                            // console.log(data);
                         }
                     });
                 }

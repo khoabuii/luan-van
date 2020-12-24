@@ -51,7 +51,12 @@
                                     <input type="date" class="form-control" name="birthDay" value="{{Auth::guard('parents')->user()->birthDay}}"/>
                                 </div>
                             </div>
-
+                            <div class="col-md-2">
+                                <label for="">Số người con</label>
+                                <div class="field">
+                                    <input type="number" class="form-control" name="child" value="{{Auth::guard('parents')->user()->child}}">
+                                </div>
+                            </div>
                         </div>
                     </fieldset>
 

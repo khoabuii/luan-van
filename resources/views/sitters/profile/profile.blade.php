@@ -293,7 +293,7 @@
                 <div class="job-location">
                     <!-- Google Map -->
                     <div class="googlemap-wrapper">
-                        <div id="map_canvas" class="map-canvas"></div>
+                        <div id="map" class="map-canvas"></div>
                     </div>
                     <!-- Google Map / End -->
                 </div>
@@ -573,4 +573,23 @@
     });
 </script>
 {{-- end ajax address --}}
+
+{{-- Google map api --}}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqLMWBABFRGf932Y9dmmmby1mIrpL1-DQ&callback=initMap&libraries=places&v=weekly" async defer></script>
+<script>
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+        mapTypeControl: false,
+        center: {lat: 10.0248, lng: 105.7667051},
+        zoom: 11
+    });
+    }
+    const marker = new google.maps.Marker({
+        map: map,
+        position: {lat: 10.0248, lng: 105.7667051},
+    });
+
+</script>
+
 @endsection

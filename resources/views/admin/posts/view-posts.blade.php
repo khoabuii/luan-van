@@ -20,7 +20,12 @@
     <div class="span12">
     <div class="widget-box">
     <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-    <h5>Danh sách các Bài viết bởi người dùng Phụ huynh</h5>
+    <h5>Danh sách các Bài viết bởi người dùng Phụ huynh và Bảo mẫu</h5>
+    <button class="btn btn-primary">
+        <a href="{{url('admin/posts/pdf')}}">
+            Xuất File PDF
+        </a>
+    </button>
     </div>
     <div class="widget-content nopadding">
     <table class="table table-bordered data-table">

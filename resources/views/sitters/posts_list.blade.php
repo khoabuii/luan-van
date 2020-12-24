@@ -7,6 +7,13 @@
     alert('{{session('save')}}')
 </script>
 @endif
+
+@if(session('success'))
+<script>
+    alert('{{session('success')}}')
+</script>
+@endif
+
 <section class="page-heading">
     <div class="container">
         <div class="row">
@@ -174,7 +181,11 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-md-9">
-                                                    <span>{{$comment->content}} </span>
+                                                    <span>{{$comment->content}} </span><br>
+                                                    Vào lúc: <i>{{$comment->created_at}}</i>
+                                                    @if($comment->sitter==Auth::user()->id)
+                                                    &nbsp; <a href="{{asset('sitter/posts/delete_comment/'.$comment->id.'')}}">Xóa</a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -227,23 +238,23 @@
 
                 <!-- Widget :: Latest Posts -->
                 <div class="latest-posts-widget widget widget__sidebar">
-                    <h3 class="widget-title">Gợi ý Phụ huynh cho bạn</h3>
+                    <h3 class="widget-title">Bài viết dành cho bạn</h3>
                     <div class="widget-content">
                         <ul class="latest-posts-list">
                             <li>
-                                <figure class="thumbnail"><a href="#"><img src="images/samples/post-img-1-sm.jpg" alt=""></a></figure>
-                                <span class="date">24/07/2013</span>
-                                <h5 class="title"><a href="#">Duis placerat rhoncus arcu, sit amet aliquam leo</a></h5>
+                                <figure class="thumbnail"><a href="{{asset('posts/what_is_babysitter')}}"><img src="images/samples/post-img-1-sm.jpg" alt=""></a></figure>
+                                <span class="date">24/07/2020</span>
+                                <h5 class="title"><a href="{{asset('posts/what_is_babysitter')}}">Nghề Babysittter là gì</a></h5>
                             </li>
                             <li>
-                                <figure class="thumbnail"><a href="#"><img src="images/samples/post-img-2-sm.jpg" alt=""></a></figure>
-                                <span class="date">16/07/2013</span>
-                                <h5 class="title"><a href="#">Mauris in arcu aliq, elementum nibh nec</a></h5>
+                                <figure class="thumbnail"><a href="{{asset('posts/what_is_babysitter')}}"><img src="images/samples/post-img-2-sm.jpg" alt=""></a></figure>
+                                <span class="date">16/07/2020</span>
+                                <h5 class="title"><a href="{{asset('posts/what_is_babysitter')}}">Làm thế nào để tìm được người bảo mẫu tốt?</a></h5>
                             </li>
                             <li>
-                                <figure class="thumbnail"><a href="#"><img src="images/samples/post-img-3-sm.jpg" alt=""></a></figure>
-                                <span class="date">14/07/2013</span>
-                                <h5 class="title"><a href="#">Vestibulum in ligula rutrum faucibus interdum</a></h5>
+                                <figure class="thumbnail"><a href="{{asset('posts/what_is_babysitter')}}"><img src="images/samples/post-img-3-sm.jpg" alt=""></a></figure>
+                                <span class="date">14/07/2020</span>
+                                <h5 class="title"><a href="{{asset('posts/what_is_babysitter')}}">Chăm sóc cho trẻ biến ăn</a></h5>
                             </li>
                         </ul>
                     </div>

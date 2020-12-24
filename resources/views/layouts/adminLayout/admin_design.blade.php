@@ -51,8 +51,10 @@
 
 @include('layouts.adminLayout.admin_footer')
 {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
-<script src="{{asset('/admin/js/bootstrap-wysihtml5.js')}}"></script>
+
 <script src="{{asset('/admin/js/jquery.min.js')}}"></script>
+{{-- <script src="{{asset('/admin/js/bootstrap-wysihtml5.js')}}"></script> --}}
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{asset('/admin/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('/admin/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('/admin/js/jquery.uniform.js')}}"></script>
@@ -63,8 +65,6 @@
 <script src="{{asset('/admin/js/matrix.tables.js')}}"></script>
 <script src="{{asset('/admin/js/matrix.popover.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 
 <script>
     $( function() {

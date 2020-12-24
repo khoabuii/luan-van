@@ -159,6 +159,7 @@ class ParentsController extends Controller
             $parent->password=bcrypt($request->re_new_password);
         }
         $parent->description=$request->description;
+        $parent->child=$request->child;
 
         $file=request()->file('images');
         if($file !=null){
@@ -334,6 +335,15 @@ class ParentsController extends Controller
             ->orderBy('sitters.id','desc')
             ->paginate(10);
         }
+        elseif($gender !=null && $province_id !=null){
+            $data['sitters']=DB::table('sitters')
+                ->join('location','sitters.id','=','location.sitter')
+                ->select('sitters.id','sitters.name','sitters.birthDay','sitters.status as status','sitters.created_at','location.address','location.district','location.city','sitters.images as img')
+                ->orderBy('sitters.id','desc')
+                ->where('sitters.gender','like',(int)$gender)
+                ->where('location.city','like',$province_id)
+                ->paginate(10);
+        }
         elseif($gender !=null ){
             $data['sitters']=DB::table('sitters')
                 ->join('location','sitters.id','=','location.sitter')
@@ -341,7 +351,8 @@ class ParentsController extends Controller
                 ->orderBy('sitters.id','desc')
                 ->where('sitters.gender','like',(int)$gender)
                 ->paginate(10);
-        }elseif($province_id !=null){ // check province and name sitter
+        }
+        elseif($province_id !=null){ // check province and name sitter
             $data['sitters']=DB::table('sitters')
                 ->join('location','sitters.id','=','location.sitter')
                 ->select('sitters.id','sitters.name','sitters.birthDay','sitters.status as status','sitters.created_at','location.address','location.district','location.city','sitters.images as img')
@@ -357,7 +368,11 @@ class ParentsController extends Controller
                 ->where('sitters.age','<',$age_min)
                 ->paginate(10);
         }
-        return view('parents.list_sitters',$data);
+        return view('parents.list_sitters',$data,
+        [
+            'gender'=>$gender,
+            'province'=>$province_id
+        ]);
     }
 
     //get Save Sitters
@@ -465,6 +480,12 @@ class ParentsController extends Controller
         // return response()->json(array(['success'=>true]));
         return back()->with('success','Bình luận đã được gửi');
     }
+    //delete comment
+    public function deleteComment($id){
+        Comment::destroy($id);
+        return back()->with('success','Đã xóa bình luận');
+    }
+
     // post add
     public function postAddPost(Request $request){
         $this->validate($request,[
@@ -685,7 +706,7 @@ class ParentsController extends Controller
         $parent->save();
         $passwordReset->delete();
 
-        return redirect('parent/login')->with('pass_reset','Mật khẩu mới của bạn là \n 123456'); 
+        return redirect('parent/login')->with('pass_reset','Mật khẩu mới của bạn là \n 123456');
     }
 
 }

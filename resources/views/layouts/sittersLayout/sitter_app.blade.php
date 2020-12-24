@@ -146,27 +146,6 @@
     <script src="{{asset('homepage/js/custom.js')}}"></script>
 
     <!-- Map Init-->
-    <script>
-        var mapObj = null;
-        var defaultCoord = [10.0352419,105.7773227]; // coord mặc định, 9 giữa HCMC
-        var zoomLevel = 13;
-        var mapConfig = {
-            attributionControl: false, // để ko hiện watermark nữa
-            center: defaultCoord, // vị trí map mặc định hiện tại
-            zoom: zoomLevel, // level zoom
-        };
-        window.onload = function() {
-            // init map
-            mapObj = L.map('map_canvas', {attributionControl: false}).setView(defaultCoord, zoomLevel);
-
-            // add tile để map có thể hoạt động, xài free từ OSM
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(mapObj);
-            L.marker([10.0344379,105.770484]).addTo(mapObj);
-        };
-
-    </script>
 	<script>
 		jQuery(function($){
 			$('body').addClass('loading');

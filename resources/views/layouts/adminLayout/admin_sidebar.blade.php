@@ -30,7 +30,7 @@
                 @elseif(Request::is('admin/parents/*')) style="display:block;"
                 @endif>
         <li >
-          <a href="{{url ('/admin/parents')}}">Xem danh sách người bảo mẫu</a></li>
+          <a href="{{url ('/admin/parents')}}">Xem danh sách người phụ huynh</a></li>
           <li>
             <a href="{{url ('/admin/parents/add')}}">----------</a></li>
         </ul>

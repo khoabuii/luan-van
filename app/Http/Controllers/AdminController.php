@@ -12,6 +12,7 @@ use App\Post;
 use App\Sitters;
 use App\Skill;
 use App\User;
+// use Barryvdh\DomPDF\PDF;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Closure;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Carbon\Doctrine\CarbonType;
 use OneSignal;
+use Barryvdh\DomPDF\Facade as PDF;
 class AdminController extends Controller
 {
     //
@@ -65,6 +67,13 @@ class AdminController extends Controller
         $data['sitters']=Sitters::all();
         return view('admin.sitters.view-sitters',$data);
     }
+    // create pdf sitter
+    public function createPDFListSitter(){
+        $data['sitters']=Sitters::all();
+        PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+    	$pdf = PDF::loadView('pdf.sitters',$data);
+    	return $pdf->download('ds_bao_mau.pdf');
+    }
     // detail sitter
     public function getDetailSitter($id){
         $data['sitter']=Sitters::findOrFail($id);
@@ -91,20 +100,20 @@ class AdminController extends Controller
         Sitters::destroy($id);
         return back()->with('success','Thao tác thành công');
     }
+
     // active sitter
     public function activeSitter($id){
         $sitter=Sitters::find($id);
         $sitter->status=1;
         $sitter->save();
-
         return response()->json(array('success'=>true));
     }
+
     // cancel active sitter
     public function cancelActiveSitter($id){
         $sitter=Sitters::find($id);
         $sitter->status=0;
         $sitter->save();
-
         return response()->json(array('success'=>true));
     }
 
@@ -115,6 +124,16 @@ class AdminController extends Controller
         ->select('parents.*','location.address as add_current')->get();
         return view('admin.parents.view-parents',$data);
     }
+
+    // export pdf parent
+    public function createPDFParent(){
+        $data['parents']=DB::table('parents')
+        ->join('location','parents.id','=','location.parent')
+        ->select('parents.*','location.address as add_current')->get();
+        $pdf = PDF::loadView('pdf.parents',$data);
+    	return $pdf->download('ds_phu_huynh.pdf');
+    }
+
     // detail parent
     public function getDetailParent($id){
         $data['parent']=Parents::findOrFail($id);
@@ -172,6 +191,28 @@ class AdminController extends Controller
 
         return view('admin.posts.view-posts',$data);
     }
+    // create pdf file posts
+    public function createPDFPosts(){
+        $data['parents']=DB::table('posts')
+        ->join('parents','posts.parent','=','parents.id')
+        ->select('posts.*','parents.id as id_parent','parents.name as parent_name','parents.avatar as parent_img')
+        ->orderByDesc('posts.id')
+        ->get();
+
+        $data['sitters']=DB::table('posts')
+        ->join('sitters','posts.sitter','=','sitters.id')
+        ->select('posts.*','sitters.id as id_sitter','sitters.name as sitter_name','sitters.images as sitter_img')
+        ->orderByDesc('posts.id')
+        ->get();
+
+        $posts=array();
+        $posts=array_merge($data['parents']->toArray(),$data['sitters']->toArray());
+        $data['posts']=$posts;
+
+        $pdf = PDF::loadView('pdf.posts',$data);
+    	return $pdf->download('ds_bai_viet.pdf');
+    }
+
     // delete posts
     public function deletePost($id){
         $this->deletePostParent($id);
@@ -186,6 +227,17 @@ class AdminController extends Controller
         ->get();
         return view('admin.contracts.view-contracts',$data);
     }
+// CREATE PDF FILE CONTRACTS
+    public function createPDFContracts(){
+        $data['contracts']=DB::table('contracts')
+        ->join('sitters','contracts.sitter','=','sitters.id')
+        ->join('parents','contracts.parent','=','parents.id')
+        ->select('contracts.*','parents.id as id_parent','parents.name as name_parent','parents.avatar as avatar_parent','sitters.id as id_sitter','sitters.name as name_sitter','sitters.images as avatar_sitter')
+        ->get();
+        $pdf=PDF::loadView('pdf.contracts',$data);
+        return $pdf->download('ds_hop_dong.pdf');
+    }
+
     // delete contract
     public function deleteContract($id){
         Contract::destroy($id);
