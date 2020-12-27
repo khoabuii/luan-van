@@ -114,7 +114,7 @@
                                         </li>
                                     </ul>
                                     @Auth('parents')
-                                    @if(count($check_is_contract)!=0)
+                                    @if(count($check_is_contract)==0)
                                         <span style="color: rgb(182, 97, 27)">
                                             Bạn đã hoặc đang làm việc với người này, hãy đánh giá cho mọi người cùng biết nhé!
                                         </span>
@@ -127,7 +127,7 @@
                                 <a href="{{asset('parent/save_sitters')}}/{{$sitter->id}}" class="btn btn-primary"><span class="fa fa-user-plus"></span> Lưu</a>
                                     @endif
                                 <button type="button"
-                                @if(count($check_is_contract)!=0) disabled @endif
+                                @if(count($check_is_contract)==0) disabled @endif
                                 class="btn btn-primary" data-toggle="modal" data-target="#contract">
                                     <span class="fa fa-send"></span> Gửi yêu cầu làm việc
                                 </button>
@@ -239,7 +239,7 @@
                 <div class="job-location">
                     <!-- Google Map -->
                     <div class="googlemap-wrapper">
-                        <div id="map_canvas" class="map-canvas"></div>
+                        <div id="map" class="map-canvas"></div>
                     </div>
                     <!-- Google Map / End -->
                 </div>
@@ -531,27 +531,21 @@
 </script>
 {{-- end ajax address --}}
 
- <!-- Map Init-->
- <script>
-    var mapObj = null;
-    var defaultCoord = [10.0352419,105.7773227]; // coord mặc định, 9 giữa Can Tho City
-    var zoomLevel = 13;
-    var mapConfig = {
-        attributionControl: false, // để ko hiện watermark nữa
-        center: defaultCoord, // vị trí map mặc định hiện tại
-        zoom: zoomLevel, // level zoom
-    };
-    window.onload = function() {
-        // init map
-        mapObj = L.map('map_canvas', {attributionControl: false}).setView(defaultCoord, zoomLevel);
-
-        // add tile để map có thể hoạt động, xài free từ OSM
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: '© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(mapObj);
-        L.marker([10.0344379,105.770484]).addTo(mapObj);
-    };
-
+ <!-- Google map Map Init-->
+<!-- Google maps -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqLMWBABFRGf932Y9dmmmby1mIrpL1-DQ&callback=initMap&libraries=places&v=weekly" defer></script>
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+        mapTypeControl: false,
+        center: {lat: 10.0248, lng: 105.7667051},
+        zoom: 11
+    });
+    }
+    const marker = new google.maps.Marker({
+        map: map,
+        position: {lat: 10.0248, lng: 105.7667051},
+    });
 </script>
 <!-- end map -->
 @endsection

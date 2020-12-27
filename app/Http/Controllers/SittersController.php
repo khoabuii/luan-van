@@ -27,6 +27,8 @@ use Illuminate\Support\Str;
 use OneSignal;
 use mysqli;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
@@ -375,14 +377,14 @@ class SittersController extends Controller
             ->where('sitter',Auth::user()->id)
             ->where('parent',$id)->get();
 
-            $data['check_is_contract']=DB::table('contracts')
-                ->where([
-                    'parent'=>$id,
-                    'sitter'=>Auth::user()->id,
-                    'status'=>0||1
-                ])->get();
+            $data['check_is_contract']=Contract::where([
+                'parent'=>$id,
+                'sitter'=>Auth::user()->id,
+                'status'=>2
+            ])
+            ->get();
         }
-
+        // dd($data);
         return view('sitters.parent_profile',$data);
     }
     // post feedback parent profile
@@ -518,11 +520,11 @@ class SittersController extends Controller
     // get save post list
     public function getSaveList(){
         $data['save_list']=DB::table('save_posts')
-        ->where('sitter',Auth::user()->id)
-        ->join('posts','save_posts.post','=','posts.id')
-        ->join('parents','posts.parent','=','parents.id')
-        ->select('save_posts.id as id_save_post','posts.id as id_post','posts.title','posts.content','posts.created_at','posts.images','parents.id as id_parent','parents.name as parent_name','parents.avatar')
-        ->orderBy('save_posts.id','desc')->paginate(15);
+            ->where('save_posts.sitter',Auth::user()->id)
+            ->join('posts','save_posts.post','=','posts.id')
+            ->join('parents','posts.parent','=','parents.id')
+            ->select('save_posts.id as id_save_post','posts.id as id_post','posts.title','posts.content','posts.created_at','posts.images','parents.id as id_parent','parents.name as parent_name','parents.avatar')
+            ->orderBy('save_posts.id','desc')->paginate(15);
         return view('sitters.save_list',$data);
     }
     // get getSaveDelete
@@ -537,8 +539,16 @@ class SittersController extends Controller
         ->join('sitters','contracts.sitter','=','sitters.id')
         ->join('parents','contracts.parent','=','parents.id')
         ->select('contracts.*','sitters.name as sitter_name','sitters.images as sitter_img','parents.name as parent_name','parents.avatar as parent_img')
+        ->orderBy('id','desc')
         ->get();
         return view('sitters.profile.contracts',$data);
+    }
+
+    // export pdf contract
+    public function exportContract($id){
+        $data['contract']=Contract::find($id);
+        $pdf=PDF::loadView('pdf.contract_sitter',$data);
+        return $pdf->download('contract.pdf');
     }
 
     //send contract parent
@@ -553,7 +563,7 @@ class SittersController extends Controller
         Chúng tôi chỉ cung cấp nền tảng, mọi vấn đề xảy ra chúng tôi sẽ không chịu trách nhiệm.";
 
         $contract->money=Auth::user()->money;
-        $contract->check=1;
+        $contract->check=0;
         $contract->description=$description;
         $contract->status=0;
 

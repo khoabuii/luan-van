@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h1>Bài viết</h1>
+                <h1>Bài viết đã lưu</h1>
             </div>
             <div class="col-md-6">
                 <ul class="breadcrumb">

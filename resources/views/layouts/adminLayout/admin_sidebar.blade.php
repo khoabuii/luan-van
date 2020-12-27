@@ -18,7 +18,7 @@
         <li >
           <a href="{{url ('/admin/sitters')}}">Xem danh sách người bảo mẫu</a></li>
           <li>
-            <a href="{{url ('/admin/sitters/skill')}}">Quản lý kỷ năng</a></li>
+            <a href="{{url ('/admin/sitters/skill')}}">Quản lý danh mục kỷ năng</a></li>
         </ul>
       </li>
 

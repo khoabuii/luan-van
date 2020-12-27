@@ -108,7 +108,7 @@ Route::group(['prefix' => 'parent'], function () {
     // list_babysitter
     Route::get('/list_sitters','ParentsController@getListSitters')->middleware('checkLoginParents');
     // search sitter
-    Route::get('/search_sitter','ParentsController@searchSitter');
+    Route::get('/search_sitter','ParentsController@searchSitter')->name('search.sitters');
 
     // profile_sitter
     Route::get('sitter_profile/{id}','ParentsController@getSitterProfile');
@@ -146,6 +146,7 @@ Route::group(['prefix' => 'parent'], function () {
     Route::group(['prefix' => 'contract','middleware'=>'checkLoginParents'], function () {
         Route::get('/','ParentsController@getContract');
         Route::get('/{id}','ParentsController@detailContract');
+        Route::get('/pdf/{id}','ParentsController@exportContract');
 
         Route::get('/sendRequest/{id}','ParentsController@sendRequestContractSitter');
 
@@ -241,6 +242,7 @@ Route::group(['prefix' => 'sitter'], function () {
     Route::group(['prefix' => 'contract','middleware'=>'checkLoginSitters'], function () {
         Route::get('/','SittersController@getContracts');
         Route::get('/sendRequest/{id}','SittersController@sendRequestContractParent');
+        Route::get('/pdf/{id}','SittersController@exportContract');
 
         Route::get('/accept/{id}','SittersController@acceptContract');
         Route::get('/cancel/{id}','SittersController@cancelContract');

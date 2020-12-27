@@ -8,7 +8,7 @@
             <a href="#">Bảo mẫu</a>
             <a href="#" class="current">Skills</a>
         </div>
-            <h1>Quản lý kỉ năng</h1>
+            <h1>Quản lý danh mục kỷ năng</h1>
         @include('noti.errors')
         @include('noti.success')
     </div>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="span5">
                     <h5>
-                        Danh sách các kỉ năng
+                        Danh sách các kỷ năng
                     </h5>
                     <table class="table table-bordered table-invoice">
                         <tbody>

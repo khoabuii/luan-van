@@ -25,7 +25,6 @@
         <form class="job_filters" action="{{asset('parent/search_sitter')}}" method="GET">
             <div style="padding: 2pc">
                 <div class="row">
-
                     <div class="col-md-5">
                         <div class="col-md-5">
                             <input type="text" name="name" id="search_keywords" placeholder="Tên bảo mẫu" class="form-control" value="" />
@@ -36,15 +35,16 @@
                                 @foreach($location as $location)
                                     <option
                                     value="{{$location->id}}"
-                                    @if($province==$location->id)
-                                        selected
+                                    @if(Request::route('search.sitter'))
+                                        @if($province==$location->id)
+                                            selected
+                                        @endif
                                     @endif
                                         >{{$location->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-
                     <div class="col-md-7">
                         <div class="form-group">
                             <div class="col-md-3">
@@ -57,14 +57,18 @@
                                 <select name="gender" id="" class="form-control">
                                     <option value="">Giới tính</option>
                                     <option
+                                    @if(Request::route('search.sitter'))
                                         @if($gender==0)
                                             selected
                                         @endif
+                                    @endif
                                             value="0">Nam</option>
                                     <option
+                                    @if(Request::route('search.sitter'))
                                         @if($gender==1)
                                             selected
                                         @endif
+                                    @endif
                                     value="1">Nữ</option>
                                 </select>
                             </div>
@@ -93,10 +97,16 @@
                             <i class="fa fa-map-marker"></i> {{strstr($sitter->address,',')}}
                         </div>
                         <div class="meta">
+                            @php
+                                $date_create=$sitter->created_at;
+                                $date=new DateTime($date_create);
+                                $now=new DateTime();
+                            @endphp
+
                             @if(date_diff(date_create($sitter->created_at), date_create('now'))->d !=0)
-                                <h5>{{date_diff(date_create($sitter->created_at), date_create('now'))->d}} ngày trước</h5>
+                                <h5>{{$date->diff($now)->format("%m tháng, %d ngày trước" )}} </h5>
                             @elseif(date_diff(date_create($sitter->created_at), date_create('now'))->d==0)
-                                <h5>{{date_diff(date_create($sitter->created_at), date_create('now'))->h}} giờ trước</h5>
+                                <h5>Hôm nay</h5>
                             @endif
                         </div>
                     </a>

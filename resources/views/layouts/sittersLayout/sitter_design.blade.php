@@ -43,6 +43,7 @@
 	<link rel="apple-touch-icon" sizes="144x144" href="{{asset('homepage/images/apple-touch-icon-144x144.png')}}">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 </head>
 <body class="boxed">
@@ -94,6 +95,7 @@
 	<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 	<script src="vendor/jquery.gmap3.min.js"></script>
 
+
 	<script>
 		jQuery(function($){
 			$('body').addClass('loading');
@@ -121,6 +123,11 @@
                 $("p.alert").remove();
             }, 7000 ); // 7 secs
         });
+
+        $(document).ready(function() {
+            $('#contract').DataTable();
+        });
+
     </script>
 </body>
 </html>

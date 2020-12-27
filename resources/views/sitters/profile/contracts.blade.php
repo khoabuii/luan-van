@@ -8,7 +8,7 @@
         <h4>Danh sách hợp đồng</h4>
         <div id="job-manager-job-dashboard">
             <div class="table-responsive">
-                <table class="job-manager-jobs table table-bordered table-striped">
+                <table id="contract" class="job-manager-jobs table table-bordered table-striped data-table">
                     <thead>
                         <tr>
                             <th width="10%">ID hợp đồng</th>
@@ -28,7 +28,7 @@
                             <td class="job_title">
                                 <center>
                                     <a href="{{asset('sitter/parent_profile')}}/{{$contract->parent}}" class="job_title_link">{{$contract->parent_name}}</a>
-                                    @if($contract->check==0)(Người gửi yêu cầu) @endif
+                                    @if($contract->check==1)(Người gửi yêu cầu) @endif
                                     <br>
                                     <img src="{{asset('uploads/parents_profile')}}/{{$contract->parent_img}}" width="50%">
                                 </center>
@@ -44,11 +44,15 @@
                                      style="color:red" > Hủy hợp đồng
                                     @endif
                                 </p>
-                                @if($contract->check==0 && ($contract->status==0 || $contract->status==1))
-                                <ul class="job-dashboard-actions">
-                                    <li><button onclick="return action_{{$contract->id}}();">Xác nhận</button></li>
-                                    <li><button onclick="return cancel_{{$contract->id}}();">Hủy hợp đồng</button></li>
-                                </ul>
+                                @if($contract->check==1 && $contract->status==0)
+                                    <ul class="job-dashboard-actions">
+                                        <li><button onclick="return cancel_{{$contract->id}}();">Hủy hợp đồng</button></li>
+                                        <li><button onclick="return action_{{$contract->id}}();">Xác nhận</button></li>
+                                    </ul>
+                                @elseif($contract->status==0 || $contract->status==1)
+                                    <ul class="job-dashboard-actions">
+                                        <li><button onclick="return cancel_{{$contract->id}}();">Hủy hợp đồng</button></li>
+                                    </ul>
                                 @endif
                             </td>
                             <td class="filled">{{number_format($contract->money)}} VND</td>
@@ -85,15 +89,15 @@
                                                         @elseif($contract->status==2)
                                                             <span style="color: brown">Đã hủy hợp đồng</span>
                                                         @endif
-                                            @if($contract->check==0 && ($contract->status==0 || $contract->status==1))
+                                            @if($contract->check==1 && $contract->status==0)
                                                 <ul class="job-dashboard-actions">
                                                     <li><button onclick="return action_{{$contract->id}}();">Xác nhận</button></li>
                                                     <li><button onclick="return cancel_{{$contract->id}}();">Hủy hợp đồng</button></li>
                                                 </ul>
-                                            @elseif($contract->check==1 && $contract->status==0)
+                                            @elseif($contract->status==0 || $contract->status==1)
                                             <ul>
                                                 <li style="display: inline;">
-                                                    <button onclick="return cancel_{{$contract->id}}();">Hủy hợp đồng</button>
+                                                    <button onclick="return cancel_{{$contract->id}}"> Hủy hợp đồng</button>
                                                 </li>
                                             </ul>
                                             @endif
@@ -102,7 +106,7 @@
                                             @if($contract->check==1)
                                                 Bạn là người gửi thông tin yêu cầu làm việc.
                                             @elseif($contract->check==0)
-                                                Bảo mẫu là người gửi thông tin làm việc.
+                                               Phụ huynh là người gửi thông tin làm việc.
                                             @endif
                                         </p>
                                         <div class="row">
@@ -124,6 +128,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
+                                        <a href="{{url('sitter/contract/pdf/'.$contract->id)}}" class="btn btn-primary">Xuat File PDF</a>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                                     </div>
                                 </div>
@@ -162,4 +167,7 @@
 </section>
 <!-- Page Content / End -->
 
+<script>
+
+</script>
 @endsection

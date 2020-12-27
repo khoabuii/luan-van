@@ -79,8 +79,14 @@
                         </div>
 
                         <div class="meta">
+                            @php
+                                $date_create=$parent->created_at;
+                                $date=new DateTime($date_create);
+                                $now=new DateTime();
+                            @endphp
+
                             @if(date_diff(date_create($parent->created_at), date_create('now'))->d !=0)
-                                <h5>{{date_diff(date_create($parent->created_at), date_create('now'))->d}} ngày trước</h5>
+                                <h5>{{$date->diff($now)->format("%m tháng, %d ngày trước" )}} </h5>
                             @elseif(date_diff(date_create($parent->created_at), date_create('now'))->d==0)
                                 <h5>Hôm nay</h5>
                             @endif

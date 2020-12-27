@@ -15,7 +15,7 @@ use App\Province;
 use App\save_sitters;
 use App\Sitters;
 use App\PasswordReset;
-
+use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -302,14 +302,15 @@ class ParentsController extends Controller
                 ->where([
                     'sitter'=>$id,
                     'parent'=>$id_parent,
-                    'status'=>0||1
+                    'status'=>2
                 ])->get();
         }
-
+        // dd($data);
         return view('parents.sitter_profile',$data);
     }
     //////////////////////////// get List Sitters ////////////////////////////////////////////
     public function getListSitters(){
+        // $data['province']=Province::find(59)->id;
         $data['location']=Province::all();
         $data['sitters']=DB::table('sitters')
             ->join('location','sitters.id','=','location.sitter')
@@ -318,6 +319,7 @@ class ParentsController extends Controller
             ->paginate(10);
         return view('parents.list_sitters',$data);
     }
+
     // search sitter
     function searchSitter(Request $request){
         $data['location']=Province::all();
@@ -569,6 +571,13 @@ class ParentsController extends Controller
 
         dd($contract);
     }
+    // export pdf contract
+    public function exportContract($id){
+        $data['contract']=Contract::find($id);
+        $pdf=PDF::loadView('pdf.contract_parent',$data);
+        return $pdf->download('contract.pdf');
+    }
+
     // send contract to sitter
     public function sendRequestContractSitter($id){
         $contract=new Contract();
@@ -582,6 +591,7 @@ class ParentsController extends Controller
         $contract->money=$sitter->money;
         $contract->description=$description;
         $contract->status=0;
+        $contract->check=1;
         $check_is_sent=DB::table('contracts')
                 ->where([
                     'sitter'=>$id,

@@ -99,7 +99,7 @@
                                         </li>
                                     </ul>
                                     @auth
-                                        @if(count($check_is_contract)!=0)
+                                        @if(count($check_is_contract)==0)
                                             <span style="color: rgb(182, 97, 27)">
                                                 Bạn đã hoặc đang làm việc với người này, hãy đánh giá cho mọi người cùng biết nhé!
                                             </span>
@@ -108,7 +108,7 @@
                                     <div class="spacer-lg"></div>
                                 @auth
                                 <button type="button"
-                                @if(count($check_is_contract)!=0) disabled @endif
+                                @if(count($check_is_contract)==0) disabled @endif
                                 class="btn btn-primary" data-toggle="modal" data-target="#contract">
                                     <span class="fa fa-send"></span> Gửi yêu cầu làm việc
                                 </button>
