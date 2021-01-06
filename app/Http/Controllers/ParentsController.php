@@ -298,12 +298,19 @@ class ParentsController extends Controller
             $data['check_feedback']=DB::table('feedback_sitters')
             ->where('sitter',$id_sitter)->where('parent',$id_parent)->get();
 
-            $data['check_is_contract']=DB::table('contracts')
+            $data['contract_pending']=DB::table('contracts')
                 ->where([
                     'sitter'=>$id,
                     'parent'=>$id_parent,
-                    'status'=>2
+                    'status'=>0
                 ])->get();
+
+            $data['contract_active']=DB::table('contracts')
+            ->where([
+                'sitter'=>$id,
+                'parent'=>$id_parent,
+                'status'=>1
+            ])->get();
         }
         // dd($data);
         return view('parents.sitter_profile',$data);
@@ -617,7 +624,7 @@ class ParentsController extends Controller
 
             $message->subject('Xác nhận yêu cầu kí kết làm việc');
         });
-        return redirect('/parent')->with('success','Đã gửi yêu cầu thành công');
+        return back()->with('success','Đã gửi yêu cầu thành công');
     }
     // accept contract
     public function acceptContract($id){

@@ -146,7 +146,7 @@
         options: {
             title: {
             display: true,
-            text: 'Đồ thị tăng trưởng người dùng trong hệ thống'
+            text: 'Đồ thị thống kê sự tăng trưởng người dùng theo tháng'
             }
         }
     });

@@ -51,7 +51,7 @@
                 function sendMessage() {
                     $.ajax({
                         type:'GET',
-                        url:"{{asset('parent/chat/sentNoti/15')}}",
+                        url:"{{asset('parent/chat/sentNoti/'.$id_sitter)}}",
                         success: function(data){
                         }
                     });

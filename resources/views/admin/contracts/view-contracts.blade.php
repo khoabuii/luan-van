@@ -70,11 +70,13 @@
                         Chưa xác nhận
                     @elseif($contract->status==1)
                         Đã xác nhận
+                    @elseif($contract->status==2)
+                        Đã hủy
                     @endif
                 </td>
                 <td>
                     <a href="{{asset('admin/contracts/detail')}}/{{$contract->id}}" style="color: blueviolet">
-                        <i class="icon icon-eye-open"></i>Xem chi tiết</a> /
+                        <i class="icon icon-eye-open"></i>Xem chi tiết</a> <br> <br>
                     <a href="{{asset('admin/contracts/delete_contract')}}/{{$contract->id}}" style="color: blueviolet" onclick="return confirm('Bạn có chắc chưa?')">
                         <i class="icon icon-remove"></i>Xóa</a>
                 </td>

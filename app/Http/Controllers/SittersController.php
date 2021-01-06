@@ -377,12 +377,19 @@ class SittersController extends Controller
             ->where('sitter',Auth::user()->id)
             ->where('parent',$id)->get();
 
-            $data['check_is_contract']=Contract::where([
-                'parent'=>$id,
+            $data['contract_pending']=DB::table('contracts')
+                ->where([
+                    'sitter'=>Auth::user()->id,
+                    'parent'=>$id,
+                    'status'=>0
+                ])->get();
+
+            $data['contract_active']=DB::table('contracts')
+            ->where([
                 'sitter'=>Auth::user()->id,
-                'status'=>2
-            ])
-            ->get();
+                'parent'=>$id,
+                'status'=>1
+            ])->get();
         }
         // dd($data);
         return view('sitters.parent_profile',$data);

@@ -4,8 +4,8 @@
 <div class="container">
 <h3 class=" text-center">Trò chuyện với {{$parent->name}}</h3>
 <div class="messaging">
-        <div class="inbox_msg">
-        <div class="inbox_people">
+        <div class="inbox_msg row">
+        <div class="inbox_people col-sm-3">
             <div class="headind_srch">
             <div class="recent_heading">
                 <h4>Recent</h4>
@@ -39,7 +39,7 @@
             @endforeach
             </div>
         </div>
-        <div class="mesgs">
+        <div class="mesgs col-sm-9">
             <div class="msg_history" id="messages">
                 <script>
                     var sitter_id='{{Auth::user()->id}}';
@@ -50,9 +50,9 @@
                     function sendMessage() {
                         $.ajax({
                         type:'GET',
-                        url:"{{asset('sitter/chat/sentNoti/1')}}",
+                        url:"{{asset('sitter/chat/sentNoti/'.$id_parent)}}",
                         success: function(data){
-
+                            window.scrollTo(0,document.body.scrollHeight);
                         }
                     });
                         // get message
@@ -76,8 +76,8 @@
                         var message=snapshot.val().message;
                         var time=snapshot.val().time;
                         if(snapshot.val().check==1){
-                            html +='<div class="incoming_msg" ';
-                            // html +='<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" width="10%"> </div>';
+                            html +='<div class="row">';
+                            html +='<div class="incoming_msg col-sm-6" ';
                             html += '<div class="received_msg">';
                             html += '<div class="received_withd_msg">';
                             html +='<p>';
@@ -88,8 +88,11 @@
                             html += '</span></div>';
                             html +=  '  </div>';
                             html +='</div>';
+                            html +='</div>';
                         }else{
-                            html +='<div class="outgoing_msg">';
+                            html +='<div class="row">';
+                            html +='<div class="col-sm-6"></div>';
+                            html +='<div class="outgoing_msg col-sm-6">';
                             html +='<div class="sent_msg">';
                             html +='<p id="message-'+snapshot.key+'">';
                             html +=message;
@@ -97,6 +100,7 @@
                             html +=  '<span class="time_date">';
                             html += time;
                             html += '   <small><button class="" data-id="'+snapshot.key+'" onclick="deleteMessage(this);">X</button></small> </span></div>';
+                            html +='</div>';
                             html +='</div>';
                         }
                         document.getElementById("messages").innerHTML += html;
@@ -124,7 +128,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+          </div>
         </div>
     </div>
 </div>

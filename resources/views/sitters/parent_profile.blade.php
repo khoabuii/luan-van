@@ -99,7 +99,7 @@
                                         </li>
                                     </ul>
                                     @auth
-                                        @if(count($check_is_contract)==0)
+                                        @if(count($contract_pending)!=0 || count($contract_active)!=0)
                                             <span style="color: rgb(182, 97, 27)">
                                                 Bạn đã hoặc đang làm việc với người này, hãy đánh giá cho mọi người cùng biết nhé!
                                             </span>
@@ -108,7 +108,7 @@
                                     <div class="spacer-lg"></div>
                                 @auth
                                 <button type="button"
-                                @if(count($check_is_contract)==0) disabled @endif
+                                @if(count($contract_pending)!=0 || count($contract_active)!=0) disabled @endif
                                 class="btn btn-primary" data-toggle="modal" data-target="#contract">
                                     <span class="fa fa-send"></span> Gửi yêu cầu làm việc
                                 </button>
@@ -309,7 +309,7 @@
         <div class="spacer-xl"></div>
         @auth
         <h3 id="feedback_parent"><a href="#feedback_parent">Đánh giá</a>
-            @if(count($check_is_contract)!=0)
+            @if(count($contract_active)!=0)
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedback">Gửi đánh giá của bạn</button>
             @endif
         </h3>

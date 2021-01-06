@@ -50,8 +50,8 @@
                 <!-- Icon Box -->
                 <div class="icon-box boxed circled icon-box-color__tertiary">
                     <div class="icon-box-body">
-                            <h2>Bảo vệ thông tin khách hàng</h2>
-                            Chúng tôi đảm bảo thông tin của anh chị luôn được bảo mật.
+                        <h2>Bảo vệ thông tin khách hàng</h2>
+                        Chúng tôi đảm bảo thông tin của anh chị luôn được bảo mật.
                     </div>
                 </div>
                 <!-- Icon Box / End -->
@@ -72,7 +72,7 @@
                     </figure>
                     <div class="job-listing-body">
                         <div class="name"><a href="{{asset('parent/sitter_profile')}}/{{$sitter->id}}">{{$sitter->name}}</a> @if($sitter->status==1)<i class="fa fa-check" style="color: green"></i> @endif</div>
-                        <p>4.6/5 (Tổng 3 lượt đánh giá)</p>
+                        <p>-----</p>
                     </div>
                     <footer class="job-listing-footer">
                         <ul class="meta">
