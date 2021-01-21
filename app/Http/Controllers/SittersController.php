@@ -68,7 +68,8 @@ class SittersController extends Controller
         $this->validate($request,[
             'email'=>'unique:sitters,email',
             're-password'=>'same:password',
-            'phone'=>'max:11|min:9'
+            'phone'=>'max:11|min:9',
+            'birthDay'=>'required|date|before:18 years ago'
         ],[
             'email.unique'=>'Email đã tồn tại'
         ]);
@@ -287,6 +288,7 @@ class SittersController extends Controller
         $data['parents']=DB::table('parents')
             ->join('location','parents.id','=','location.parent')
             ->select('parents.id','parents.name','parents.avatar as img','parents.created_at','location.district','location.city','location.address')
+            ->orderBy('parents.id','desc')
             ->paginate(10);
         return view('sitters.parents_list',$data);
     }

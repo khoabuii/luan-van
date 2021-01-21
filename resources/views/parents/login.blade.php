@@ -7,6 +7,11 @@
         alert('{{session('pass_reset')}}');
     </script>
 @endif
+@if(session('error'))
+    <script>
+        alert('{{session('error')}}');
+    </script>
+@endif
 <section class="page-content">
     <div class="container">
         <div class="row">
@@ -31,7 +36,7 @@
                             </div>
                             <input type="password" name="password" placeholder="Nhập mật khẩu" class="form-control">
                         </div>
-                        @include('noti.errors')
+                        {{-- @include('noti.errors') --}}
                         <button type="submit" class="btn btn-primary btn-inline">Đăng nhập</button>&nbsp; &nbsp; &nbsp;
                         <label for="remember" class="checkbox-inline">
                             <input type="checkbox" name="remember" id="remember"> Remember me
@@ -70,6 +75,7 @@
                 <div class="spacer-lg visible-sm visible-xs"></div>
                 <div class="box">
                     <h3>Đăng ký</h3>
+                    @include('noti.errors')
                     <form action="{{asset('parent/register')}}" method="POST" role="form">
                         {{csrf_field()}}
                         <div class="row">
@@ -185,13 +191,11 @@
                         </div>
                         <span class="required">*</span><small> Những trường này là bắt buộc</small>
                         <br>
-                        @include('noti.errors')
                         <button type="submit" class="btn btn-primary">Đăng ký</button>
                     </form>
                 </div>
             </div>
         </div>
-
     </div>
 </section>
 <!-- Page Content / End -->

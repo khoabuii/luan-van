@@ -114,33 +114,36 @@
                                         </li>
                                     </ul>
                                     @Auth('parents')
-                                    @if(count($contract_pending)!=0 || count($contract_active)!=0)
-                                        <span style="color: rgb(182, 97, 27)">
-                                            Bạn đã hoặc đang làm việc với người này, hãy đánh giá cho mọi người cùng biết nhé!
-                                        </span>
-                                    @endif
-
+                                        @if(count($contract_pending)!=0 || count($contract_active)!=0)
+                                            <span style="color: rgb(182, 97, 27)">
+                                                Bạn đã hoặc đang làm việc với người này, hãy đánh giá cho mọi người cùng biết nhé!
+                                            </span>
+                                        @endif
+                                    @endAuth
                                     <div class="spacer-lg"></div>
-                                    @if(count($check)>0)
-                                        <span class="btn btn-primary fa fa-check"> Đã lưu</span>
-                                    @else
-                                <a href="{{asset('parent/save_sitters')}}/{{$sitter->id}}" class="btn btn-primary"><span class="fa fa-user-plus"></span> Lưu</a>
-                                    @endif
-                                <button type="button"
-                                @if(count($contract_pending)!=0 || count($contract_active)!=0) disabled @endif
-                                class="btn btn-primary" data-toggle="modal" data-target="#contract">
-                                    <span class="fa fa-send"></span> Gửi yêu cầu làm việc
-                                </button>
-                                <a href="{{asset('parent/chat')}}/{{$sitter->id}}" class="btn btn-primary">
-                                    <span class="fa fa-inbox"></span>Chat
-                                </a>
 
-                                <a href="{{asset('parent/posts/sitter')}}/{{$sitter->id}}" class="btn btn-primary">
-                                    <span class="fa fa-newspaper-o"></span>Bài viết
-                                </a>
+                                    @auth('parents')
+                                        @if(count($check)>0)
+                                            <span class="btn btn-primary fa fa-check"> Đã lưu</span>
+                                        @else
+                                    <a href="{{asset('parent/save_sitters')}}/{{$sitter->id}}" class="btn btn-primary"><span class="fa fa-user-plus"></span> Lưu</a>
+                                        @endif
+                                    <button type="button"
+                                    @if(count($contract_pending)!=0 || count($contract_active)!=0) disabled @endif
+                                    class="btn btn-primary" data-toggle="modal" data-target="#contract">
+                                        <span class="fa fa-send"></span> Gửi yêu cầu làm việc
+                                    </button>
+                                    <a href="{{asset('parent/chat')}}/{{$sitter->id}}" class="btn btn-primary">
+                                        <span class="fa fa-inbox"></span>Chat
+                                    </a>
+
+                                    <a href="{{asset('parent/posts/sitter')}}/{{$sitter->id}}" class="btn btn-primary">
+                                        <span class="fa fa-newspaper-o"></span>Bài viết
+                                    </a>
+                                @endAuth
                             </div>
                         </div>
-
+                        @auth
                         <!-- modal contract -->
                             <div class="modal fade" id="contract" tabindex="-1" role="dialog" aria-labelledby="contract" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">

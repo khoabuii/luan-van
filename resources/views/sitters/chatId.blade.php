@@ -31,7 +31,7 @@
                 <div class="chat_people">
                 <div class="chat_img"> <img src="{{asset('uploads/parents_profile')}}/{{$parent->avatar}}" alt="sunil"> </div>
                 <a href="{{asset('sitter/chat')}}/{{$parent->id}}"><div class="chat_ib">
-                    <h5>{{$parent->name}} <span class="chat_date">Dec 25</span></h5>
+                    <h5>{{$parent->name}} <span class="chat_date">-</span></h5>
                     <p>-----------</p>
                 </div></a>
                 </div>

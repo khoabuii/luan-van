@@ -59,9 +59,9 @@
         </div>
         <div class="spacer-lg"></div>
         @Auth
+        @if(count($your_province)!=0)
         <h2>Phụ huynh gần bạn</h2>
         <div class="row">
-        @if(count($your_province)!=0)
             @foreach($parent_near as $parent)
             <div class="col-xs-6 col-sm-3 col-md-3" data-animation="fadeInLeft" data-animation-delay="0">
                 <div class="job-listing-box">
@@ -76,16 +76,22 @@
                         <ul class="meta">
                             <li class="category">Phụ huynh</li>
                             <li class="location"><a href="#">{{$location_name[0]->name}}</a></li>
-                            <li class="date">Tham gia vào <span style="color: blue">{{date_diff(date_create($parent->created_at), date_create('now'))->d}}</span> ngày trước</li>
+                            @php
+                                $date_create=$parent->created_at;
+                                $date=new DateTime($date_create);
+                                $now=new DateTime();
+                            @endphp
+                            <li class="date">Tham gia vào <span style="color: blue">{{$date->diff($now)->format("%m tháng, %d")}}</span> ngày trước</li>
                         </ul>
                     </footer>
                 </div>
             </div>
             @endforeach
-        @endif
             <div class="clearfix visible-xs"></div>
             <div class="spacer visible-xs"></div>
+          @endif
         </div>
+
         @endAuth
         <div class="spacer-xl"></div>
 

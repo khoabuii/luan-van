@@ -63,7 +63,8 @@ class ParentsController extends Controller
         $this->validate($request,[
             'email'=>'unique:parents,email',
             're-password'=>'same:password',
-            'phone'=>'min:9,max:10'
+            'phone'=>'min:9,max:10',
+            'birthDay'=>'required|date|before:18 years ago'
         ],[
             'email.unique'=>'Email đã tồn tại',
 
@@ -332,12 +333,10 @@ class ParentsController extends Controller
         $data['location']=Province::all();
         $name=$request->name;
         $province_id=$request->province;
-        $age_min=$request->age_min;
-        $age_max=$request->age_max;
+        $status=$request->status;
         $gender=$request->gender;
         $name=str_replace('','%',$name);
-
-        if($name==null && $province_id==null && $age_min==null && $age_max==null && $gender==null){
+        if($name==null && $province_id==null && $status==null && $gender==null){
             $data['sitters']=DB::table('sitters')->where('name','like','%'.$name.'%')
             ->join('location','sitters.id','=','location.sitter')
             ->select('sitters.id','sitters.name','sitters.birthDay','sitters.status as status','sitters.created_at','location.address','location.district','location.city','sitters.images as img')
@@ -369,14 +368,16 @@ class ParentsController extends Controller
                 ->where('location.city','like',$province_id)
                 ->where('sitters.name','like','%'.$name.'%')
                 ->paginate(10);
-        }elseif($age_min !=null){
+        }elseif($status !=null){
             $data['sitters']=DB::table('sitters')
                 ->join('location','sitters.id','=','location.sitter')
                 ->select('sitters.id','sitters.name','sitters.birthDay','sitters.status as status','sitters.created_at','location.address','location.district','location.city','sitters.images as img')
                 ->orderBy('sitters.id','desc')
-                ->where('sitters.age','<',$age_min)
+                ->where('sitters.status',$status)
+                ->where('sitters.name','like','%'.$name.'%')
                 ->paginate(10);
         }
+
         return view('parents.list_sitters',$data,
         [
             'gender'=>$gender,

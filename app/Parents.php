@@ -39,4 +39,8 @@ class Parents extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    // filter name
+    public function index(){
+        
+    }
 }

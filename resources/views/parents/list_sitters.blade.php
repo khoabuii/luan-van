@@ -48,10 +48,13 @@
                     <div class="col-md-7">
                         <div class="form-group">
                             <div class="col-md-3">
-                                <input type="number" name="age_min" id="" placeholder="Tuổi tối thiểu" class="form-control">
-                            </div>
-                            <div class="col-md-3">
-                                <input type="number" name="age_max" placeholder="Tuổi tối đa" class="form-control">
+                                
+                                <select name="status" id="status" class="form-control">
+                                    <option value="">Trạng thái</option>
+                                    <option value="0">Chưa xác thực</option>
+                                    <option value="1">Đã xác thực</option>
+                                </select>
+                                {{-- <label for="status" class="form-label">Xác thực</label> --}}
                             </div>
                             <div class="col-md-3">
                                 <select name="gender" id="" class="form-control">
